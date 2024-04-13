@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dittm8xt3v3dp"]
+
+[ext_resource type="Script" path="res://Scripts/Conductor.gd" id="1_f0w64"]
+
+[node name="Conductor" type="AudioStreamPlayer"]
+script = ExtResource("1_f0w64")
+
+[node name="StartTimer" type="Timer" parent="."]

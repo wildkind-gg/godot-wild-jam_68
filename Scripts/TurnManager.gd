@@ -1,4 +1,4 @@
-extends Resource
+extends AudioStreamPlayer
 
 class_name TurnManager
 
