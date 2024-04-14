@@ -1,10 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckrm64kavjvpr"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_dd3de"]
-[ext_resource type="Texture2D" uid="uid://b6e1kho53dcno" path="res://Misc/icon.svg" id="1_rv7xx"]
+[ext_resource type="Texture2D" uid="uid://bhs7acn3nn6k7" path="res://Player_Character/Animations (Static)/right_left_combo.png" id="2_pafka"]
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_dd3de")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_rv7xx")
+texture_filter = 1
+position = Vector2(0, -23)
+scale = Vector2(4.92969, 4.92969)
+texture = ExtResource("2_pafka")
+hframes = 6
