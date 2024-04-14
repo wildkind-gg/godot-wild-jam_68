@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=3 uid="uid://b4yfo8lai86mp"]
+
+[ext_resource type="Script" path="res://Scripts/Note.gd" id="1_awum4"]
+[ext_resource type="Texture2D" uid="uid://brk2ilhd7uexf" path="res://Misc/Start_left.png" id="2_7qm7i"]
+[ext_resource type="Texture2D" uid="uid://xtaafbwa28vb" path="res://Misc/Start_up.png" id="3_uqc2i"]
+[ext_resource type="Texture2D" uid="uid://bdc0pyglfup3x" path="res://Misc/Start.png" id="4_5o1ja"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_awjyd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7qm7i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_uqc2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5o1ja")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cygex"]
+
+[node name="Note" type="Area2D" groups=["note"]]
+script = ExtResource("1_awum4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_awjyd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_cygex")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="Node2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = -20.0
+offset_right = 59.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

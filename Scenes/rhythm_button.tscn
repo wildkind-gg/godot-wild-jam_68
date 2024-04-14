@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=3 uid="uid://c2qvh0ey1jh6g"]
+
+[ext_resource type="Texture2D" uid="uid://bdc0pyglfup3x" path="res://Misc/Start.png" id="1_7vyop"]
+[ext_resource type="Texture2D" uid="uid://dvnbpq0ql3eev" path="res://Misc/Start_pressed.png" id="2_vdn4a"]
+[ext_resource type="Script" path="res://Scripts/rhythm_button.gd" id="3_onddu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bg5tq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7vyop")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vdn4a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0sh0n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6tyr"]
+size = Vector2(42, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fers"]
+size = Vector2(70, 70)
+
+[node name="Rhythm_Button" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_bg5tq")
+script = ExtResource("3_onddu")
+
+[node name="PerfectArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]
+shape = SubResource("RectangleShape2D_0sh0n")
+
+[node name="GoodArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoodArea"]
+shape = SubResource("RectangleShape2D_q6tyr")
+
+[node name="OkayArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OkayArea"]
+shape = SubResource("RectangleShape2D_4fers")
+
+[node name="Pushtimer" type="Timer" parent="."]
+wait_time = 0.15
+
+[connection signal="area_entered" from="PerfectArea" to="." method="_on_perfect_area_area_entered"]
+[connection signal="area_exited" from="PerfectArea" to="." method="_on_perfect_area_area_exited"]
+[connection signal="area_entered" from="GoodArea" to="." method="_on_good_area_area_entered"]
+[connection signal="area_exited" from="GoodArea" to="." method="_on_good_area_area_exited"]
+[connection signal="area_entered" from="OkayArea" to="." method="_on_okay_area_area_entered"]
+[connection signal="area_exited" from="OkayArea" to="." method="_on_okay_area_area_exited"]
+[connection signal="timeout" from="Pushtimer" to="." method="_on_pushtimer_timeout"]

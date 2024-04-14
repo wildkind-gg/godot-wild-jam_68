@@ -6,3 +6,5 @@
 script = ExtResource("1_f0w64")
 
 [node name="StartTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

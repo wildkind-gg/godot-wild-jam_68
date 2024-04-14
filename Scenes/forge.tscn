@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://dylnjo762rsqo"]
+
+[ext_resource type="Script" path="res://Scripts/forge.gd" id="1_8xlhv"]
+[ext_resource type="PackedScene" uid="uid://c2qvh0ey1jh6g" path="res://Scenes/rhythm_button.tscn" id="1_656yl"]
+[ext_resource type="PackedScene" uid="uid://dittm8xt3v3dp" path="res://Scenes/conductor.tscn" id="2_nd8ja"]
+[ext_resource type="AudioStream" uid="uid://ci78n1sr4wn43" path="res://Sounds/Electro Opening Theme.mp3" id="4_qbimh"]
+
+[node name="Forge" type="Node2D"]
+script = ExtResource("1_8xlhv")
+
+[node name="RhythmButtonRight" parent="." instance=ExtResource("1_656yl")]
+position = Vector2(690, 600)
+input = "ui_right"
+
+[node name="RhythmButtonLeft" parent="." instance=ExtResource("1_656yl")]
+position = Vector2(450, 600)
+rotation = 3.14159
+scale = Vector2(1, -1)
+input = "ui_left"
+
+[node name="RhythmButtonUp" parent="." instance=ExtResource("1_656yl")]
+position = Vector2(570, 600)
+rotation = -1.5708
+input = "ui_up"
+
+[node name="Conductor" parent="." instance=ExtResource("2_nd8ja")]
+stream = ExtResource("4_qbimh")
+
+[node name="Combo" type="Label" parent="."]
+offset_left = 50.0
+offset_right = 90.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 32
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="beat" from="Conductor" to="." method="_on_conductor_beat"]
+[connection signal="measure_sig" from="Conductor" to="." method="_on_conductor_measure_sig"]
