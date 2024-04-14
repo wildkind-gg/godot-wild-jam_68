@@ -14,13 +14,13 @@ func _unhandled_input(event):
 			if current_note != null:
 				if perfect:
 					get_parent()._increment_score(3)
-					current_note.destroy(3)
+					current_note.queue_free()
 				elif good:
 					get_parent()._increment_score(2)
-					current_note.destroy(2)
+					current_note.queue_free()
 				elif okay:
 					get_parent()._increment_score(1)
-					current_note.destroy(1)
+					current_note.queue_free()
 				_reset()
 			else:
 				get_parent()._increment_score(0)

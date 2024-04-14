@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c2qvh0ey1jh6g"]
 
 [ext_resource type="Texture2D" uid="uid://bdc0pyglfup3x" path="res://Misc/Start.png" id="1_7vyop"]
-[ext_resource type="Texture2D" uid="uid://dvnbpq0ql3eev" path="res://Misc/Start_pressed.png" id="2_vdn4a"]
+[ext_resource type="Texture2D" uid="uid://5g4tvm3ateuc" path="res://Misc/Start.Pressed.png" id="2_sgl7l"]
 [ext_resource type="Script" path="res://Scripts/rhythm_button.gd" id="3_onddu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bg5tq"]
@@ -11,7 +11,7 @@ animations = [{
 "texture": ExtResource("1_7vyop")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_vdn4a")
+"texture": ExtResource("2_sgl7l")
 }],
 "loop": true,
 "name": &"default",

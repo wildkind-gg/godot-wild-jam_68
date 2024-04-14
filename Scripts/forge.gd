@@ -21,16 +21,15 @@ var spawn_2_beat = 0
 var spawn_3_beat = 1
 var spawn_4_beat = 0
 
-var lane = 0
+@onready var lane = 0
 var rand = 0
 var note = load("res://Scenes/note.tscn")
-var instance
 
 
 func _ready():
 	randomize()
 	#$Conductor.play_with_beat_offset(8)
-	$Conductor.seek(15) # sets the position from which audio will be played, in seconds
+	$Conductor.seek(0) # sets the position from which audio will be played, in seconds
 
 func _input(event):
 	if event.is_action("escape"):
@@ -117,15 +116,15 @@ func _on_conductor_beat(position):
 func _spawn_notes(to_spawn):
 	if to_spawn > 0:
 		lane = randi() % 3
-		instance = note.insantiate()
-		instance.initialize(lane)
+		var instance = note.instantiate()
+		instance._initialize(lane)
 		add_child(instance)
 	if to_spawn > 1:
 		while rand == lane:
 			rand = randi() % 3
 		lane = rand
-		instance = note.instantiate()
-		instance. initialize(lane)
+		var instance = note.instantiate()
+		instance._initialize(lane)
 		add_child(instance)
 
 
@@ -145,3 +144,14 @@ func _increment_score(by):
 
 	score += by * combo
 	$Label.text = str(score)
+	if combo > 0:
+		$Combo.text = str(combo) + " combo!"
+		if combo > maxCombo:
+			maxCombo = combo
+	else:
+		$Combo.text = ""
+
+
+func reset_combo():
+	combo = 0
+	$Combo.text = ""

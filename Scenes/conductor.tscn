@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://dittm8xt3v3dp"]
+[gd_scene load_steps=3 format=3 uid="uid://dittm8xt3v3dp"]
 
 [ext_resource type="Script" path="res://Scripts/Conductor.gd" id="1_f0w64"]
+[ext_resource type="AudioStream" uid="uid://ci78n1sr4wn43" path="res://Sounds/Electro Opening Theme.mp3" id="1_r5vdn"]
 
 [node name="Conductor" type="AudioStreamPlayer"]
+stream = ExtResource("1_r5vdn")
 script = ExtResource("1_f0w64")
 
 [node name="StartTimer" type="Timer" parent="."]
