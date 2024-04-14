@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://babhddpsfb770"]
+[gd_scene load_steps=2 format=3 uid="uid://babhddpsfb770"]
+
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_dk1lg"]
 
 [node name="MainMenu" type="Node2D"]
+script = ExtResource("1_dk1lg")
 
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
@@ -48,3 +51,5 @@ text = "Options
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Exit"
+
+[connection signal="pressed" from="Container/VBoxContainer/Play" to="." method="_on_play_pressed"]
