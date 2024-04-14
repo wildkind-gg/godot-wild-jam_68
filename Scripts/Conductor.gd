@@ -47,11 +47,11 @@ func _closest_beat(nth):
 	time_off_beat = abs(closest * sec_per_beat - song_position)
 	return Vector2(closest, time_off_beat)
 	
-func _play_from_beat(beat, offset): # mostly for testing, allows to play song at any point 
+func _play_from_beat(beats, offset): # mostly for testing, allows to play song at any point 
 	play()
-	seek(beat * sec_per_beat)
+	seek(beats * sec_per_beat)
 	beats_before_start = offset
-	measure = beat % measures
+	measure = beats % measures
 	
 
 func _on_start_timer_timeout():

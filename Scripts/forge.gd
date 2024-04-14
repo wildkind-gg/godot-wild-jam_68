@@ -21,7 +21,7 @@ var spawn_2_beat = 0
 var spawn_3_beat = 1
 var spawn_4_beat = 0
 
-@onready var lane = 0
+var lane = 0
 var rand = 0
 var note = load("res://Scenes/note.tscn")
 
@@ -36,18 +36,18 @@ func _input(event):
 		if get_tree().change_scene_to_file("res://Scenes/main_menu.tscn") != OK:
 			print("Error changing scene to Menu")
 
-func _on_conductor_measure_sig(position):
-	if position == 1:
+func _on_conductor_measure_sig(pos):
+	if pos == 1:
 		_spawn_notes(spawn_1_beat)
-	if position == 2:
+	if pos == 2:
 		_spawn_notes(spawn_2_beat)
-	if position == 3:
+	if pos == 3:
 		_spawn_notes(spawn_3_beat)
-	if position == 4:
+	if pos == 4:
 		_spawn_notes(spawn_4_beat)
 
-func _on_conductor_beat(position):
-	song_position_in_beats = position
+func _on_conductor_beat(pos):
+	song_position_in_beats = pos
 	if song_position_in_beats > 36:
 		spawn_1_beat = 1
 		spawn_2_beat = 1
@@ -132,6 +132,11 @@ func _increment_score(by):
 	if by > 0:
 		combo += 1
 	else: combo = 0
+	
+	if combo % 10 == 0:
+		$ComboExclamation.text = "WOW! " + str(combo) + " in a row!"
+		await get_tree().create_timer(2).timeout
+		$ComboExclamation.text = ""
 	
 	if by == 3:
 		great += 1
