@@ -14,3 +14,4 @@ var enemyRleg:float = 100.0
 var enemyTorso:float = 100.0
 var setScore = 0
 var turnCounter = 0
+var enemyAction = ""

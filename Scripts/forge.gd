@@ -134,9 +134,10 @@ func _increment_score(by):
 	else: combo = 0
 	
 	if combo % 10 == 0:
-		$ComboExclamation.text = "WOW! " + str(combo) + " in a row!"
-		await get_tree().create_timer(2).timeout
-		$ComboExclamation.text = ""
+		if combo > 0:
+			$ComboExclamation.text = "WOW! " + str(combo) + " in a row!"
+			await get_tree().create_timer(2).timeout
+			$ComboExclamation.text = ""
 	
 	if by == 3:
 		great += 1
@@ -148,7 +149,7 @@ func _increment_score(by):
 		missed += 1
 
 	score += by * combo
-	$Label.text = str(score)
+	$Score.text = "Score: " + str(score)
 	if combo > 0:
 		$Combo.text = str(combo) + " combo!"
 		if combo > maxCombo:
@@ -160,3 +161,7 @@ func _increment_score(by):
 func reset_combo():
 	combo = 0
 	$Combo.text = ""
+
+func _on_conductor_finished():
+	await get_tree().create_timer(5).timeout
+	get_tree().change_scene_to_file("res://Scenes/end_forge.tscn")

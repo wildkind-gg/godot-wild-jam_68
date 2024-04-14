@@ -3,6 +3,7 @@ extends Node2D
 var turnmanager = preload("res://Resources/TurnManager.tres")
 @onready var player = $Player
 @onready var UI = $UI/Battle_UI
+var rndm = RandomNumberGenerator.new()
 	
 func _ready():
 	# connect to turns
@@ -35,7 +36,7 @@ func _on_enemy_turn_started():
 	UI.hide()
 	$Enemy._enemy_turn()
 	# end turn
-	$Label.text = "Enemy attacks your head!"
+	$Label.text = Global.enemyAction
 	await get_tree().create_timer(2).timeout #when animations added, on animation finished change turn and show ui
 	turnmanager.turn = turnmanager.PLAYER_TURN
 
@@ -80,9 +81,17 @@ func _on_defend_pressed():
 
 
 func _on_run_pressed():
-	pass # Replace with function body.
-
-
+	var rng = rndm.randi_range(0,10)
+	if Global.playerLleg <= 0 or Global.playerRleg <= 0:
+		rng = 0
+		$Label.text = "Your leg is broken!"
+	else:
+		if rng >= 3:
+			get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
+		if rng < 3:
+			$Label.text = "Could not get away!"
+	turnmanager.turn = turnmanager.ENEMY_TURN
+		
 func _on_animation_player_animation_finished(_anim_name):
 	await get_tree().create_timer(1).timeout
 	turnmanager.turn = turnmanager.ENEMY_TURN
