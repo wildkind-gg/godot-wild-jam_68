@@ -132,13 +132,7 @@ func _increment_score(by):
 	if by > 0:
 		combo += 1
 	else: combo = 0
-	
-	if combo % 10 == 0:
-		if combo > 0:
-			$ComboExclamation.text = "WOW! " + str(combo) + " in a row!"
-			await get_tree().create_timer(2).timeout
-			$ComboExclamation.text = ""
-	
+
 	if by == 3:
 		great += 1
 	if by == 2:
@@ -156,7 +150,12 @@ func _increment_score(by):
 			maxCombo = combo
 	else:
 		$Combo.text = ""
-
+		
+	if combo % 10 == 0:
+		if combo > 0:
+			$ComboExclamation.text = "WOW! " + str(combo) + " in a row!"
+			await get_tree().create_timer(2).timeout
+			$ComboExclamation.text = ""
 
 func reset_combo():
 	combo = 0

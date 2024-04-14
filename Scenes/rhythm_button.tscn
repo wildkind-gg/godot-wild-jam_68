@@ -33,16 +33,19 @@ script = ExtResource("3_onddu")
 [node name="PerfectArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]
+scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_0sh0n")
 
 [node name="GoodArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GoodArea"]
+scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_q6tyr")
 
 [node name="OkayArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OkayArea"]
+scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_4fers")
 
 [node name="Pushtimer" type="Timer" parent="."]

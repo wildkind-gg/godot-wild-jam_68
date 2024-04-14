@@ -12,8 +12,6 @@ func _enemy_turn():
 		
 	# check speed and chance for successful run
 	var speedCheck: float = speed / maxSpeed
-	if Global.enemyLleg == 0 or Global.enemyRleg == 0:
-		speedCheck = 0.0
 		
 	# check for heals left
 	var healsRemaining: float = currentHeals / totalHeals

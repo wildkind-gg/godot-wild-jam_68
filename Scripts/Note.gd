@@ -12,14 +12,13 @@ var speed = 0
 var hit = false
 
 func _ready():
-	$Node2D/Label.hide()
-
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if !hit:
 		position.y += speed * delta
-		if position.y > 648:
+		if position.y > 700:
 			queue_free()
 			get_parent().reset_combo()
 	else:
@@ -43,18 +42,21 @@ func _initialize(lane):
 	
 func _destroy(score):
 	$AnimatedSprite2D.visible = false
-	$Timer.start()
+	$DestroyTimer.start()
 	hit = true
 	if score == 3:
-		$Node2D/Label.show()
+		$CPUParticles2D.emitting = true
+		$CPUParticles2D.modulate = Color("f6d6bd")
 		$Node2D/Label.text = "GREAT"
 		$Node2D/Label.modulate = Color("f6d6bd")
-	if score == 2:
-		$Node2D/Label.show()
+	elif score == 2:
+		$CPUParticles2D.emitting = true
+		$CPUParticles2D.modulate = Color("c3a38a")
 		$Node2D/Label.text = "GOOD"
 		$Node2D/Label.modulate = Color("c3a38a")
-	if score == 1:
-		$Node2D/Label.show()
+	elif score == 1:
+		$CPUParticles2D.emitting = true
+		$CPUParticles2D.modulate = Color("997577")
 		$Node2D/Label.text = "OKAY"
 		$Node2D/Label.modulate = Color("997577")
 		
