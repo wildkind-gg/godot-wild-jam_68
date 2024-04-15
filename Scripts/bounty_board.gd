@@ -1,23 +1,31 @@
 extends Node2D
 
-# References
+### On Ready Variables ###
 @onready var bounty_item_prefab = preload("res://Scenes/bounty_board/bounty_item.tscn")
-@onready var grid_container = $CanvasLayer/Panel/GridContainer
+@onready var grid_container = $Board/Panel/GridContainer
+@onready var scene_transition = $Loading/SceneTransition
+@onready var fade_transition = $Loading/FadeTransition
 
-# Constants
+### Constants ###
 const DEFAULT_DISPLAY_NAME : String = "Missing Name"
 const DEFAULT_DESCRIPTION : String = "Missing Description"
 const DEFAULT_TEXTURE : Texture = preload("res://Resources/_temp_ui_sprites/missing_texture.png")
 
+### Editor Parameters ###
 # TODO: Remove this variable once we have full enemy data structure setup
 @export var _temp_enemy_data : Array[EnemyUiData]
-
-# Variables
 @export var has_debugs : bool = true
-var is_initialzied : bool = false
+
+### Private Variables ###
+var _is_initialzied : bool = false
+
+### Private Methods ###
+func _on_item_clicked():
+	print("Clicked")
+	scene_transition.start_transition()
 
 # Build a bounty item from specific data
-func create_bounty_item(ui_data : EnemyUiData):
+func _create_bounty_item(ui_data : EnemyUiData) -> void:
 	# Get values or use defaults if there is no value set
 	var display_name : String = ui_data.display_name if ui_data.display_name != null else DEFAULT_DISPLAY_NAME
 	var description : String = ui_data.description if ui_data.description != null else DEFAULT_DESCRIPTION
@@ -40,17 +48,22 @@ func create_bounty_item(ui_data : EnemyUiData):
 	description_text.text = description
 	enemy_texture.texture = texture
 	
+	# Connect click event to scene transition
+	var new_item_btn = new_bounty_item.find_child("Button")
+	new_item_btn.button_up.connect(_on_item_clicked)
+	
 	# Add to grid
 	grid_container.add_child(new_bounty_item)
 
 
+### Public Methods ###
 # Build the bounty board from enemy ui data
-func initialize_board(enemy_data : Array[EnemyUiData]):
+func initialize_board(enemy_data : Array[EnemyUiData]) -> void:
 	# Make sure we only initialize once
-	if is_initialzied:
+	if _is_initialzied:
 		return
 	else:
-		is_initialzied = true
+		_is_initialzied = true
 	
 	# DEBUG
 	if has_debugs:
@@ -58,15 +71,17 @@ func initialize_board(enemy_data : Array[EnemyUiData]):
 	
 	# Create each item from passed data
 	for ui_data in enemy_data:
-		create_bounty_item(ui_data)
+		_create_bounty_item(ui_data)
 
-
-func _process(delta):
+func on_scene_loaded():
+	# Fade in animation
+	fade_transition.play_fade_in()
+	
 	# TODO: This is temporary for testing initialization
-	if Input.is_key_pressed(KEY_ENTER):
-		initialize_board(_temp_enemy_data)
-		
-		# DEBUG
-		if has_debugs:
-			print("Enter Pressed")
+	# need to implement propper enemy data later
+	initialize_board(_temp_enemy_data)
 
+
+### Built in Methods ###
+func _ready():
+	on_scene_loaded()

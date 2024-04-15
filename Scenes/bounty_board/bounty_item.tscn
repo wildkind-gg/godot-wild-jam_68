@@ -7,11 +7,8 @@
 custom_minimum_size = Vector2(220, 260)
 offset_right = 220.0
 offset_bottom = 270.0
+mouse_filter = 2
 theme_override_styles/panel = ExtResource("1_o5wx5")
-
-[node name="Button" type="Button" parent="."]
-layout_mode = 2
-flat = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -44,3 +41,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "This is a description for the enemy"
 autowrap_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+flat = true

@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://babhddpsfb770"]
+[gd_scene load_steps=5 format=3 uid="uid://babhddpsfb770"]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_dk1lg"]
+[ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="2_o6fhd"]
+[ext_resource type="PackedScene" uid="uid://bih7xps8v4bbc" path="res://Scenes/bounty_board/bounty_board.tscn" id="3_bttwj"]
+[ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="3_wywr5"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_dk1lg")
@@ -40,6 +43,12 @@ theme_override_constants/separation = 25
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Play"
+
+[node name="SceneTransition" parent="Container/VBoxContainer/Play" node_paths=PackedStringArray("fade_transition") instance=ExtResource("3_wywr5")]
+landing_scene = ExtResource("3_bttwj")
+fade_transition = NodePath("FadeTransition")
+
+[node name="FadeTransition" parent="Container/VBoxContainer/Play/SceneTransition" instance=ExtResource("2_o6fhd")]
 
 [node name="Options" type="Button" parent="Container/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)

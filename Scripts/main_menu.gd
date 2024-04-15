@@ -1,15 +1,19 @@
 extends Node2D
 
+### On Ready Varaibles ###
+@onready var scene_transition := $Container/VBoxContainer/Play/SceneTransition
+
+### Private Methods ###
 func _process(_delta):
 	pass
 
-func _on_play_pressed():
-	get_tree().change_scene_to_file("res://Scenes/battle.tscn")
 
+### Signal Connected Methods ###
+func _on_play_pressed():
+	scene_transition.start_transition()
 
 func _on_exit_pressed():
 	get_tree().quit()
-
 
 func _on_options_pressed():
 	pass # Replace with function body.
