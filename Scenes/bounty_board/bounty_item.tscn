@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dq7qs7xy6a7dk"]
 
 [ext_resource type="StyleBox" uid="uid://bigsvjwr6xmts" path="res://Resources/ui_themes/bounty_item_texture.tres" id="1_o5wx5"]
-[ext_resource type="Texture2D" uid="uid://tlg6nhdpypip" path="res://Resources/_temp_ui_sprites/temp_image.png" id="2_l6pdd"]
+[ext_resource type="Texture2D" uid="uid://si4gq0ukpwff" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/floating_fall.png" id="2_gnewe"]
 
 [node name="BountyItem" type="PanelContainer"]
 custom_minimum_size = Vector2(220, 260)
@@ -34,7 +34,7 @@ custom_minimum_size = Vector2(120, 120)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("2_l6pdd")
+texture = ExtResource("2_gnewe")
 expand_mode = 1
 stretch_mode = 5
 
