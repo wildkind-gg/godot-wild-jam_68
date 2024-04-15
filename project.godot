@@ -20,6 +20,10 @@ config/icon="res://Misc/icon.svg"
 
 Global="*res://Scripts/Global.gd"
 
+[display]
+
+mouse_cursor/custom_image="res://Scenes/1-Normal-Select.png"
+
 [dotnet]
 
 project/assembly_name="Game Projects"
