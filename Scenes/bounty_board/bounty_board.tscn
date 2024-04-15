@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bih7xps8v4bbc"]
+
+[ext_resource type="Script" path="res://Scripts/bounty_board.gd" id="1_7nv2g"]
+[ext_resource type="PackedScene" uid="uid://dq7qs7xy6a7dk" path="res://Scenes/bounty_board/bounty_item.tscn" id="2_tv8iq"]
+
+[node name="BountyBoard" type="Node2D"]
+script = ExtResource("1_7nv2g")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/Panel"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 50.0
+offset_right = 784.0
+offset_bottom = 590.0
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="BountyItem" parent="CanvasLayer/Panel/GridContainer" instance=ExtResource("2_tv8iq")]
+layout_mode = 2
+
+[node name="BountyItem2" parent="CanvasLayer/Panel/GridContainer" instance=ExtResource("2_tv8iq")]
+layout_mode = 2
+
+[node name="BountyItem3" parent="CanvasLayer/Panel/GridContainer" instance=ExtResource("2_tv8iq")]
+layout_mode = 2
+
+[node name="BountyItem4" parent="CanvasLayer/Panel/GridContainer" instance=ExtResource("2_tv8iq")]
+layout_mode = 2
+
+[node name="BountyItem5" parent="CanvasLayer/Panel/GridContainer" instance=ExtResource("2_tv8iq")]
+layout_mode = 2
+
+[node name="BountyItem6" parent="CanvasLayer/Panel/GridContainer" instance=ExtResource("2_tv8iq")]
+layout_mode = 2
