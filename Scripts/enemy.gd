@@ -45,13 +45,13 @@ func _enemy_turn():
 	print(rarmCalc)
 	var llegCalc:float = (limbsHealth + (1-playerLlegHealth) + healsRemaining + speedCheck)/9
 	print(llegCalc)
-	var rlegCalc:float = (limbsHealth + (1-playerRlegHealth) + healsRemaining + speedCheck + 100)/9
+	var rlegCalc:float = (limbsHealth + (1-playerRlegHealth) + healsRemaining + speedCheck)/9
 	print(rlegCalc)
 	# calculate avg for each defensive action
-	var healCalc:float = (limbsHealth + playerLimbHealthAvg + healsRemaining + speedCheck)/9
+	var healCalc:float = (limbsHealth + playerLimbHealthAvg + healsRemaining + speedCheck)/15
 	# add in 1 if a limb is below 30%?
 	print(healCalc)
-	var defendCalc:float = (limbsHealth + playerLimbHealthAvg + healsRemaining + speedCheck)/9
+	var defendCalc:float = (limbsHealth + playerLimbHealthAvg + healsRemaining + speedCheck)/15
 	# add 1 if a limb is below 20%?
 	# add 1 if no more heals?
 	print(defendCalc)

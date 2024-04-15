@@ -12,6 +12,7 @@ func _ready():
 	
 	
 func _process(_delta):
+	print(Global.playerHead)
 	# leave game press esc
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()

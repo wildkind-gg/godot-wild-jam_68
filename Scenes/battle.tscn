@@ -202,9 +202,9 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
 
 [node name="Enemy_Torso" type="ProgressBar" parent="UI/Battle_UI/Gauges/Enemy_Limbs"]
 visible = false
-offset_left = 994.0
-offset_top = 129.0
-offset_right = 1044.0
+offset_left = 1018.0
+offset_top = 133.0
+offset_right = 1019.0
 offset_bottom = 156.0
 theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")

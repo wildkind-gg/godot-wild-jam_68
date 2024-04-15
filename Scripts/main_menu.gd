@@ -13,3 +13,11 @@ func _on_exit_pressed():
 
 func _on_options_pressed():
 	pass # Replace with function body.
+
+
+func _on_controls_pressed():
+	$Container/ControlsText.show()
+
+
+func _on_button_pressed():
+	$Container/ControlsText.hide()

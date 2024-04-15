@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://babhddpsfb770"]
+[gd_scene load_steps=3 format=3 uid="uid://babhddpsfb770"]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_dk1lg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdsfi"]
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_dk1lg")
@@ -47,11 +49,42 @@ layout_mode = 2
 text = "Options
 "
 
+[node name="Controls" type="Button" parent="Container/VBoxContainer"]
+layout_mode = 2
+text = "Controls"
+
 [node name="Exit" type="Button" parent="Container/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 text = "Exit"
 
+[node name="ControlsText" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_cdsfi")
+text = "ESC to return to main menu
+Left mouse button to choose action or limb
+Arrow keys to hit notes"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Container/ControlsText"]
+layout_mode = 0
+offset_left = 562.0
+offset_top = 414.0
+offset_right = 599.0
+offset_bottom = 445.0
+text = "Exit"
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
+
 [connection signal="pressed" from="Container/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Container/VBoxContainer/Controls" to="." method="_on_controls_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Container/ControlsText/Button" to="." method="_on_button_pressed"]
