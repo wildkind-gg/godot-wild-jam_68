@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyUiData" load_steps=3 format=3 uid="uid://c5u60b0ge0evc"]
+
+[ext_resource type="Script" path="res://Resources/_temp_enemy_ui_data/enemy_ui_data.gd" id="1_qaxf6"]
+[ext_resource type="Texture2D" uid="uid://cv0lbmugplxnk" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/multi_jump.png" id="2_qhrh8"]
+
+[resource]
+script = ExtResource("1_qaxf6")
+display_name = "Quizznorb"
+description = "Quizznorb flutters with mismatched wings, shooting rainbow splinters from its bristly snout. This is a placeholder description."
+texture = ExtResource("2_qhrh8")

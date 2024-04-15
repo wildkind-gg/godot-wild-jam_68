@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyUiData" load_steps=3 format=3 uid="uid://blgtiphlw148o"]
+
+[ext_resource type="Script" path="res://Resources/_temp_enemy_ui_data/enemy_ui_data.gd" id="1_c70nv"]
+[ext_resource type="Texture2D" uid="uid://jga8tt2k85mm" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/shield.png" id="2_grr1l"]
+
+[resource]
+script = ExtResource("1_c70nv")
+display_name = "Grimblerath"
+description = "Grimblerath slithers with glitchy scales and hums a low, discordant wibble. This is a placeholder description."
+texture = ExtResource("2_grr1l")

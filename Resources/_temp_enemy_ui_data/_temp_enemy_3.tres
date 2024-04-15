@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyUiData" load_steps=3 format=3 uid="uid://bv4xdj2kxhs2d"]
+
+[ext_resource type="Script" path="res://Resources/_temp_enemy_ui_data/enemy_ui_data.gd" id="1_35qld"]
+[ext_resource type="Texture2D" uid="uid://byig6s3eorqmh" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/fall.png" id="2_ljj8e"]
+
+[resource]
+script = ExtResource("1_35qld")
+display_name = "Floopdoodle"
+description = "Floopdoodle hops erratically, its tentacle whiskers swirling in a sparkly, woozy dance. This is a placeholder description."
+texture = ExtResource("2_ljj8e")

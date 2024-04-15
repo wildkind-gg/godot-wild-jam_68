@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyUiData" load_steps=3 format=3 uid="uid://b4sumg3qubbsi"]
+
+[ext_resource type="Script" path="res://Resources/_temp_enemy_ui_data/enemy_ui_data.gd" id="1_rj56o"]
+[ext_resource type="Texture2D" uid="uid://do8esrbwgy37s" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/crouch.png" id="2_yefw8"]
+
+[resource]
+script = ExtResource("1_rj56o")
+display_name = "Blorptok"
+description = "Blorptok lumbers with zippy fins and glows like a squiggly nebula, ready to zap-kapow! This is a placeholder description."
+texture = ExtResource("2_yefw8")
