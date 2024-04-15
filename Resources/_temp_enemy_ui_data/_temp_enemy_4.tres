@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyUiData" load_steps=3 format=3 uid="uid://b61apavd5onbh"]
+
+[ext_resource type="Script" path="res://Resources/_temp_enemy_ui_data/enemy_ui_data.gd" id="1_43per"]
+[ext_resource type="Texture2D" uid="uid://d06k2hehy8rhg" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/ledge_grab.png" id="2_teki6"]
+
+[resource]
+script = ExtResource("1_43per")
+display_name = "Placeholder 4"
+description = "This is a placeholder description."
+texture = ExtResource("2_teki6")

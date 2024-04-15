@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://dq7qs7xy6a7dk"]
+
+[ext_resource type="StyleBox" uid="uid://bigsvjwr6xmts" path="res://Resources/ui_themes/bounty_item_texture.tres" id="1_o5wx5"]
+[ext_resource type="Texture2D" uid="uid://do8esrbwgy37s" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/crouch.png" id="2_eouqg"]
+
+[node name="BountyItem" type="PanelContainer"]
+custom_minimum_size = Vector2(220, 260)
+offset_right = 220.0
+offset_bottom = 270.0
+mouse_filter = 2
+theme_override_styles/panel = ExtResource("1_o5wx5")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="NameText" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Enemy Name"
+horizontal_alignment = 1
+
+[node name="EnemyTexture" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_eouqg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DescriptionText" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "This is a description for the enemy"
+autowrap_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+flat = true
