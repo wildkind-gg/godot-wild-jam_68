@@ -24,6 +24,7 @@ rotation = -1.5708
 input = "ui_up"
 
 [node name="Conductor" parent="." instance=ExtResource("2_nd8ja")]
+volume_db = -15.0
 autoplay = true
 bpm = 129
 
