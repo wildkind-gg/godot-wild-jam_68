@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_8mykb")
-display_name = "Glorgath Tizzlewomp"
-description = "The Glorgath Tizzlewomp is a fearsome creature with zizzle-sparkle scales. This is a placeholder description."
+display_name = "Placeholder 2"
+description = "This is a placeholder description."
 texture = ExtResource("2_rojjl")

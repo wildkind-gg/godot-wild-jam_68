@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_c70nv")
-display_name = "Grimblerath"
-description = "Grimblerath slithers with glitchy scales and hums a low, discordant wibble. This is a placeholder description."
+display_name = "Placeholder 5"
+description = "This is a placeholder description."
 texture = ExtResource("2_grr1l")

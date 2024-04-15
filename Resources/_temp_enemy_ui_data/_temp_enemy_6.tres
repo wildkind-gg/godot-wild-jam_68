@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_qaxf6")
-display_name = "Quizznorb"
-description = "Quizznorb flutters with mismatched wings, shooting rainbow splinters from its bristly snout. This is a placeholder description."
+display_name = "Placeholder 6"
+description = "This is a placeholder description."
 texture = ExtResource("2_qhrh8")
