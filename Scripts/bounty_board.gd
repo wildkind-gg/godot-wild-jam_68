@@ -14,15 +14,15 @@ const DEFAULT_TEXTURE : Texture = preload("res://Resources/_temp_ui_sprites/miss
 ### Editor Parameters ###
 # TODO: Remove this variable once we have full enemy data structure setup
 @export var _temp_enemy_data : Array[EnemyUiData]
-@export var has_debugs : bool = true
+@export var has_debugs : bool
 
 ### Private Variables ###
 var _is_initialzied : bool = false
 
 ### Private Methods ###
 func _on_item_clicked():
-	print("Clicked")
 	scene_transition.start_transition()
+
 
 # Build a bounty item from specific data
 func _create_bounty_item(ui_data : EnemyUiData) -> void:
@@ -33,7 +33,7 @@ func _create_bounty_item(ui_data : EnemyUiData) -> void:
 	
 	# DEBUG
 	if has_debugs:
-		print("[Creating Item] Display Name: " + display_name)
+		print("[_create_bounty_item] Display Name: %s" %display_name)
 	
 	# Insatantiate bounty item ui
 	var new_bounty_item = bounty_item_prefab.instantiate()
@@ -67,11 +67,12 @@ func initialize_board(enemy_data : Array[EnemyUiData]) -> void:
 	
 	# DEBUG
 	if has_debugs:
-		print("[Initializing Board]")
+		print("[initialize_board] Initializing Board")
 	
 	# Create each item from passed data
 	for ui_data in enemy_data:
 		_create_bounty_item(ui_data)
+
 
 func on_scene_loaded():
 	# Fade in animation
@@ -85,3 +86,4 @@ func on_scene_loaded():
 ### Built in Methods ###
 func _ready():
 	on_scene_loaded()
+

@@ -1,15 +1,43 @@
 extends Node2D
 
+### Exports ###
+@export var enemy_data : EnemyData
 @export var speed: float = 0.0
 @export var maxSpeed: float = 10.0
 @export var totalHeals: float = 3.0
 @export var currentHeals: float = 0.0
+
+### References ###
 var turnmanager = preload("res://Resources/TurnManager.tres")
 var rnd = RandomNumberGenerator.new()
-		
-		
+var limb_object : PackedScene = preload("res://Scenes/components/limb.tscn")
+
+### Private Methods ###
+func _create_limb_object(parent : Node2D, limb_data : LimbData):
+	var new_limb = limb_object.instantiate()
+	new_limb.create(limb_data)
+	
+	parent.add_child(new_limb)
+
+
+func _generate_limbs() -> void:
+	# Get limb data and points
+	var limb_points := $LimbPoints.get_children()
+	var limbs = enemy_data.limbs
+	
+	# Get the shortest length
+	var points_size = limb_points.size()
+	var data_size = limbs.size()
+	var length = mini(points_size, data_size)
+
+	# Add a limb for each data entry
+	for i in length:
+		var parent = limb_points[i]
+		var limb_data = limbs[i]
+		_create_limb_object(parent, limb_data)
+
+
 func _enemy_turn():
-		
 	# check speed and chance for successful run
 	var speedCheck: float = speed / maxSpeed
 		
@@ -108,7 +136,7 @@ func _enemy_turn():
 		Global.playerLleg -= 25
 		Global.enemyAction = "Enemy attacks your left leg!"
 		
-### HEAL CALCS ###
+	### HEAL CALCS ###
 	if _find_best_action(dict) == "healCalc":
 		#play an animation
 		# choose best limb to heal from enemy_dict
@@ -130,7 +158,7 @@ func _enemy_turn():
 		if _find_best_heal(enemy_dict) == "enemyRlegHealth":
 			Global.enemyRleg += 25
 			Global.enemyAction = "Enemy heals its right leg!"
-### END HEAL CALCS ###
+	### END HEAL CALCS ###
 
 	if _find_best_action(dict) == "defendCalc":
 		# play an animation
@@ -168,3 +196,8 @@ func _find_best_heal(enemy_dict):
 			min_val = val
 			bestHeal = i
 	return bestHeal
+
+
+### Built in Methods ###
+func _ready():
+	_generate_limbs()

@@ -1,12 +1,42 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpxmv4kpifn3x"]
+[gd_scene load_steps=4 format=3 uid="uid://cpxmv4kpifn3x"]
 
-[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_vxg0j"]
-[ext_resource type="Texture2D" uid="uid://b6e1kho53dcno" path="res://Misc/icon.svg" id="1_wxili"]
+[ext_resource type="Script" path="res://Scripts/enemy/enemy.gd" id="1_vxg0j"]
+[ext_resource type="Texture2D" uid="uid://cf00stc4wcp17" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/full.png" id="2_huuko"]
+[ext_resource type="Resource" uid="uid://ieqpjmrppfhp" path="res://Resources/enemy_data/enemy_1.tres" id="2_kbe1m"]
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_vxg0j")
+enemy_data = ExtResource("2_kbe1m")
 speed = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.117647, 0.180392, 1)
-texture = ExtResource("1_wxili")
+scale = Vector2(2, 2)
+texture = ExtResource("2_huuko")
+
+[node name="LimbPoints" type="Node2D" parent="."]
+
+[node name="Head" type="Node2D" parent="LimbPoints"]
+position = Vector2(8, -9)
+
+[node name="Area2D" type="Area2D" parent="LimbPoints/Head"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LimbPoints/Head/Area2D"]
+position = Vector2(3, -4)
+build_mode = 1
+polygon = PackedVector2Array(-18, -9, 3, -9, 12, -2, 12, 9, 0, 16, -19, 16)
+
+[node name="Torso" type="Node2D" parent="LimbPoints"]
+position = Vector2(0, 6)
+
+[node name="LeftArm" type="Node2D" parent="LimbPoints"]
+position = Vector2(-23, 7)
+
+[node name="RightArm" type="Node2D" parent="LimbPoints"]
+position = Vector2(22, 8)
+
+[node name="LeftLeg" type="Node2D" parent="LimbPoints"]
+position = Vector2(-26, 27)
+
+[node name="RightLeg" type="Node2D" parent="LimbPoints"]
+position = Vector2(18, 28)

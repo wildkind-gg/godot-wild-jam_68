@@ -5,6 +5,16 @@ var turnmanager = preload("res://Resources/TurnManager.tres")
 @onready var UI = $UI/Battle_UI
 var rndm = RandomNumberGenerator.new()
 	
+### Public Methods ###
+func on_limb_hit(hit_message : String) -> void:
+	$Label.text = hit_message
+	$AnimationPlayer.play("tackle")
+
+
+func generate_enemy(enemy_data : EnemyData) -> void:
+	pass
+
+
 func _ready():
 	# connect to turns
 	turnmanager.player_turn_started.connect(self._on_player_turn_started)
@@ -12,11 +22,11 @@ func _ready():
 	
 	
 func _process(_delta):
-	print(Global.playerHead)
 	# leave game press esc
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
-### player gauges ###
+	
+	### player gauges ###
 	$UI/Battle_UI/Gauges/Player_Limbs/Player_Head.value = Global.playerHead
 	if Global.playerHead == 100:
 		$UI/Battle_UI/Gauges/Player_Limbs/Player_Head.hide()
@@ -53,7 +63,7 @@ func _process(_delta):
 	else:
 		$UI/Battle_UI/Gauges/Player_Limbs/Player_Torso.show()
 
-### enemy gauges ###
+	### enemy gauges ###
 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Head.value = Global.enemyHead
 	if Global.enemyHead == 100 or Global.enemyHead == 0:
 		$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Head.hide()
@@ -114,41 +124,42 @@ func _on_enemy_turn_started():
 	await get_tree().create_timer(2).timeout #when animations added, on animation finished change turn and show ui
 	turnmanager.turn = turnmanager.PLAYER_TURN
 
-func _on_head_pressed():
-	Global.enemyHead -= 25 #test value 
-	$Label.text = "Enemies head attacked!"
-	UI.hide()
-	$AnimationPlayer.play("tackle")
+
+# func _on_head_pressed():
+# 	Global.enemyHead -= 25 #test value 
+# 	$Label.text = "Enemies head attacked!"
+# 	UI.hide()
+# 	$AnimationPlayer.play("tackle")
 	
-func _on_torso_pressed():
-	Global.enemyTorso -= 25 #test value 
-	$Label.text = "Enemies torso attacked!"
-	UI.hide()
-	$AnimationPlayer.play("tackle")
+# func _on_torso_pressed():
+# 	Global.enemyTorso -= 25 #test value 
+# 	$Label.text = "Enemies torso attacked!"
+# 	UI.hide()
+# 	$AnimationPlayer.play("tackle")
 
-func _on_left_arm_pressed():
-	Global.enemyLarm -= 25 #test value 
-	$Label.text = "Enemies left arm attacked!"
-	UI.hide()
-	$AnimationPlayer.play("tackle")
+# func _on_left_arm_pressed():
+# 	Global.enemyLarm -= 25 #test value 
+# 	$Label.text = "Enemies left arm attacked!"
+# 	UI.hide()
+# 	$AnimationPlayer.play("tackle")
 
-func _on_right_arm_pressed():
-	Global.enemyRarm -= 25 #test value 
-	$Label.text = "Enemy right arm attacked!"
-	UI.hide()
-	$AnimationPlayer.play("tackle")
+# func _on_right_arm_pressed():
+# 	Global.enemyRarm -= 25 #test value 
+# 	$Label.text = "Enemy right arm attacked!"
+# 	UI.hide()
+# 	$AnimationPlayer.play("tackle")
 
-func _on_left_leg_pressed():
-	Global.enemyLleg -= 25 #test value 
-	$Label.text = "Enemies left leg attacked!"
-	UI.hide()
-	$AnimationPlayer.play("tackle")
+# func _on_left_leg_pressed():
+# 	Global.enemyLleg -= 25 #test value 
+# 	$Label.text = "Enemies left leg attacked!"
+# 	UI.hide()
+# 	$AnimationPlayer.play("tackle")
 
-func _on_right_leg_pressed():
-	Global.enemyRleg -= 25 #test value 
-	$Label.text = "Enemies right leg attacked!"
-	UI.hide()
-	$AnimationPlayer.play("tackle")
+# func _on_right_leg_pressed():
+# 	Global.enemyRleg -= 25 #test value 
+# 	$Label.text = "Enemies right leg attacked!"
+# 	UI.hide()
+# 	$AnimationPlayer.play("tackle")
 
 func _on_defend_pressed():
 	pass # Replace with function body.

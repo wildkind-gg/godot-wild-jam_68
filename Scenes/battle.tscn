@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c3ev5xwygolwl"]
+[gd_scene load_steps=9 format=3 uid="uid://c3ev5xwygolwl"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/player.tscn" id="2_qdcmu"]
@@ -9,50 +9,6 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ca5t3"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0e2g"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_color = Color(0.8, 0.8, 0.8, 0)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_65cu4"]
-bg_color = Color(0.32549, 0.588235, 0.329412, 0.466667)
-border_color = Color(0.8, 0.8, 0.8, 0)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lg7l4"]
-bg_color = Color(0.32549, 0.588235, 0.329412, 0.768627)
-border_color = Color(0.8, 0.8, 0.8, 0)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_krf2m"]
-bg_color = Color(0.882353, 0.0705882, 0, 0.501961)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8uxfo"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kgw63"]
-bg_color = Color(0.32549, 0.588235, 0.329412, 0.768627)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o5ssj"]
-bg_color = Color(0.882353, 0.0705882, 0, 0.501961)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
 
 [sub_resource type="Animation" id="Animation_00tku"]
 length = 0.001
@@ -161,6 +117,7 @@ offset_left = 993.0
 offset_top = 54.0
 offset_right = 1043.0
 offset_bottom = 81.0
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
 
@@ -170,6 +127,7 @@ offset_left = 1082.0
 offset_top = 129.0
 offset_right = 1132.0
 offset_bottom = 156.0
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
 
@@ -179,6 +137,7 @@ offset_left = 904.0
 offset_top = 128.0
 offset_right = 954.0
 offset_bottom = 155.0
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
 
@@ -188,6 +147,7 @@ offset_left = 918.0
 offset_top = 209.0
 offset_right = 968.0
 offset_bottom = 236.0
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
 
@@ -197,6 +157,7 @@ offset_left = 1069.0
 offset_top = 209.0
 offset_right = 1119.0
 offset_bottom = 236.0
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
 
@@ -206,80 +167,9 @@ offset_left = 1018.0
 offset_top = 133.0
 offset_right = 1019.0
 offset_bottom = 156.0
+mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Head" type="Button" parent="UI/Battle_UI"]
-custom_minimum_size = Vector2(110, 0)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 954.0
-offset_top = 81.0
-offset_right = 1082.0
-offset_bottom = 112.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_m0e2g")
-theme_override_styles/hover = SubResource("StyleBoxFlat_65cu4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_lg7l4")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_krf2m")
-
-[node name="Torso" type="Button" parent="UI/Battle_UI"]
-layout_mode = 2
-offset_left = 988.0
-offset_top = 112.0
-offset_right = 1048.0
-offset_bottom = 172.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_8uxfo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_65cu4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kgw63")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_o5ssj")
-
-[node name="Left_Arm" type="Button" parent="UI/Battle_UI"]
-layout_mode = 2
-offset_left = 954.0
-offset_top = 112.0
-offset_right = 988.0
-offset_bottom = 172.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_8uxfo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_65cu4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kgw63")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_o5ssj")
-
-[node name="Right_Arm" type="Button" parent="UI/Battle_UI"]
-layout_mode = 2
-offset_left = 1048.0
-offset_top = 112.0
-offset_right = 1082.0
-offset_bottom = 172.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_8uxfo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_65cu4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kgw63")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_o5ssj")
-
-[node name="Left_Leg" type="Button" parent="UI/Battle_UI"]
-layout_mode = 2
-offset_left = 954.0
-offset_top = 172.0
-offset_right = 1018.0
-offset_bottom = 209.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_8uxfo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_65cu4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kgw63")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_o5ssj")
-
-[node name="Right_Leg" type="Button" parent="UI/Battle_UI"]
-layout_mode = 2
-offset_left = 1018.0
-offset_top = 172.0
-offset_right = 1082.0
-offset_bottom = 209.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_8uxfo")
-theme_override_styles/hover = SubResource("StyleBoxFlat_65cu4")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_kgw63")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_o5ssj")
 
 [node name="Defend" type="Button" parent="UI/Battle_UI"]
 custom_minimum_size = Vector2(110, 0)
@@ -315,12 +205,6 @@ libraries = {
 "": SubResource("AnimationLibrary_jwsv8")
 }
 
-[connection signal="pressed" from="UI/Battle_UI/Head" to="." method="_on_head_pressed"]
-[connection signal="pressed" from="UI/Battle_UI/Torso" to="." method="_on_torso_pressed"]
-[connection signal="pressed" from="UI/Battle_UI/Left_Arm" to="." method="_on_left_arm_pressed"]
-[connection signal="pressed" from="UI/Battle_UI/Right_Arm" to="." method="_on_right_arm_pressed"]
-[connection signal="pressed" from="UI/Battle_UI/Left_Leg" to="." method="_on_left_leg_pressed"]
-[connection signal="pressed" from="UI/Battle_UI/Right_Leg" to="." method="_on_right_leg_pressed"]
 [connection signal="pressed" from="UI/Battle_UI/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="UI/Battle_UI/Run" to="." method="_on_run_pressed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

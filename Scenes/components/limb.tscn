@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1ihyvruc0uoj"]
+
+[ext_resource type="Script" path="res://Scripts/enemy/limb.gd" id="1_4oqme"]
+[ext_resource type="Texture2D" uid="uid://c626by25aal5r" path="res://Resources/_temp_ui_sprites/IconButton_Small_Blank_Square.png" id="3_k3vvq"]
+
+[node name="Limb" type="Node2D"]
+script = ExtResource("1_4oqme")
+has_debugs = true
+
+[node name="Hover" type="Sprite2D" parent="."]
+modulate = Color(0.619608, 0.768627, 0.423529, 0.270588)
+scale = Vector2(0.149813, 0.149813)
+texture = ExtResource("3_k3vvq")
+
+[node name="ClickableArea" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ClickableArea"]
+
+[connection signal="mouse_entered" from="ClickableArea" to="." method="_on_limb_entered"]
+[connection signal="mouse_exited" from="ClickableArea" to="." method="_on_limb_exited"]
