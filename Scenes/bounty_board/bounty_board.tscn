@@ -1,0 +1,44 @@
+[gd_scene load_steps=11 format=3 uid="uid://bih7xps8v4bbc"]
+
+[ext_resource type="Script" path="res://Scripts/bounty_board.gd" id="1_7nv2g"]
+[ext_resource type="Resource" uid="uid://b4sumg3qubbsi" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_1.tres" id="2_rgbeu"]
+[ext_resource type="Resource" uid="uid://s40jhcf5nrww" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_2.tres" id="3_4daup"]
+[ext_resource type="Resource" uid="uid://bv4xdj2kxhs2d" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_3.tres" id="4_y74kg"]
+[ext_resource type="Resource" uid="uid://b61apavd5onbh" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_4.tres" id="5_vjoiw"]
+[ext_resource type="Resource" uid="uid://blgtiphlw148o" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_5.tres" id="6_u3uqs"]
+[ext_resource type="Resource" uid="uid://c5u60b0ge0evc" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_6.tres" id="7_h2yqb"]
+[ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="8_uyka7"]
+[ext_resource type="PackedScene" uid="uid://c3ev5xwygolwl" path="res://Scenes/battle.tscn" id="9_4olab"]
+[ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="10_srq2r"]
+
+[node name="BountyBoard" type="Node2D"]
+script = ExtResource("1_7nv2g")
+_temp_enemy_data = Array[Resource("res://Resources/_temp_enemy_ui_data/enemy_ui_data.gd")]([ExtResource("2_rgbeu"), ExtResource("3_4daup"), ExtResource("4_y74kg"), ExtResource("5_vjoiw"), ExtResource("6_u3uqs"), ExtResource("7_h2yqb")])
+
+[node name="Board" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="Panel" parent="Board"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Board/Panel"]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 25.0
+offset_right = 784.0
+offset_bottom = 565.0
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="Loading" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="FadeTransition" parent="Loading" instance=ExtResource("10_srq2r")]
+
+[node name="SceneTransition" parent="Loading" node_paths=PackedStringArray("fade_transition") instance=ExtResource("8_uyka7")]
+landing_scene = ExtResource("9_4olab")
+fade_transition = NodePath("../FadeTransition")
