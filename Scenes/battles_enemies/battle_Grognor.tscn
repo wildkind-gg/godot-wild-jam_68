@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://c3ev5xwygolwl"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
-[ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/player.tscn" id="2_qdcmu"]
-[ext_resource type="PackedScene" uid="uid://cpxmv4kpifn3x" path="res://Scenes/enemy.tscn" id="3_ebjh3"]
+[ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/battles_enemies/player.tscn" id="2_qdcmu"]
+[ext_resource type="PackedScene" uid="uid://cpxmv4kpifn3x" path="res://Scenes/battles_enemies/Grognor.tscn" id="3_e75wr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajrwm"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -79,7 +79,7 @@ _data = {
 "tackle": SubResource("Animation_6vtxd")
 }
 
-[node name="Battle" type="Node2D"]
+[node name="Battle_Grognor" type="Node2D"]
 script = ExtResource("1_wb0f5")
 
 [node name="Label" type="Label" parent="."]
@@ -96,62 +96,6 @@ layout_mode = 3
 anchors_preset = 0
 
 [node name="Gauges" type="Node" parent="UI/Battle_UI"]
-
-[node name="Player_Limbs" type="Node" parent="UI/Battle_UI/Gauges"]
-
-[node name="Player_Head" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = 35.0
-offset_top = 329.0
-offset_right = 235.0
-offset_bottom = 356.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Rarm" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = 140.0
-offset_top = 414.0
-offset_right = 340.0
-offset_bottom = 441.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Larm" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = -78.0
-offset_top = 411.0
-offset_right = 122.0
-offset_bottom = 438.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Lleg" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = -69.0
-offset_top = 517.0
-offset_right = 131.0
-offset_bottom = 544.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Rleg" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = 111.0
-offset_top = 523.0
-offset_right = 311.0
-offset_bottom = 550.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Torso" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = 26.0
-offset_top = 420.0
-offset_right = 226.0
-offset_bottom = 447.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
 
 [node name="Enemy_Limbs" type="Node" parent="UI/Battle_UI/Gauges"]
 
@@ -300,9 +244,9 @@ offset_bottom = 642.0
 text = "Run"
 
 [node name="Player" parent="." instance=ExtResource("2_qdcmu")]
-position = Vector2(125, 452)
+position = Vector2(-7, 48)
 
-[node name="Enemy" parent="." instance=ExtResource("3_ebjh3")]
+[node name="Grognor" parent="." instance=ExtResource("3_e75wr")]
 position = Vector2(1018, 145)
 speed = 5.0
 currentHeals = 2.0

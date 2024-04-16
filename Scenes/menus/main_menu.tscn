@@ -1,0 +1,99 @@
+[gd_scene load_steps=6 format=3 uid="uid://babhddpsfb770"]
+
+[ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_dk1lg"]
+[ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="2_o6fhd"]
+[ext_resource type="PackedScene" uid="uid://bih7xps8v4bbc" path="res://Scenes/bounty_board/bounty_board.tscn" id="3_bttwj"]
+[ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="3_wywr5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdsfi"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_dk1lg")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Label" type="Label" parent="Container"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "LoFi Beats to Slay Monsters to"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="Play" type="Button" parent="Container/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Play"
+
+[node name="SceneTransition" parent="Container/VBoxContainer/Play" node_paths=PackedStringArray("fade_transition") instance=ExtResource("3_wywr5")]
+landing_scene = ExtResource("3_bttwj")
+fade_transition = NodePath("FadeTransition")
+
+[node name="FadeTransition" parent="Container/VBoxContainer/Play/SceneTransition" instance=ExtResource("2_o6fhd")]
+
+[node name="Options" type="Button" parent="Container/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Options
+"
+
+[node name="Controls" type="Button" parent="Container/VBoxContainer"]
+layout_mode = 2
+text = "Controls"
+
+[node name="Exit" type="Button" parent="Container/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Exit"
+
+[node name="ControlsText" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_cdsfi")
+text = "ESC to return to main menu
+Left mouse button to choose action or limb
+Arrow keys to hit notes"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Container/ControlsText"]
+layout_mode = 0
+offset_left = 562.0
+offset_top = 414.0
+offset_right = 599.0
+offset_bottom = 445.0
+text = "Exit"
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="Container/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Container/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Container/VBoxContainer/Controls" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="Container/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Container/ControlsText/Button" to="." method="_on_button_pressed"]

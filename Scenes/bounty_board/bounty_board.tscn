@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://blgtiphlw148o" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_5.tres" id="6_u3uqs"]
 [ext_resource type="Resource" uid="uid://c5u60b0ge0evc" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_6.tres" id="7_h2yqb"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="8_uyka7"]
-[ext_resource type="PackedScene" uid="uid://c3ev5xwygolwl" path="res://Scenes/battle.tscn" id="9_4olab"]
+[ext_resource type="PackedScene" uid="uid://c3ev5xwygolwl" path="res://Scenes/battles_enemies/battle_Grognor.tscn" id="9_4olab"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="10_srq2r"]
 
 [node name="BountyBoard" type="Node2D"]

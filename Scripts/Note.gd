@@ -1,12 +1,12 @@
 extends Area2D
 
-const TARGET_Y = 600
+const TARGET_Y = 727
 const SPAWN_Y = -16
 const DIST_TO_TARGET = TARGET_Y - SPAWN_Y
 
-const LEFT_LANE_SPAWN = Vector2(450, SPAWN_Y)
-const CENTER_LANE_SPAWN = Vector2(570, SPAWN_Y)
-const RIGHT_LANE_SPAWN = Vector2(690, SPAWN_Y)
+const LEFT_LANE_SPAWN = Vector2(930, SPAWN_Y)
+const CENTER_LANE_SPAWN = Vector2(1070, SPAWN_Y)
+const RIGHT_LANE_SPAWN = Vector2(1210, SPAWN_Y)
 
 var speed = 0
 var hit = false
@@ -18,7 +18,7 @@ func _ready():
 func _physics_process(delta):
 	if !hit:
 		position.y += speed * delta
-		if position.y > 700:
+		if position.y > 800:
 			queue_free()
 			get_parent().reset_combo()
 	else:
@@ -38,7 +38,7 @@ func _initialize(lane):
 		printerr("Invalid lane set for note: " + str(lane))
 		return
 	
-	speed = DIST_TO_TARGET / 2.0
+	speed = DIST_TO_TARGET/2.0
 	
 func _destroy(score):
 	$AnimatedSprite2D.visible = false

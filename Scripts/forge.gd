@@ -23,13 +23,15 @@ var spawn_4_beat = 0
 
 var lane = 0
 var rand = 0
-var note = load("res://Scenes/note.tscn")
-
+var note = load("res://Scenes/rhythm_forge/note.tscn")
+var cursor = load("res://_Art/images.png")
 
 func _ready():
 	randomize()
 	#$Conductor.play_with_beat_offset(8)
 	$Conductor.seek(0) # sets the position from which audio will be played, in seconds
+	Input.set_custom_mouse_cursor(cursor)
+	
 
 func _input(event):
 	if event.is_action("escape"):
@@ -163,4 +165,4 @@ func reset_combo():
 
 func _on_conductor_finished():
 	await get_tree().create_timer(5).timeout
-	get_tree().change_scene_to_file("res://Scenes/end_forge.tscn")
+	get_tree().change_scene_to_file("res://Scenes/bounty_board/bounty_board.tscn")
