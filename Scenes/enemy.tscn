@@ -7,7 +7,6 @@
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_vxg0j")
 enemy_data = ExtResource("2_kbe1m")
-speed = 3.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.117647, 0.180392, 1)
@@ -16,27 +15,45 @@ texture = ExtResource("2_huuko")
 
 [node name="LimbPoints" type="Node2D" parent="."]
 
-[node name="Head" type="Node2D" parent="LimbPoints"]
+[node name="Head" type="Area2D" parent="LimbPoints"]
 position = Vector2(8, -9)
 
-[node name="Area2D" type="Area2D" parent="LimbPoints/Head"]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LimbPoints/Head/Area2D"]
-position = Vector2(3, -4)
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/Head"]
+position = Vector2(1, -4)
 build_mode = 1
-polygon = PackedVector2Array(-18, -9, 3, -9, 12, -2, 12, 9, 0, 16, -19, 16)
+polygon = PackedVector2Array(-14, -5, 3, -9, 12, -2, 12, 9, 0, 16, -13, 10)
 
-[node name="Torso" type="Node2D" parent="LimbPoints"]
-position = Vector2(0, 6)
+[node name="Torso" type="Area2D" parent="LimbPoints"]
+position = Vector2(-4, 6)
 
-[node name="LeftArm" type="Node2D" parent="LimbPoints"]
-position = Vector2(-23, 7)
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/Torso"]
+build_mode = 1
+polygon = PackedVector2Array(-8, -3, -2, -9, 12, -2, 26, -2, 14, 5, 10, 23, -8, 23, -14, 7, -8, 2)
 
-[node name="RightArm" type="Node2D" parent="LimbPoints"]
-position = Vector2(22, 8)
+[node name="LeftArm" type="Area2D" parent="LimbPoints"]
+position = Vector2(-28, -4)
 
-[node name="LeftLeg" type="Node2D" parent="LimbPoints"]
-position = Vector2(-26, 27)
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/LeftArm"]
+build_mode = 1
+polygon = PackedVector2Array(5, -8, -5, 2, -3, 13, 2, 16, 11, 15, 15, 9)
 
-[node name="RightLeg" type="Node2D" parent="LimbPoints"]
-position = Vector2(18, 28)
+[node name="RightArm" type="Area2D" parent="LimbPoints"]
+position = Vector2(19, 10)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/RightArm"]
+build_mode = 1
+polygon = PackedVector2Array(4, -5, -8, 2, -9, 8, 0, 10, 2, 6, 4, 0)
+
+[node name="LeftLeg" type="Area2D" parent="LimbPoints"]
+position = Vector2(-24, 27)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/LeftLeg"]
+build_mode = 1
+polygon = PackedVector2Array(1, -9, -8, -1, -8, 5, 11, 5, 11, 1)
+
+[node name="RightLeg" type="Area2D" parent="LimbPoints"]
+position = Vector2(15, 27)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/RightLeg"]
+build_mode = 1
+polygon = PackedVector2Array(4, -5, -7, 1, -8, 5, 11, 5, 11, 1)

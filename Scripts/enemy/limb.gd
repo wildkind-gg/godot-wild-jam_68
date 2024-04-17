@@ -16,7 +16,7 @@ var _hit_display_message : String
 var _input_button : MouseButton
 
 ### Private Methods ###
-func _initialize(new_limb_data : LimbData) -> void:
+func _initialize(new_limb_data : LimbData, shape : CollisionPolygon2D) -> void:
 	if new_limb_data == null:
 		printerr("[_initialize] No limb data provided")
 
@@ -30,16 +30,20 @@ func _initialize(new_limb_data : LimbData) -> void:
 
 	# Setup input
 	_input_button = new_limb_data.click_type
+
 	var click_area = $ClickableArea
+	var click_poly = click_area.get_node("Shape")
+	click_poly.polygon = shape.polygon
 	click_area.input_event.connect(_on_clickable_area_input_event)
+
 
 func _is_alive() -> bool:
 	return _current_health > 0
 
 
 ### Public Methods ###
-func create(new_limb_data : LimbData) -> void:
-	_initialize(new_limb_data)
+func create(new_limb_data : LimbData, shape : CollisionPolygon2D) -> void:
+	_initialize(new_limb_data, shape)
 	
 	# DEBUG
 	if has_debugs:
@@ -69,12 +73,25 @@ func take_damage(amount : float) -> void:
 	on_hit.emit(_hit_display_message)
 
 
+func heal_damage(amount : float) -> void:
+	# Increase health
+	_current_health += amount
+	
+	# DEBUG
+	if has_debugs:
+		print("[heal_damage] %s healed %f damage" %[_display_name, amount])
+
+
 func get_current_health() -> float:
 	return _current_health
 
 
 ### Connected Signals ###
 func _on_limb_clicked() -> void:
+	# TODO: Use player attack action on a player script
+	if not Global.can_player_act:
+		return
+	
 	# TODO: Get damage somehow
 	var damage = 25.0
 	take_damage(damage)

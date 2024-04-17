@@ -1,19 +1,9 @@
 class_name LimbData
 extends Resource
 
-### GLOBAL ###
-enum LimbType {
-    HEAD,
-    TORSO,
-    LEFT_ARM,
-    RIGHT_ARM,
-    LEFT_LEG,
-    RIGHT_LEG,
-}
-
 
 ### Fields ###
-@export var type : LimbType
+@export var type : Global.LimbType
 
 # Display Values
 @export var display_name : String

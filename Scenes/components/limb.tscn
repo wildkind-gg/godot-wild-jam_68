@@ -8,13 +8,14 @@ script = ExtResource("1_4oqme")
 has_debugs = true
 
 [node name="Hover" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(0.619608, 0.768627, 0.423529, 0.270588)
 scale = Vector2(0.149813, 0.149813)
 texture = ExtResource("3_k3vvq")
 
 [node name="ClickableArea" type="Area2D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ClickableArea"]
+[node name="Shape" type="CollisionPolygon2D" parent="ClickableArea"]
 
 [connection signal="mouse_entered" from="ClickableArea" to="." method="_on_limb_entered"]
 [connection signal="mouse_exited" from="ClickableArea" to="." method="_on_limb_exited"]

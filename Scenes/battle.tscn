@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://c3ev5xwygolwl"]
+[gd_scene load_steps=10 format=3 uid="uid://c3ev5xwygolwl"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
+[ext_resource type="Resource" uid="uid://ieqpjmrppfhp" path="res://Resources/enemy_data/enemy_1.tres" id="2_nhmhs"]
 [ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/player.tscn" id="2_qdcmu"]
 [ext_resource type="PackedScene" uid="uid://cpxmv4kpifn3x" path="res://Scenes/enemy.tscn" id="3_ebjh3"]
 
@@ -37,6 +38,7 @@ _data = {
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_wb0f5")
+enemy_data = ExtResource("2_nhmhs")
 
 [node name="Label" type="Label" parent="."]
 offset_left = 307.0
@@ -194,8 +196,6 @@ position = Vector2(125, 452)
 
 [node name="Enemy" parent="." instance=ExtResource("3_ebjh3")]
 position = Vector2(1018, 145)
-speed = 5.0
-currentHeals = 2.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
@@ -207,4 +207,3 @@ libraries = {
 
 [connection signal="pressed" from="UI/Battle_UI/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="UI/Battle_UI/Run" to="." method="_on_run_pressed"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
