@@ -37,6 +37,9 @@ func on_scene_loaded() -> void:
 	current_turn_manager.player_turn_started.connect(self._on_player_turn_started)
 	current_turn_manager.enemy_turn_started.connect(self._on_enemy_turn_started)
 
+	# Setup player
+	Global.current_player = player
+
 	# Setup enemy
 	var new_enemy_data = Global.current_enemy
 	generate_enemy(new_enemy_data)
@@ -66,7 +69,7 @@ func _on_enemy_limb_hit(hit_message : String) -> void:
 	_broadcast_action(hit_message)
 	
 	# TODO: This should be called from the player
-	# and the animation should be on player
+	# and the animation should be on player scene
 	$AnimationPlayer.play("tackle")
 
 	# Say we took our action

@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://casq3nvol6l0c"]
+[gd_scene load_steps=5 format=3 uid="uid://casq3nvol6l0c"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/enemy.gd" id="1_vxg0j"]
-[ext_resource type="Resource" uid="uid://ieqpjmrppfhp" path="res://Resources/enemy_data/enemy_1.tres" id="2_kbe1m"]
 [ext_resource type="PackedScene" uid="uid://bepew6251e28h" path="res://Scenes/battles_enemies/enemy_visuals/enemy_1_visuals.tscn" id="3_7u77r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7ccm"]
@@ -12,7 +11,6 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_vxg0j")
-enemy_data = ExtResource("2_kbe1m")
 
 [node name="Visuals" parent="." instance=ExtResource("3_7u77r")]
 

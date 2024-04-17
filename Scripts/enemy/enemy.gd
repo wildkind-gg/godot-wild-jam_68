@@ -4,9 +4,6 @@ extends Node2D
 signal on_action_completed(action_message : String)
 signal on_limb_hit(hit_message : String)
 
-### Exports ###
-@export var enemy_data : EnemyData
-
 
 ### Private Variables ###
 var _current_limbs : Dictionary
@@ -16,17 +13,18 @@ var _total_heals: float
 var _current_heals: float
 var _heal_amount : float
 var _current_attack_damage : float
-var _visuals
+
 
 ### References ###
 var limb_object : PackedScene = preload("res://Scenes/components/limb.tscn")
 var rnd = RandomNumberGenerator.new()
+var util : Util = Util.new()
 
 
 ### Private Methods ###
 # Debug
 func _debug_log_all_health() -> void:
-	print("Limb Health:")
+	print("[Enemy] Limb Health:")
 	for key in _current_limbs:
 		var limb_health = _get_limb_health(key)
 		print("- %s: %d" %[key, limb_health])
@@ -69,41 +67,6 @@ func _generate_visuals(visuals_data : PackedScene) -> Node2D:
 	return new_visuals.get_node("LimbPoints")
 
 
-# Dictionary helpers
-func _get_largest_dict_value(dict : Dictionary) -> String:
-	var current_max = -999999
-	var largest_key
-	for key in dict:
-		var val = dict[key]
-		if val > current_max:
-			current_max = val
-			largest_key = key
-
-	return largest_key
-
-
-func _get_smallest_dict_value(dict : Dictionary) -> String:
-	var current_min = 999999
-	var smallest_key
-	for key in dict:
-		var val = dict[key]
-		if val < current_min:
-			current_min = val
-			smallest_key = key
-
-	return smallest_key
-
-
-func _add_dictionary_values(dict : Dictionary) -> float:
-	var total = 0
-	for key in dict:
-		var value = dict[key]
-		if value is float:
-			total += value
-	
-	return total
-
-
 # Data getters
 func _get_limb_name_by_type(type : Global.LimbType) -> String:
 	# May need to change this later, works for now
@@ -138,13 +101,7 @@ func _get_limb_health_percent(limb_name : String) -> float:
 
 func _get_total_limb_health() -> float: ## Returns total limb health percentage
 	var enemy_limb_health = _get_enemy_limb_health_dict()
-	var total_health = _add_dictionary_values(enemy_limb_health)
-	return total_health
-
-
-func _get_player_total_limb_health() -> float: ## Returns players total limb health percentage
-	var player_limb_health = _get_player_limb_health_dict()
-	var total_health = _add_dictionary_values(player_limb_health)
+	var total_health = util.add_dictionary_values(enemy_limb_health)
 	return total_health
 
 
@@ -160,20 +117,6 @@ func _get_enemy_limb_health_dict() -> Dictionary:
 	}
 
 	return enemy_limb_health
-
-
-func _get_player_limb_health_dict() -> Dictionary:
-	# Player limb health dictionary
-	var player_limb_health = {
-		"playerHead": Global.playerHead / 100,
-		"playerTorso": Global.playerTorso / 100,
-		"playerLarm": Global.playerLarm / 100,
-		"playerRarm": Global.playerRarm / 100,
-		"playerLleg": Global.playerLleg / 100, 
-		"playerRleg": Global.playerRleg / 100, 
-	}
-
-	return player_limb_health
 
 
 func _heal_limb(limb_name : String, amount : float) -> void:
@@ -194,13 +137,11 @@ func _damage_calculation() -> float:
 
 
 func _attack_player_part(part_name : String) -> void:
-	var damage = _damage_calculation()
-	
 	# Play an animation
 
-	# TODO: Create player object with a take damage
-	# method that does this instead
-	Global[part_name] -= damage
+	# Have player take damage
+	var damage = _damage_calculation()
+	Global.current_player.take_damage(damage, part_name)
 	
 	# Broadcast action
 	var action_message = "Enemy attacks %s" %part_name
@@ -215,15 +156,15 @@ func _emit_on_limb_hit(hit_message : String) -> void:
 
 # Actions
 func _take_attack_action() -> void:
-	var limb_weights = _get_player_limb_health_dict()
-	var best_limb = _get_largest_dict_value(limb_weights)
+	var limb_weights = Global.current_player.get_limb_health_dict()
+	var best_limb = util.get_smallest_dict_value(limb_weights)
 	_attack_player_part(best_limb)
 	print("\nBest limb to attack: %s" %best_limb)
 
 func _take_heal_action() -> void:
 	# choose best limb to heal from enemy_dict
 	var enemy_limb_health = _get_enemy_limb_health_dict()
-	var best_limb = _get_smallest_dict_value(enemy_limb_health)
+	var best_limb = util.get_smallest_dict_value(enemy_limb_health)
 	_heal_limb(best_limb, _heal_amount)
 	print("Best limb to heal: %s" %best_limb)
 
@@ -249,7 +190,7 @@ func _take_run_action() -> void:
 func _get_attack_chance() -> float:
 	# Get enemy and player total health percentages
 	var enemy_total_limbs_health = _get_total_limb_health()
-	var player_total_limbs_health = _get_player_total_limb_health()
+	var player_total_limbs_health = Global.current_player.get_total_limb_health()
 
 	# Calculate the heals remaining and our current speed?
 	var heals_remaining = _current_heals / _total_heals
@@ -325,7 +266,7 @@ func take_enemy_turn(turn_manager : TurnManager):
 		"defend": _get_defend_chance(),
 		"run": _get_run_chance(),
 	}
-	var best_action = _get_largest_dict_value(action_weights)
+	var best_action = util.get_largest_dict_value(action_weights)
 
 	# Take chosen action
 	if best_action == "attack":
