@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://bepew6251e28h"]
+
+[ext_resource type="Texture2D" uid="uid://cf00stc4wcp17" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/full.png" id="1_gldx0"]
+
+[node name="Visuals" type="Sprite2D"]
+scale = Vector2(4, 4)
+texture = ExtResource("1_gldx0")
+
+[node name="LimbPoints" type="Node2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="Head" type="Area2D" parent="LimbPoints"]
+position = Vector2(8, -9)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/Head"]
+position = Vector2(1, -4)
+build_mode = 1
+polygon = PackedVector2Array(-14, -5, 3, -9, 12, -2, 12, 9, 0, 16, -13, 10)
+
+[node name="Torso" type="Area2D" parent="LimbPoints"]
+position = Vector2(-4, 6)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/Torso"]
+build_mode = 1
+polygon = PackedVector2Array(-8, -3, -2, -9, 12, -2, 26, -2, 14, 5, 10, 23, -8, 23, -14, 7, -8, 2)
+
+[node name="LeftArm" type="Area2D" parent="LimbPoints"]
+position = Vector2(-28, -4)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/LeftArm"]
+build_mode = 1
+polygon = PackedVector2Array(5, -8, -5, 2, -3, 13, 2, 16, 11, 15, 15, 9)
+
+[node name="RightArm" type="Area2D" parent="LimbPoints"]
+position = Vector2(19, 10)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/RightArm"]
+build_mode = 1
+polygon = PackedVector2Array(4, -5, -8, 2, -9, 8, 0, 10, 2, 6, 4, 0)
+
+[node name="LeftLeg" type="Area2D" parent="LimbPoints"]
+position = Vector2(-24, 27)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/LeftLeg"]
+build_mode = 1
+polygon = PackedVector2Array(1, -9, -8, -1, -8, 5, 11, 5, 11, 1)
+
+[node name="RightLeg" type="Area2D" parent="LimbPoints"]
+position = Vector2(15, 27)
+
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/RightLeg"]
+build_mode = 1
+polygon = PackedVector2Array(4, -5, -7, 1, -8, 5, 11, 5, 11, 1)

@@ -22,5 +22,6 @@ var setScore = 0
 var turnCounter = 0
 var enemyAction = ""
 
+var current_enemy : EnemyData
 
 var can_player_act : bool = true

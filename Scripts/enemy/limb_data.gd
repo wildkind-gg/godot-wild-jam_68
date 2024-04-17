@@ -14,4 +14,3 @@ extends Resource
 
 # Interation
 @export var click_type : MouseButton = MOUSE_BUTTON_LEFT
-@export var area_size : Vector2 = Vector2(2, 2)

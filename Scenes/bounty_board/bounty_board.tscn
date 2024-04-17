@@ -1,19 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://bih7xps8v4bbc"]
+[gd_scene load_steps=7 format=3 uid="uid://bih7xps8v4bbc"]
 
 [ext_resource type="Script" path="res://Scripts/bounty_board.gd" id="1_7nv2g"]
-[ext_resource type="Resource" uid="uid://b4sumg3qubbsi" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_1.tres" id="2_rgbeu"]
-[ext_resource type="Resource" uid="uid://s40jhcf5nrww" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_2.tres" id="3_4daup"]
-[ext_resource type="Resource" uid="uid://bv4xdj2kxhs2d" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_3.tres" id="4_y74kg"]
-[ext_resource type="Resource" uid="uid://b61apavd5onbh" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_4.tres" id="5_vjoiw"]
-[ext_resource type="Resource" uid="uid://blgtiphlw148o" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_5.tres" id="6_u3uqs"]
-[ext_resource type="Resource" uid="uid://c5u60b0ge0evc" path="res://Resources/_temp_enemy_ui_data/_temp_enemy_6.tres" id="7_h2yqb"]
+[ext_resource type="Resource" uid="uid://ieqpjmrppfhp" path="res://Resources/enemy_data/enemy_1.tres" id="2_jx4yv"]
+[ext_resource type="Resource" uid="uid://b7c1hg7hv1hpb" path="res://Resources/enemy_data/enemy_2.tres" id="3_em0q4"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="8_uyka7"]
 [ext_resource type="PackedScene" uid="uid://dafdr4mgqnqyn" path="res://Scenes/battle.tscn" id="9_a8h7v"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="10_srq2r"]
 
 [node name="BountyBoard" type="Node2D"]
 script = ExtResource("1_7nv2g")
-_temp_enemy_data = Array[Resource("res://Resources/_temp_enemy_ui_data/enemy_ui_data.gd")]([ExtResource("2_rgbeu"), ExtResource("3_4daup"), ExtResource("4_y74kg"), ExtResource("5_vjoiw"), ExtResource("6_u3uqs"), ExtResource("7_h2yqb")])
+enemy_data = Array[Resource("res://Scripts/enemy/enemy_data.gd")]([ExtResource("2_jx4yv"), ExtResource("3_em0q4")])
 
 [node name="Board" type="CanvasLayer" parent="."]
 

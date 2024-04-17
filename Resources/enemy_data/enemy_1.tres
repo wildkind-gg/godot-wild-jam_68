@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=10 format=3 uid="uid://ieqpjmrppfhp"]
+[gd_resource type="Resource" script_class="EnemyData" load_steps=11 format=3 uid="uid://ieqpjmrppfhp"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/enemy_data.gd" id="1_64sat"]
 [ext_resource type="Script" path="res://Scripts/enemy/limb_data.gd" id="1_ysxdu"]
 [ext_resource type="Texture2D" uid="uid://cf00stc4wcp17" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/full.png" id="3_kj8dv"]
+[ext_resource type="PackedScene" uid="uid://bepew6251e28h" path="res://Scenes/battles_enemies/enemy_visuals/enemy_1_visuals.tscn" id="4_ica2h"]
 
 [sub_resource type="Resource" id="Resource_0uxb1"]
 script = ExtResource("1_ysxdu")
@@ -11,7 +12,6 @@ display_name = "Head"
 hit_description = "was hit"
 max_health = 75.0
 click_type = 1
-area_size = Vector2(2, 2)
 
 [sub_resource type="Resource" id="Resource_pdlp2"]
 script = ExtResource("1_ysxdu")
@@ -20,7 +20,6 @@ display_name = "Torso"
 hit_description = "was hit"
 max_health = 75.0
 click_type = 1
-area_size = Vector2(2, 2)
 
 [sub_resource type="Resource" id="Resource_wpktj"]
 script = ExtResource("1_ysxdu")
@@ -29,7 +28,6 @@ display_name = "Left Arm"
 hit_description = "was hit"
 max_health = 75.0
 click_type = 1
-area_size = Vector2(2, 2)
 
 [sub_resource type="Resource" id="Resource_ndxms"]
 script = ExtResource("1_ysxdu")
@@ -38,7 +36,6 @@ display_name = "Right Arm"
 hit_description = "was hit"
 max_health = 75.0
 click_type = 1
-area_size = Vector2(2, 2)
 
 [sub_resource type="Resource" id="Resource_jgvl7"]
 script = ExtResource("1_ysxdu")
@@ -47,7 +44,6 @@ display_name = "Left Leg"
 hit_description = "was hit"
 max_health = 75.0
 click_type = 1
-area_size = Vector2(2, 2)
 
 [sub_resource type="Resource" id="Resource_tyoop"]
 script = ExtResource("1_ysxdu")
@@ -56,14 +52,15 @@ display_name = "Right Leg"
 hit_description = "was hit"
 max_health = 75.0
 click_type = 1
-area_size = Vector2(2, 2)
 
 [resource]
 script = ExtResource("1_64sat")
 limbs = Array[ExtResource("1_ysxdu")]([SubResource("Resource_0uxb1"), SubResource("Resource_pdlp2"), SubResource("Resource_wpktj"), SubResource("Resource_ndxms"), SubResource("Resource_jgvl7"), SubResource("Resource_tyoop")])
+visuals = ExtResource("4_ica2h")
 max_speed = 10.0
 total_heals = 3.0
-attack_damage = 0.0
+heal_amount = 25.0
+attack_damage = 25.0
 display_name = "Enemy 1"
 description = "I am an enemy"
 ui_texture = ExtResource("3_kj8dv")
