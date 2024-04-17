@@ -2,12 +2,12 @@ extends Node
 
 ### Enums ###
 enum LimbType {
-    HEAD,
-    TORSO,
-    LEFT_ARM,
-    RIGHT_ARM,
-    LEFT_LEG,
-    RIGHT_LEG,
+	HEAD,
+	TORSO,
+	LEFT_ARM,
+	RIGHT_ARM,
+	LEFT_LEG,
+	RIGHT_LEG,
 }
 
 
@@ -21,6 +21,7 @@ var playerTorso:float = 100.0
 var setScore = 0
 var turnCounter = 0
 var enemyAction = ""
+var setCombo = 0
 
 var current_enemy : EnemyData
 var current_player : Player # May want to change from global later

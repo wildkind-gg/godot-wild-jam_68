@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="2_nnivy"]
 [ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/battles_enemies/player.tscn" id="2_qdcmu"]
-[ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/enemy.tscn" id="3_ebjh3"]
+[ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/battles_enemies/enemy.tscn" id="3_ebjh3"]
 [ext_resource type="PackedScene" uid="uid://bih7xps8v4bbc" path="res://Scenes/bounty_board/bounty_board.tscn" id="3_ijttq"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="4_tfdtn"]
 

@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dylnjo762rsqo"]
+[gd_scene load_steps=4 format=3 uid="uid://dylnjo762rsqo"]
 
 [ext_resource type="Script" path="res://Scripts/forge.gd" id="1_8xlhv"]
-[ext_resource type="PackedScene" uid="uid://c2qvh0ey1jh6g" path="res://Scenes/rhythm_forge/rhythm_button.tscn" id="1_656yl"]
 [ext_resource type="Texture2D" uid="uid://b1p85yai67mqw" path="res://_Art/Forge/ForgeBG-temp.png" id="2_01e6s"]
 [ext_resource type="PackedScene" uid="uid://dittm8xt3v3dp" path="res://Scenes/rhythm_forge/conductor.tscn" id="2_nd8ja"]
 
@@ -18,22 +17,6 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_01e6s")
-
-[node name="RhythmButtonRight" parent="." instance=ExtResource("1_656yl")]
-position = Vector2(1210, 727)
-rotation = 0.00213111
-input = "ui_right"
-
-[node name="RhythmButtonLeft" parent="." instance=ExtResource("1_656yl")]
-position = Vector2(930, 727)
-rotation = 3.14159
-scale = Vector2(1, -1)
-input = "ui_left"
-
-[node name="RhythmButtonUp" parent="." instance=ExtResource("1_656yl")]
-position = Vector2(1070, 727)
-rotation = -1.5708
-input = "ui_up"
 
 [node name="Conductor" parent="." instance=ExtResource("2_nd8ja")]
 volume_db = -15.0
@@ -52,7 +35,7 @@ vertical_alignment = 1
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 32
-text = "Score: 0"
+text = "test"
 horizontal_alignment = 1
 vertical_alignment = 1
 
