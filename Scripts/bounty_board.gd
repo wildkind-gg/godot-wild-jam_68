@@ -4,7 +4,7 @@ extends Node2D
 @onready var bounty_item_prefab = preload("res://Scenes/bounty_board/bounty_item.tscn")
 @onready var grid_container = $Board/Panel/GridContainer
 @onready var scene_transition = $Loading/SceneTransition
-@onready var fade_transition = $Loading/FadeTransition
+@onready var fade_transition = $Loading/SceneTransition/FadeTransition
 
 ### Constants ###
 const DEFAULT_DISPLAY_NAME : String = "Missing Name"
@@ -13,27 +13,28 @@ const DEFAULT_TEXTURE : Texture = preload("res://Resources/_temp_ui_sprites/miss
 
 ### Editor Parameters ###
 # TODO: Remove this variable once we have full enemy data structure setup
-@export var _temp_enemy_data : Array[EnemyUiData]
-@export var has_debugs : bool = true
+@export var enemy_data : Array[EnemyData]
+@export var has_debugs : bool
 
 ### Private Variables ###
 var _is_initialzied : bool = false
 
 ### Private Methods ###
-func _on_item_clicked():
-	print("Clicked")
+func _on_item_clicked(item_enemy : EnemyData):
+	Global.current_enemy = item_enemy
 	scene_transition.start_transition()
 
+
 # Build a bounty item from specific data
-func _create_bounty_item(ui_data : EnemyUiData) -> void:
+func _create_bounty_item(new_enemy_data : EnemyData) -> void:
 	# Get values or use defaults if there is no value set
-	var display_name : String = ui_data.display_name if ui_data.display_name != null else DEFAULT_DISPLAY_NAME
-	var description : String = ui_data.description if ui_data.description != null else DEFAULT_DESCRIPTION
-	var texture : Texture = ui_data.texture if ui_data.texture != null else DEFAULT_TEXTURE
+	var display_name : String = new_enemy_data.display_name if new_enemy_data.display_name != null else DEFAULT_DISPLAY_NAME
+	var description : String = new_enemy_data.description if new_enemy_data.description != null else DEFAULT_DESCRIPTION
+	var texture : Texture = new_enemy_data.ui_texture if new_enemy_data.ui_texture != null else DEFAULT_TEXTURE
 	
 	# DEBUG
 	if has_debugs:
-		print("[Creating Item] Display Name: " + display_name)
+		print("[_create_bounty_item] Display Name: %s" %display_name)
 	
 	# Insatantiate bounty item ui
 	var new_bounty_item = bounty_item_prefab.instantiate()
@@ -50,7 +51,9 @@ func _create_bounty_item(ui_data : EnemyUiData) -> void:
 	
 	# Connect click event to scene transition
 	var new_item_btn = new_bounty_item.find_child("Button")
-	new_item_btn.button_up.connect(_on_item_clicked)
+	new_item_btn.button_up.connect(func():
+		_on_item_clicked(new_enemy_data)
+	)
 	
 	# Add to grid
 	grid_container.add_child(new_bounty_item)
@@ -58,7 +61,7 @@ func _create_bounty_item(ui_data : EnemyUiData) -> void:
 
 ### Public Methods ###
 # Build the bounty board from enemy ui data
-func initialize_board(enemy_data : Array[EnemyUiData]) -> void:
+func initialize_board(new_enemy_data : Array[EnemyData]) -> void:
 	# Make sure we only initialize once
 	if _is_initialzied:
 		return
@@ -67,11 +70,12 @@ func initialize_board(enemy_data : Array[EnemyUiData]) -> void:
 	
 	# DEBUG
 	if has_debugs:
-		print("[Initializing Board]")
+		print("[initialize_board] Initializing Board")
 	
 	# Create each item from passed data
-	for ui_data in enemy_data:
-		_create_bounty_item(ui_data)
+	for data in new_enemy_data:
+		_create_bounty_item(data)
+
 
 func on_scene_loaded():
 	# Fade in animation
@@ -79,9 +83,10 @@ func on_scene_loaded():
 	
 	# TODO: This is temporary for testing initialization
 	# need to implement propper enemy data later
-	initialize_board(_temp_enemy_data)
+	initialize_board(enemy_data)
 
 
 ### Built in Methods ###
 func _ready():
 	on_scene_loaded()
+

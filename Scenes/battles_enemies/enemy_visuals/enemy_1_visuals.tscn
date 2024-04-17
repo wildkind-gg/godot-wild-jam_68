@@ -1,17 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpxmv4kpifn3x"]
+[gd_scene load_steps=2 format=3 uid="uid://bepew6251e28h"]
 
-[ext_resource type="Script" path="res://Scripts/enemy/enemy.gd" id="1_vxg0j"]
-[ext_resource type="Texture2D" uid="uid://cf00stc4wcp17" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/full.png" id="2_huuko"]
+[ext_resource type="Texture2D" uid="uid://cf00stc4wcp17" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/full.png" id="1_gldx0"]
 
-[node name="Enemy" type="Node2D"]
-script = ExtResource("1_vxg0j")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0.117647, 0.180392, 1)
-scale = Vector2(2, 2)
-texture = ExtResource("2_huuko")
+[node name="Visuals" type="Sprite2D"]
+scale = Vector2(4, 4)
+texture = ExtResource("1_gldx0")
 
 [node name="LimbPoints" type="Node2D" parent="."]
+scale = Vector2(0.5, 0.5)
 
 [node name="Head" type="Area2D" parent="LimbPoints"]
 position = Vector2(8, -9)

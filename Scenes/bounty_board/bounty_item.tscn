@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dq7qs7xy6a7dk"]
 
 [ext_resource type="StyleBox" uid="uid://bigsvjwr6xmts" path="res://Resources/ui_themes/bounty_item_texture.tres" id="1_o5wx5"]
-[ext_resource type="Texture2D" uid="uid://cpshek0ppxp4t" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/crouch.png" id="2_eouqg"]
+[ext_resource type="Texture2D" uid="uid://do8esrbwgy37s" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/crouch.png" id="2_eouqg"]
 
 [node name="BountyItem" type="PanelContainer"]
 custom_minimum_size = Vector2(220, 260)
