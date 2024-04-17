@@ -79,6 +79,7 @@ position = Vector2(15, 0)
 
 [node name="Enemy" parent="." instance=ExtResource("3_ebjh3")]
 position = Vector2(1018, 145)
+enemy_data = null
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)

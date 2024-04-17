@@ -23,5 +23,6 @@ var turnCounter = 0
 var enemyAction = ""
 
 var current_enemy : EnemyData
+var current_player : Player # May want to change from global later
 
 var can_player_act : bool = true
