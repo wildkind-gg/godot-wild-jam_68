@@ -38,11 +38,16 @@ func on_scene_loaded() -> void:
 	current_turn_manager.enemy_turn_started.connect(self._on_enemy_turn_started)
 
 	# Setup player
+	player.create(current_turn_manager)
 	Global.current_player = player
 
 	# Setup enemy
 	var new_enemy_data = Global.current_enemy
 	generate_enemy(new_enemy_data)
+
+	# Set as player's turn to start
+	var next_turn = turn_type.PLAYER_TURN
+	current_turn_manager.change_turn(next_turn)
 
 
 ### Private Methods ###
@@ -55,12 +60,10 @@ func _on_player_action(delay : float) -> void:
 	var next_turn = TurnManager.TurnType.NO_TURN
 	current_turn_manager.change_turn(next_turn)
 	
-	# Lock turn change so player can't take two in a row
-	current_turn_manager.lock_turn_change()
+	# Wait for a second
 	await get_tree().create_timer(delay).timeout
 
 	# Unlock after delay and move to enemy turn
-	current_turn_manager.unlock_turn_change()
 	next_turn = TurnManager.TurnType.ENEMY_TURN
 	current_turn_manager.change_turn(next_turn)
 

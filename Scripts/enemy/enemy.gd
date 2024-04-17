@@ -280,10 +280,8 @@ func create(new_enemy_data : EnemyData):
 
 
 func end_enemy_turn(turn_manager : TurnManager) -> void:
-	# Lock turn change while we wait for timer
-	turn_manager.lock_turn_change()
+	# Wait for timer
 	await get_tree().create_timer(1).timeout	
-	turn_manager.unlock_turn_change()
 
 	# Start enemy turn
 	var next_turn = TurnManager.TurnType.PLAYER_TURN

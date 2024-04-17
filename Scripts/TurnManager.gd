@@ -22,23 +22,12 @@ var current_turn : TurnType :
 var _can_change_turn : bool = true
 
 ### Public Method ###
-func lock_turn_change() -> void:
-	_can_change_turn = false
-	
-	# TODO: This should be handled by player script in future
-	Global.can_player_act = _can_change_turn
-
-
-func unlock_turn_change() -> void:
-	_can_change_turn = true
-
-	# TODO: This should be handled by player script in future
-	Global.can_player_act = _can_change_turn
-
-
 func change_turn(turn : TurnType) -> void:
-	# Change turns
 	current_turn = turn
+
+
+func is_players_turn() -> bool:
+	return current_turn == TurnType.PLAYER_TURN
 
 
 func start_player_turn() -> void:

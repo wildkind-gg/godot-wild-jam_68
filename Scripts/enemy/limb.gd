@@ -92,13 +92,7 @@ func get_max_health() -> float:
 
 ### Connected Signals ###
 func _on_limb_clicked() -> void:
-	# TODO: Use player attack action on a player script
-	if not Global.can_player_act:
-		return
-	
-	# TODO: Get damage somehow
-	var damage = 25.0
-	take_damage(damage)
+	Global.current_player.take_attack_action(self)
 
 
 func _on_limb_entered() -> void:

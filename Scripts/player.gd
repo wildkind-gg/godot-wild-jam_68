@@ -11,6 +11,10 @@ const MAX_PERCENT : float = 100.0
 const MIN_HEALTH : float = 0.0
 
 
+## Public Variables ###
+var current_turn_manager : TurnManager
+
+
 ### On Ready ###
 @onready var _limb_gauges = {
 	"playerHead" = $Player_Limbs/Player_Head,
@@ -20,6 +24,10 @@ const MIN_HEALTH : float = 0.0
 	"playerRleg" = $Player_Limbs/Player_Rleg,
 	"playerLleg" = $Player_Limbs/Player_Lleg,
 }
+
+
+### Exports ###
+@export var attack_damage : float = 25
 
 
 ### Private Methods ###
@@ -53,6 +61,13 @@ func _process_gauges() -> void:
 			ui_element.show()
 
 
+# Action helpers
+func _damage_calculation() -> float:
+	# Add any other damage calculations here
+	var base_damage = attack_damage
+	return base_damage 
+
+
 ### Public Methods ###
 # Getters
 func get_total_limb_health() -> float: ## Returns player's total limb health percentage
@@ -76,6 +91,15 @@ func get_limb_health_dict() -> Dictionary: # Returns dictionary of player's limb
 	return player_limb_health
 
 
+# actions
+func take_attack_action(limb : Limb) -> void:
+	if not current_turn_manager.is_players_turn():
+		return
+	
+	var damage = _damage_calculation()
+	limb.take_damage(damage)
+
+
 # Limb helpers
 func take_damage(amount : float, limb : String) -> void:
 	# DEBUG
@@ -89,6 +113,10 @@ func take_damage(amount : float, limb : String) -> void:
 		Global[limb] = new_value
 	else:
 		Global[limb] = MIN_HEALTH
+
+
+func create(turn_manager : TurnManager) -> void:
+	current_turn_manager = turn_manager
 
 
 ### Built in Methods ###
