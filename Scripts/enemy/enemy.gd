@@ -5,6 +5,21 @@ signal on_action_completed(action_message : String)
 signal on_limb_hit(hit_message : String)
 
 
+### Constants ###
+const MAX_PERCENT : float = 100.0
+
+
+### On Ready ###
+@onready var _limb_gauges = {
+	"Head" = $Enemy_Limbs/Enemy_Head,
+	"Torso" = $Enemy_Limbs/Enemy_Torso,
+	"RightArm" = $Enemy_Limbs/Enemy_Rarm,
+	"LeftArm" = $Enemy_Limbs/Enemy_Larm,
+	"RightLeg" = $Enemy_Limbs/Enemy_Rleg,
+	"LeftLeg" = $Enemy_Limbs/Enemy_Lleg,
+}
+
+
 ### Private Variables ###
 var _current_limbs : Dictionary
 var _max_speed: float
@@ -67,6 +82,23 @@ func _generate_visuals(visuals_data : PackedScene) -> Node2D:
 	return new_visuals.get_node("LimbPoints")
 
 
+# Gauge helpers
+func _process_gauges() -> void:
+	for key in _limb_gauges:
+		# Get data
+		var ui_element = _limb_gauges[key]
+		var value =  _get_limb_health_percent(key) * 100
+		
+		# Set ui value
+		ui_element.value = value
+		
+		# Check to hide
+		if value == MAX_PERCENT:
+			ui_element.hide()
+		else:
+			ui_element.show()
+
+
 # Data getters
 func _get_limb_name_by_type(type : Global.LimbType) -> String:
 	# May need to change this later, works for now
@@ -93,10 +125,14 @@ func _get_limb_health(limb_name : String) -> float:
 	return _current_limbs[limb_name].get_current_health()
 
 
+func _get_limb_max_health(limb_name : String) -> float:
+	return _current_limbs[limb_name].get_max_health()
+
+
 func _get_limb_health_percent(limb_name : String) -> float:
-	var percent_factor = 100
+	var max_health = _get_limb_max_health(limb_name)
 	var health = _get_limb_health(limb_name)
-	return health / percent_factor
+	return health / max_health
 
 
 func _get_total_limb_health() -> float: ## Returns total limb health percentage
@@ -286,3 +322,6 @@ func take_enemy_turn(turn_manager : TurnManager):
 	# end turn	
 	end_enemy_turn(turn_manager)
 
+### Built in Methods ###
+func _process(_delta):
+	_process_gauges()

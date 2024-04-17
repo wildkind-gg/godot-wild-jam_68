@@ -86,6 +86,10 @@ func get_current_health() -> float:
 	return _current_health
 
 
+func get_max_health() -> float:
+	return _max_health
+
+
 ### Connected Signals ###
 func _on_limb_clicked() -> void:
 	# TODO: Use player attack action on a player script
