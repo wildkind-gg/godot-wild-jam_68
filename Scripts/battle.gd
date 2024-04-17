@@ -1,13 +1,12 @@
 extends Node2D
 
-### Exports ###
-@export var enemy_data : EnemyData
-
 
 ### On Ready Varaibles ###
 @onready var player = $Player
 @onready var enemy = $Enemy
 @onready var UI = $UI/Battle_UI
+@onready var scene_transition = $Transition/SceneTranstion
+@onready var fade_transition = $Transition/SceneTransition/FadeTransition
 
 
 ### Public Variables ###
@@ -21,6 +20,26 @@ func generate_enemy(new_enemy_data : EnemyData) -> void:
 	enemy.create(new_enemy_data)
 	enemy.on_limb_hit.connect(_on_enemy_limb_hit)
 	enemy.on_action_completed.connect(_broadcast_action)
+
+
+func on_player_win() -> void:
+	scene_transition.start_transition()
+
+
+func on_scene_loaded() -> void:
+	# Fade in animation
+	fade_transition.play_fade_in()
+
+	# Create turn manager
+	current_turn_manager = TurnManager.new()
+
+	# Connect to turns
+	current_turn_manager.player_turn_started.connect(self._on_player_turn_started)
+	current_turn_manager.enemy_turn_started.connect(self._on_enemy_turn_started)
+
+	# Setup enemy
+	var new_enemy_data = Global.current_enemy
+	generate_enemy(new_enemy_data)
 
 
 ### Private Methods ###
@@ -70,70 +89,13 @@ func _on_run_fail() -> void:
 
 ### Built in Methods ###
 func _ready() -> void:
-	# Create turn manager
-	current_turn_manager = TurnManager.new()
-
-	# Create enemy
-	generate_enemy(enemy_data)
-
-	# connect to turns
-	current_turn_manager.player_turn_started.connect(self._on_player_turn_started)
-	current_turn_manager.enemy_turn_started.connect(self._on_enemy_turn_started)
+	on_scene_loaded()
 
 	
 func _process(_delta):
 	# leave game press esc
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
-
-	### enemy gauges ###
-	# $UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Head.value = Global.enemyHead
-	# if Global.enemyHead == 100 or Global.enemyHead == 0:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Head.hide()
-	# else:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Head.show()
-	# if Global.enemyHead == 0:
-	# 	$UI/Battle_UI/Head.disabled = true
-		
-	# $UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Rarm.value = Global.enemyRarm
-	# if Global.enemyRarm == 100 or Global.enemyRarm == 0:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Rarm.hide()
-	# else:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Rarm.show()
-	# if Global.enemyRarm == 0:
-	# 	$UI/Battle_UI/Right_Arm.disabled = true
-		
-	# $UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Larm.value = Global.enemyLarm
-	# if Global.enemyLarm == 100  or Global.enemyLarm == 0:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Larm.hide()
-	# else:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Larm.show()
-	# if Global.enemyLarm == 0:
-	# 	$UI/Battle_UI/Left_Arm.disabled = true
-		
-	# $UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Lleg.value = Global.enemyLleg
-	# if Global.enemyLleg == 100 or Global.enemyLleg == 0:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Lleg.hide()
-	# else:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Lleg.show()
-	# if Global.enemyLleg == 0:
-	# 	$UI/Battle_UI/Left_Leg.disabled = true
-		
-	# $UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Rleg.value = Global.enemyRleg
-	# if Global.enemyRleg == 100 or Global.enemyRleg == 0:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Rleg.hide()
-	# else:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Rleg.show()
-	# if Global.enemyRleg == 0:
-	# 	$UI/Battle_UI/Right_Leg.disabled = true
-		
-	# $UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Torso.value = Global.enemyTorso
-	# if Global.enemyTorso == 100 or Global.enemyTorso == 0:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Torso.hide()
-	# else:
-	# 	$UI/Battle_UI/Gauges/Enemy_Limbs/Enemy_Torso.show()
-	# if Global.enemyTorso == 0:
-	# 	$UI/Battle_UI/Torso.disabled = true
 
 
 ### Signals Connected ###

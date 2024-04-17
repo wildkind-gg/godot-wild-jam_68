@@ -4,11 +4,12 @@ extends Resource
 ### Fields ###
 # Game Data
 @export var limbs : Array[LimbData]
-# Add some visuals somewhere
+@export var visuals : PackedScene
 
 # Stats
 @export var max_speed : float = 10.0
 @export var total_heals : float = 3.0
+@export var heal_amount : float
 @export var attack_damage : float
 
 # UI Data

@@ -1,15 +1,11 @@
 [gd_scene load_steps=10 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
-[ext_resource type="Resource" uid="uid://ieqpjmrppfhp" path="res://Resources/enemy_data/enemy_1.tres" id="2_nhmhs"]
+[ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="2_nnivy"]
 [ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/battles_enemies/player.tscn" id="2_qdcmu"]
 [ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/enemy.tscn" id="3_ebjh3"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajrwm"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ca5t3"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[ext_resource type="PackedScene" uid="uid://bih7xps8v4bbc" path="res://Scenes/bounty_board/bounty_board.tscn" id="3_ijttq"]
+[ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="4_tfdtn"]
 
 [sub_resource type="Animation" id="Animation_00tku"]
 length = 0.001
@@ -38,7 +34,6 @@ _data = {
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_wb0f5")
-enemy_data = ExtResource("2_nhmhs")
 
 [node name="Label" type="Label" parent="."]
 offset_left = 307.0
@@ -52,126 +47,6 @@ theme_override_font_sizes/font_size = 42
 [node name="Battle_UI" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 0
-
-[node name="Gauges" type="Node" parent="UI/Battle_UI"]
-
-[node name="Player_Limbs" type="Node" parent="UI/Battle_UI/Gauges"]
-
-[node name="Player_Head" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = 35.0
-offset_top = 329.0
-offset_right = 235.0
-offset_bottom = 356.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Rarm" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = 140.0
-offset_top = 414.0
-offset_right = 340.0
-offset_bottom = 441.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Larm" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = -78.0
-offset_top = 411.0
-offset_right = 122.0
-offset_bottom = 438.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Lleg" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = -69.0
-offset_top = 517.0
-offset_right = 131.0
-offset_bottom = 544.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Rleg" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = 111.0
-offset_top = 523.0
-offset_right = 311.0
-offset_bottom = 550.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Player_Torso" type="ProgressBar" parent="UI/Battle_UI/Gauges/Player_Limbs"]
-visible = false
-offset_left = 26.0
-offset_top = 420.0
-offset_right = 226.0
-offset_bottom = 447.0
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Enemy_Limbs" type="Node" parent="UI/Battle_UI/Gauges"]
-
-[node name="Enemy_Head" type="ProgressBar" parent="UI/Battle_UI/Gauges/Enemy_Limbs"]
-visible = false
-offset_left = 993.0
-offset_top = 54.0
-offset_right = 1043.0
-offset_bottom = 81.0
-mouse_filter = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Enemy_Rarm" type="ProgressBar" parent="UI/Battle_UI/Gauges/Enemy_Limbs"]
-visible = false
-offset_left = 1082.0
-offset_top = 129.0
-offset_right = 1132.0
-offset_bottom = 156.0
-mouse_filter = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Enemy_Larm" type="ProgressBar" parent="UI/Battle_UI/Gauges/Enemy_Limbs"]
-visible = false
-offset_left = 904.0
-offset_top = 128.0
-offset_right = 954.0
-offset_bottom = 155.0
-mouse_filter = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Enemy_Lleg" type="ProgressBar" parent="UI/Battle_UI/Gauges/Enemy_Limbs"]
-visible = false
-offset_left = 918.0
-offset_top = 209.0
-offset_right = 968.0
-offset_bottom = 236.0
-mouse_filter = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Enemy_Rleg" type="ProgressBar" parent="UI/Battle_UI/Gauges/Enemy_Limbs"]
-visible = false
-offset_left = 1069.0
-offset_top = 209.0
-offset_right = 1119.0
-offset_bottom = 236.0
-mouse_filter = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
-
-[node name="Enemy_Torso" type="ProgressBar" parent="UI/Battle_UI/Gauges/Enemy_Limbs"]
-visible = false
-offset_left = 1018.0
-offset_top = 133.0
-offset_right = 1019.0
-offset_bottom = 156.0
-mouse_filter = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_ajrwm")
-theme_override_styles/fill = SubResource("StyleBoxFlat_ca5t3")
 
 [node name="Defend" type="Button" parent="UI/Battle_UI"]
 custom_minimum_size = Vector2(110, 0)
@@ -190,6 +65,14 @@ offset_top = 602.0
 offset_right = 1137.0
 offset_bottom = 642.0
 text = "Run"
+
+[node name="Transition" type="CanvasLayer" parent="."]
+
+[node name="SceneTransition" parent="Transition" node_paths=PackedStringArray("fade_transition") instance=ExtResource("2_nnivy")]
+landing_scene = ExtResource("3_ijttq")
+fade_transition = NodePath("FadeTransition")
+
+[node name="FadeTransition" parent="Transition/SceneTransition" instance=ExtResource("4_tfdtn")]
 
 [node name="Player" parent="." instance=ExtResource("2_qdcmu")]
 position = Vector2(15, 0)
