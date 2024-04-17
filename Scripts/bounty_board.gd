@@ -4,7 +4,7 @@ extends Node2D
 @onready var bounty_item_prefab = preload("res://Scenes/bounty_board/bounty_item.tscn")
 @onready var grid_container = $Board/Panel/GridContainer
 @onready var scene_transition = $Loading/SceneTransition
-@onready var fade_transition = $Loading/FadeTransition
+@onready var fade_transition = $Loading/SceneTransition/FadeTransition
 
 ### Constants ###
 const DEFAULT_DISPLAY_NAME : String = "Missing Name"

@@ -42,12 +42,12 @@ func change_turn(turn : TurnType) -> void:
 
 
 func start_player_turn() -> void:
-	print("\n\nStarting player turn")
+	print("\n\n-------------------\nStarting player turn:")
 	player_turn_started.emit()
 
 
 func start_enemy_turn() -> void:
-	print("\n\nStarting enemy turn")
+	print("\n\n-------------------\nStarting enemy turn:\n")
 	enemy_turn_started.emit()
 
 

@@ -87,9 +87,10 @@ func _get_limb_health_percent(limb_name : String) -> float:
 
 
 func _debug_log_all_health() -> void:
+	print("Limb Health:")
 	for key in _current_limbs:
 		var limb_health = _get_limb_health(key)
-		print("%s has %d health remaining" %[key, limb_health])
+		print("- %s: %d" %[key, limb_health])
 
 
 func _heal_limb(limb_name : String, amount : float) -> void:
@@ -202,7 +203,6 @@ func take_enemy_turn(turn_manager : TurnManager):
 	
 	# add something later above calc is a place holder
 	# no chance to run if one or more legs are at 0%?
-	print(runCalc)
 
 	# comparing values
 	var enemy_dict = {"enemyHeadHealth": head_health, 
@@ -225,8 +225,8 @@ func take_enemy_turn(turn_manager : TurnManager):
 	# choose best action from dictionary
 	var bestHeal = _find_best_heal(enemy_dict)
 	var bestAction = _find_best_action(dict)
-	print(bestAction)
-	print(bestHeal)
+	print("\nBest action: %s" %bestAction)
+	print("Best heal: %s" %bestHeal)
 
 	if _find_best_action(dict) == "headCalc":
 		_attack_player_part("playerHead")
