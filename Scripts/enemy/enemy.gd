@@ -1,13 +1,16 @@
 extends Node2D
 
 ### Signals ###
+signal on_action_started(action_message : String)
 signal on_action_completed(action_message : String)
 signal on_limb_hit(action_message : String)
+signal on_run_away(action_message : String)
 signal on_health_changed(current_health : float)
 signal on_defeated(rewards : Array[RewardData])
 
 ### Constants ###
 const MAX_PERCENT : float = 100.0
+const TURN_STEP_DELAY : float = 0.5
 
 
 ### On Ready ###
@@ -39,7 +42,7 @@ var _current_attack_damage : float
 
 ### References ###
 var limb_object : PackedScene = preload("res://Scenes/components/limb.tscn")
-var rnd = RandomNumberGenerator.new()
+var rng = RandomNumberGenerator.new()
 var util : Util = Util.new()
 
 
@@ -145,7 +148,7 @@ func _get_limb_health_percent(limb_name : String) -> float:
 func _get_total_limb_health_percent() -> float: ## Returns total limb health percentage
 	var enemy_limb_health = _get_enemy_limb_health_percent_dict()
 	var total_health = util.add_dictionary_values(enemy_limb_health)
-	return total_health
+	return total_health / enemy_limb_health.size()
 
 
 func _get_total_limb_health() -> float: ## Returns total limb health percentage
@@ -180,6 +183,20 @@ func _get_enemy_limb_health_percent_dict() -> Dictionary:
 	}
 
 	return enemy_limb_health
+
+
+func _get_best_action(percents : Dictionary) -> String:
+	var total_weights = util.add_dictionary_values(percents)
+
+	var roll = rng.randf_range(0, total_weights)
+	var current_weight = 0
+	for key in percents:
+		current_weight += percents[key]
+		if roll <= current_weight:
+			return key
+
+	# Default to attacking
+	return "attack"
 
 
 func _change_health(increment : float) -> void:
@@ -227,25 +244,25 @@ func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 	# Remove health from damage done
 	_change_health(-damage_taken)
 
-	on_limb_hit.emit(hit_message)
-
 	# Update visuals
 	_process_gauges()
+
+	if _is_alive():
+		on_limb_hit.emit(hit_message)
 
 
 # Actions
 func _take_attack_action() -> void:
-	var limb_weights = Global.current_player.get_limb_health_dict()
+	var limb_weights = Global.current_player.get_limb_health_percent_dict()
 	var best_limb = util.get_largest_dict_value(limb_weights)
 	_attack_player_part(best_limb)
-	print("\nBest limb to attack: %s" %best_limb)
+
 
 func _take_heal_action() -> void:
 	# choose best limb to heal from enemy_dict
 	var enemy_limb_health = _get_enemy_limb_health_percent_dict()
 	var best_limb = util.get_smallest_dict_value(enemy_limb_health)
 	_heal_limb(best_limb, _heal_amount)
-	print("Best limb to heal: %s" %best_limb)
 
 
 func _take_defend_action() -> void:
@@ -255,29 +272,70 @@ func _take_defend_action() -> void:
 	on_action_completed.emit(action_message)
 
 
-func _take_run_action() -> void:
+func _take_run_action() -> bool:
 	# play an animation
 	# RNG to determine run chance, can't run if leg broken
 	# if run is best action use RNG to determine if it is successful 
 	# play animation and change scene
-	var action_message = "Enemy tries to run!"
-	on_action_completed.emit(action_message)
 
+	# Get health pecentages
+	var left_leg_health: float = _get_limb_health_percent("LeftLeg")
+	var right_leg_health: float = _get_limb_health_percent("RightLeg")
+	var leg_health = (left_leg_health + right_leg_health) / 2
+
+	# Get any other run factors (in this case a flat 10% reduction to success)
+	var other_factors = 0.1
+
+	# Roll rng and increase our fail chance by other factors
+	var chance_to_fail = rng.randf() + other_factors
+	chance_to_fail = maxf(0.0, chance_to_fail)
+
+	# We successfully run if our leg health is greater than our fail chance
+	var was_successful = leg_health > chance_to_fail
+
+	if was_successful:
+		var action_message = "Enemy runs away!"
+		on_run_away.emit(action_message)
+		return true
+	else:
+		var action_message = "Enemy fails to run away"
+		on_action_completed.emit(action_message)
+
+	return false
 
 
 # Action chance calculations
-func _get_attack_chance() -> float:
+## Returns the risk to the enemy, higher is more threat
+func _get_threat_level() -> float:
 	# Get enemy and player total health percentages
-	var enemy_total_limbs_health = _get_total_limb_health_percent()
-	var player_total_limbs_health = Global.current_player.get_total_limb_health()
+	var enemy_health = _get_total_limb_health_percent()
+	var player_health = Global.current_player.get_total_limb_health_percent()
+	var normalized_difference = absf(enemy_health - player_health)
 
-	# Calculate the heals remaining and our current speed?
-	var heals_remaining = _current_heals / _total_heals
-	var speed_check = _current_speed / _max_speed
+	# The threat level is generated from the
+	# difference in health and how health the enemy is
+	var threat_level = normalized_difference + (1 - enemy_health)
+	return threat_level / 2
 
-	# Get attack chance
-	var factor = 15
-	var attack_chance_percent = (enemy_total_limbs_health + player_total_limbs_health + heals_remaining + speed_check) / factor
+
+## How aggressive the enemy should be a high value here will encorage the enemy to attack
+func _get_aggression_level() -> float:
+	# Aggression reduces when threat is increased
+	return 1 - _get_threat_level()
+
+
+func _get_attack_chance() -> float:
+	# How aggressive the enemy should be
+	var aggression_level = _get_aggression_level()
+
+	# How healthy the player is relative to the enemy
+	var enemy_health = _get_total_limb_health_percent()
+	var player_health = Global.current_player.get_total_limb_health_percent()
+	var player_strength = player_health / (player_health + enemy_health)
+
+	# The more aggressive we are and the weaker
+	# the player is, the more likely we are to attack
+	var attack_chance_percent = max(0, aggression_level * player_strength)
 	return attack_chance_percent
 
 
@@ -300,10 +358,22 @@ func _get_run_chance() -> float:
 	# Get leg health
 	var left_leg_health: float = _get_limb_health_percent("LeftLeg")
 	var right_leg_health: float = _get_limb_health_percent("RightLeg")
-	var factor = 4
+	
+	# The higher the leg health, the more likely to run
+	var leg_health_percent = (left_leg_health + right_leg_health) / 2
+
+	# How aggressive the enemy is
+	# The higher the aggression, the less likely to run 
+	var aggression_level = _get_aggression_level() 
 
 	# Run chance is a percentage of the remaining leg health
-	var run_chance_percent = (left_leg_health + right_leg_health) / factor
+	var run_chance_percent = 1 - aggression_level
+
+	# If we are over a threshold, check our leg health
+	var run_threshold = 0.75
+	if run_chance_percent > run_threshold:
+		run_chance_percent = (run_chance_percent + leg_health_percent) / 2
+
 	return run_chance_percent
 
 
@@ -354,7 +424,7 @@ func destroy() -> void:
 
 func end_enemy_turn(turn_manager : TurnManager) -> void:
 	# Wait for timer
-	await get_tree().create_timer(1).timeout	
+	await get_tree().create_timer(TURN_STEP_DELAY).timeout	
 
 	# Start enemy turn
 	var next_turn = TurnManager.TurnType.PLAYER_TURN
@@ -367,8 +437,11 @@ func take_enemy_turn(turn_manager : TurnManager):
 		turn_manager.change_turn(next_turn)
 		return
 
+	# Wait for timer
+	await get_tree().create_timer(TURN_STEP_DELAY).timeout	
+
 	# DEBUG
-	_debug_log_all_health()
+	# _debug_log_all_health()
 	
 	# TODO: add something later calc is a place holder
 	# choose best action from dictionary
@@ -378,7 +451,8 @@ func take_enemy_turn(turn_manager : TurnManager):
 		"defend": _get_defend_chance(),
 		"run": _get_run_chance(),
 	}
-	var best_action = util.get_largest_dict_value(action_weights)
+	var best_action = _get_best_action(action_weights)
+	print("Action: %s" %best_action)
 
 	# Take chosen action
 	if best_action == "attack":
@@ -388,7 +462,19 @@ func take_enemy_turn(turn_manager : TurnManager):
 	elif best_action == "defend":
 		_take_defend_action()
 	elif best_action == "run":
-		_take_run_action()	
+		# Run functions a little different since
+		# we want to see attempt message before action is taken
+		var action_message = "Enemy tries to run!"
+		on_action_started.emit(action_message)
+
+		# Wait a bit
+		await get_tree().create_timer(TURN_STEP_DELAY).timeout
+
+		# If we were successful in running
+		# don't end the turn (for menu transition)
+		var success = _take_run_action()
+		if success:
+			return
 	
 	# if 2 calcs are equal, randomly choose any of them for easier difficulty
 	# choose attack over defense action for harder difficulty

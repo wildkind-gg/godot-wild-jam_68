@@ -16,6 +16,21 @@ enum StatType {
 	SPEED,
 }
 
+var stat_display_data = [
+	{
+		display_name = "Attack",
+		abbreviation = "atk",
+	},
+	{
+		display_name = "Defense",
+		abbreviation = "def",
+	},
+	{
+		display_name = "Speed",
+		abbreviation = "spd",
+	},
+]
+
 var setScore = 0
 var turnCounter = 0
 var enemyAction = ""

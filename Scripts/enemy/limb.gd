@@ -59,6 +59,7 @@ func destroy() -> void:
 	# DEBUG
 	if has_debugs:
 		print("[destroy] %s was destroied" %_display_name)
+	
 	on_destroy.emit()
 
 

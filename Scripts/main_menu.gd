@@ -1,15 +1,13 @@
 extends Node2D
 
 ### On Ready Varaibles ###
+@onready var landing_scene = preload("res://Scenes/bounty_board/bounty_board.tscn")
 @onready var scene_transition := $Container/VBoxContainer/Play/SceneTransition
-
-### Private Methods ###
-func _process(_delta):
-	pass
 
 
 ### Signal Connected Methods ###
 func _on_play_pressed():
+	scene_transition.landing_scene = landing_scene
 	scene_transition.start_transition()
 
 func _on_exit_pressed():

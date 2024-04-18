@@ -13,7 +13,7 @@ extends Resource
 @export var heal_amount : float
 @export var attack_damage : float
 ## The percentage of total limb health the player needs to deal before enemy is defeated
-@export var max_health_percent : float
+@export var max_health_percent : float = 60
 
 # UI Data
 @export var display_name : String

@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://babhddpsfb770"]
+[gd_scene load_steps=5 format=3 uid="uid://bbv7krw1tkkpf"]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_dk1lg"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="2_o6fhd"]
-[ext_resource type="PackedScene" uid="uid://bih7xps8v4bbc" path="res://Scenes/bounty_board/bounty_board.tscn" id="3_bttwj"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="3_wywr5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdsfi"]
@@ -47,7 +46,6 @@ layout_mode = 2
 text = "Play"
 
 [node name="SceneTransition" parent="Container/VBoxContainer/Play" node_paths=PackedStringArray("fade_transition") instance=ExtResource("3_wywr5")]
-landing_scene = ExtResource("3_bttwj")
 fade_transition = NodePath("FadeTransition")
 
 [node name="FadeTransition" parent="Container/VBoxContainer/Play/SceneTransition" instance=ExtResource("2_o6fhd")]
