@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dafdr4mgqnqyn"]
+[gd_scene load_steps=15 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="2_nnivy"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dylnjo762rsqo" path="res://Scenes/rhythm_forge/forge.tscn" id="3_arcld"]
 [ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/battles_enemies/enemy.tscn" id="3_ebjh3"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="4_tfdtn"]
+[ext_resource type="PackedScene" uid="uid://babhddpsfb770" path="res://Scenes/main_menu.tscn" id="5_h6p4q"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ocq2g"]
 bg_color = Color(0.443137, 0.65098, 0.6, 0.627451)
@@ -210,12 +211,15 @@ horizontal_alignment = 1
 
 [node name="Transition" type="CanvasLayer" parent="."]
 
-[node name="SceneTransition" parent="Transition" node_paths=PackedStringArray("fade_transition") instance=ExtResource("2_nnivy")]
-landing_scene = ExtResource("3_arcld")
-fade_transition = NodePath("FadeTransition")
+[node name="FadeTransition" parent="Transition" instance=ExtResource("4_tfdtn")]
 
-[node name="FadeTransition" parent="Transition/SceneTransition" instance=ExtResource("4_tfdtn")]
-visible = false
+[node name="ForgeSceneTransition" parent="Transition" node_paths=PackedStringArray("fade_transition") instance=ExtResource("2_nnivy")]
+landing_scene = ExtResource("3_arcld")
+fade_transition = NodePath("../FadeTransition")
+
+[node name="MenuSceneTransition" parent="Transition" node_paths=PackedStringArray("fade_transition") instance=ExtResource("2_nnivy")]
+landing_scene = ExtResource("5_h6p4q")
+fade_transition = NodePath("../FadeTransition")
 
 [node name="Player" parent="." instance=ExtResource("2_qdcmu")]
 position = Vector2(15, 0)

@@ -10,6 +10,9 @@ var util : Util = Util.new()
 const MAX_PERCENT : float = 100.0
 const MIN_HEALTH : float = 0.0
 
+### Signals ###
+signal on_death(death_message : String)
+
 
 ## Public Variables ###
 var current_turn_manager : TurnManager
@@ -46,6 +49,11 @@ func _debug_log_all_health() -> void:
 		print("- %s: %d" %[key, health])
 
 
+# Getters
+func _is_alive() -> bool:
+	return get_total_limb_health() > 0
+
+
 # Gauge helpers
 func _get_clamped_limb_health(limb_name : String) -> float:
 	var value = limb_health[limb_name]
@@ -76,6 +84,14 @@ func _damage_calculation() -> float:
 
 
 ### Public Methods ###
+func destroy() -> void:
+	# Play death animation
+
+	# Tell batlle that player died
+	var death_message = "You have been defeated"
+	on_death.emit(death_message)
+
+
 # Getters
 func get_total_limb_health() -> float: ## Returns player's total limb health percentage
 	var player_limb_health = get_limb_health_dict()
@@ -119,6 +135,10 @@ func take_damage(amount : float, limb : String) -> void:
 
 	# Update UI
 	_process_gauges()
+
+	# Check if we are still alive
+	if not _is_alive():
+		destroy()
 
 
 func create(turn_manager : TurnManager) -> void:

@@ -6,8 +6,9 @@ extends Node2D
 @onready var enemy = $Enemy
 
 # Scene Transition
-@onready var scene_transition = $Transition/SceneTransition
-@onready var fade_transition = $Transition/SceneTransition/FadeTransition
+@onready var fade_transition = $Transition/FadeTransition
+@onready var forge_scene_transition = $Transition/ForgeSceneTransition
+@onready var menu_scene_transition = $Transition/MenuSceneTransition
 
 # UI
 @onready var UI = $UI/Battle_UI
@@ -29,8 +30,12 @@ var turn_type = TurnManager.TurnType
 
 
 ### Public Methods ###
-func move_to_next_scene() -> void:
-	scene_transition.start_transition()
+func move_to_forge() -> void:
+	forge_scene_transition.start_transition()
+
+
+func move_to_menu() -> void:
+	menu_scene_transition.start_transition()
 
 
 func generate_rewards(rewards : Array[RewardData]) -> void:
@@ -46,7 +51,7 @@ func generate_rewards(rewards : Array[RewardData]) -> void:
 	# Create rewards
 	for reward in rewards:
 		var new_reward = _generate_reward(reward)
-		new_reward.pressed.connect(move_to_next_scene)
+		new_reward.pressed.connect(move_to_forge)
 		rewards_container.add_child(new_reward)
 
 	
@@ -74,8 +79,18 @@ func on_player_win(rewards) -> void:
 	if rewards.size() > 0:
 		generate_rewards(rewards)
 	else:
-		move_to_next_scene()
+		move_to_forge()
 		
+
+func on_player_lose(death_message : String) -> void:
+	_broadcast_action(death_message)
+	
+	# Wait for death animations
+	await get_tree().create_timer(1).timeout
+	
+	# Move back to menu
+	move_to_menu()
+
 
 func on_scene_loaded() -> void:
 	# Make sure to hide popup
@@ -94,6 +109,7 @@ func on_scene_loaded() -> void:
 	# Setup player
 	player.create(current_turn_manager)
 	Global.current_player = player
+	player.on_death.connect(on_player_lose)
 
 	# Setup enemy
 	var new_enemy_data = Global.current_enemy
