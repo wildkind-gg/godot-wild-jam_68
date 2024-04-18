@@ -2,8 +2,9 @@ extends Node2D
 
 ### Signals ###
 signal on_action_completed(action_message : String)
-signal on_limb_hit(hit_message : String)
-
+signal on_limb_hit(action_message : String)
+signal on_health_changed(current_health : float)
+signal on_defeated(rewards : Array[RewardData])
 
 ### Constants ###
 const MAX_PERCENT : float = 100.0
@@ -22,11 +23,17 @@ const MAX_PERCENT : float = 100.0
 
 ### Private Variables ###
 var _current_limbs : Dictionary
+var _current_rewards : Array[RewardData]
+
+var _total_heals: float
+var _heal_amount : float
+var _current_heals: float
+
 var _max_speed: float
 var _current_speed: float
-var _total_heals: float
-var _current_heals: float
-var _heal_amount : float
+
+var _max_health : float
+var _current_health : float
 var _current_attack_damage : float
 
 
@@ -64,7 +71,7 @@ func _generate_limbs(limb_points : Node2D, limbs : Array[LimbData]) -> void:
 		if parent_name:
 			var parent = limb_points.get_node(parent_name)
 			var new_limb = _create_limb_object(parent, limb_data)
-			new_limb.on_hit.connect(_emit_on_limb_hit)
+			new_limb.on_hit.connect(_on_limb_hit)
 
 			# Add to a dictionary
 			_current_limbs[parent_name] = new_limb
@@ -135,6 +142,12 @@ func _get_limb_health_percent(limb_name : String) -> float:
 	return health / max_health
 
 
+func _get_total_limb_health_percent() -> float: ## Returns total limb health percentage
+	var enemy_limb_health = _get_enemy_limb_health_percent_dict()
+	var total_health = util.add_dictionary_values(enemy_limb_health)
+	return total_health
+
+
 func _get_total_limb_health() -> float: ## Returns total limb health percentage
 	var enemy_limb_health = _get_enemy_limb_health_dict()
 	var total_health = util.add_dictionary_values(enemy_limb_health)
@@ -142,6 +155,20 @@ func _get_total_limb_health() -> float: ## Returns total limb health percentage
 
 
 func _get_enemy_limb_health_dict() -> Dictionary:
+	# Enemy limb health pecentage dictionary
+	var enemy_limb_health = {
+		"Head": _get_limb_health("Head"), 
+		"Torso": _get_limb_health("Torso"), 
+		"LeftArm": _get_limb_health("LeftArm"), 
+		"RightArm": _get_limb_health("RightArm"), 
+		"LeftLeg": _get_limb_health("LeftLeg"), 
+		"RightLeg": _get_limb_health("RightLeg"),
+	}
+
+	return enemy_limb_health
+
+
+func _get_enemy_limb_health_percent_dict() -> Dictionary:
 	# Enemy limb health pecentage dictionary
 	var enemy_limb_health = {
 		"Head": _get_limb_health_percent("Head"), 
@@ -155,12 +182,21 @@ func _get_enemy_limb_health_dict() -> Dictionary:
 	return enemy_limb_health
 
 
+func _change_health(increment : float) -> void:
+	_current_health += increment
+	on_health_changed.emit(_current_health)
+
+	if _current_health <= 0:
+		destroy()
+
+
 func _heal_limb(limb_name : String, amount : float) -> void:
 	# Play an animation
 
 	# Heal the limb
 	_current_limbs[limb_name].heal_damage(amount)
-	
+	_change_health(amount)
+
 	# Broadcast action
 	var heal_message = "Enemy heals its %s!" %limb_name
 	on_action_completed.emit(heal_message)
@@ -184,22 +220,29 @@ func _attack_player_part(part_name : String) -> void:
 	on_action_completed.emit(action_message)
 
 
-# Generate a function to use when a limb is hit
-func _emit_on_limb_hit(hit_message : String) -> void:
+# Signals
+func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 	# Play is hit animation
+
+	# Remove health from damage done
+	_change_health(-damage_taken)
+
 	on_limb_hit.emit(hit_message)
+
+	# Update visuals
+	_process_gauges()
 
 
 # Actions
 func _take_attack_action() -> void:
 	var limb_weights = Global.current_player.get_limb_health_dict()
-	var best_limb = util.get_smallest_dict_value(limb_weights)
+	var best_limb = util.get_largest_dict_value(limb_weights)
 	_attack_player_part(best_limb)
 	print("\nBest limb to attack: %s" %best_limb)
 
 func _take_heal_action() -> void:
 	# choose best limb to heal from enemy_dict
-	var enemy_limb_health = _get_enemy_limb_health_dict()
+	var enemy_limb_health = _get_enemy_limb_health_percent_dict()
 	var best_limb = util.get_smallest_dict_value(enemy_limb_health)
 	_heal_limb(best_limb, _heal_amount)
 	print("Best limb to heal: %s" %best_limb)
@@ -225,7 +268,7 @@ func _take_run_action() -> void:
 # Action chance calculations
 func _get_attack_chance() -> float:
 	# Get enemy and player total health percentages
-	var enemy_total_limbs_health = _get_total_limb_health()
+	var enemy_total_limbs_health = _get_total_limb_health_percent()
 	var player_total_limbs_health = Global.current_player.get_total_limb_health()
 
 	# Calculate the heals remaining and our current speed?
@@ -264,19 +307,49 @@ func _get_run_chance() -> float:
 	return run_chance_percent
 
 
+func _is_alive() -> bool:
+	return _current_health > 0
+
+
 ### Public Methods ###
+func get_health_values() -> Dictionary:
+	var health = {
+		"current" = _current_health,
+		"max" = _max_health,
+	}
+	return health
+
+
 func create(new_enemy_data : EnemyData):
 	# Set enemy stats
 	_max_speed = new_enemy_data.max_speed
 	_total_heals = new_enemy_data.total_heals
 	_heal_amount = new_enemy_data.heal_amount
 	_current_attack_damage = new_enemy_data.attack_damage
+	_current_rewards = new_enemy_data.rewards
 
 	# Generate visuals and get limb points to add limbs to
 	var limb_points = _generate_visuals(new_enemy_data.visuals)
 
 	# Generate the enemy's limbs
 	_generate_limbs(limb_points, new_enemy_data.limbs)
+
+	# Setup health
+	var max_health_pecent = new_enemy_data.max_health_percent / 100
+	var total_limb_health = _get_total_limb_health()
+	_max_health = total_limb_health * max_health_pecent
+	_current_health = _max_health
+
+
+func destroy() -> void:
+	_current_health = 0
+	on_health_changed.emit(_current_health)
+
+	# Play death animation
+	print("Enemy was defeated")
+
+	# Signal that we were defeated (after animation if added)
+	on_defeated.emit(_current_rewards)
 
 
 func end_enemy_turn(turn_manager : TurnManager) -> void:
@@ -289,6 +362,11 @@ func end_enemy_turn(turn_manager : TurnManager) -> void:
 
 
 func take_enemy_turn(turn_manager : TurnManager):
+	if not _is_alive():
+		var next_turn = TurnManager.TurnType.NO_TURN
+		turn_manager.change_turn(next_turn)
+		return
+
 	# DEBUG
 	_debug_log_all_health()
 	
@@ -320,6 +398,3 @@ func take_enemy_turn(turn_manager : TurnManager):
 	# end turn	
 	end_enemy_turn(turn_manager)
 
-### Built in Methods ###
-func _process(_delta):
-	_process_gauges()

@@ -1,11 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://dafdr4mgqnqyn"]
+[gd_scene load_steps=12 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="2_nnivy"]
 [ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/battles_enemies/player.tscn" id="2_qdcmu"]
+[ext_resource type="PackedScene" uid="uid://dylnjo762rsqo" path="res://Scenes/rhythm_forge/forge.tscn" id="3_arcld"]
 [ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/battles_enemies/enemy.tscn" id="3_ebjh3"]
-[ext_resource type="PackedScene" uid="uid://bih7xps8v4bbc" path="res://Scenes/bounty_board/bounty_board.tscn" id="3_ijttq"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="4_tfdtn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ocq2g"]
+bg_color = Color(0.443137, 0.65098, 0.6, 0.627451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig3l7"]
+bg_color = Color(0, 0.67451, 0.270588, 1)
 
 [sub_resource type="Animation" id="Animation_00tku"]
 length = 0.001
@@ -44,9 +50,72 @@ theme_override_font_sizes/font_size = 42
 
 [node name="UI" type="CanvasLayer" parent="."]
 
+[node name="EnemyInfo" type="PanelContainer" parent="UI"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -273.0
+offset_top = -51.0
+offset_right = -8.0
+offset_bottom = 29.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ocq2g")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/EnemyInfo"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Stack" type="VBoxContainer" parent="UI/EnemyInfo/MarginContainer"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Gordnor"
+horizontal_alignment = 1
+
+[node name="Health" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="HealthLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
+layout_mode = 2
+text = "HP"
+
+[node name="EnemyHealth" type="ProgressBar" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_ig3l7")
+value = 20.0
+show_percentage = false
+
+[node name="ValueLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/Health/EnemyHealth"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "100"
+horizontal_alignment = 1
+
 [node name="Battle_UI" type="Control" parent="UI"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 
 [node name="Defend" type="Button" parent="UI/Battle_UI"]
 custom_minimum_size = Vector2(110, 0)
@@ -66,10 +135,44 @@ offset_right = 1137.0
 offset_bottom = 642.0
 text = "Run"
 
+[node name="Rewards" type="PanelContainer" parent="UI"]
+custom_minimum_size = Vector2(0, 41)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -57.0
+offset_right = 105.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Rewards"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RewardsContainer" type="VBoxContainer" parent="UI/Rewards/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TitleLabel" type="Label" parent="UI/Rewards/MarginContainer/RewardsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Choose a Reward"
+horizontal_alignment = 1
+
 [node name="Transition" type="CanvasLayer" parent="."]
 
 [node name="SceneTransition" parent="Transition" node_paths=PackedStringArray("fade_transition") instance=ExtResource("2_nnivy")]
-landing_scene = ExtResource("3_ijttq")
+landing_scene = ExtResource("3_arcld")
 fade_transition = NodePath("FadeTransition")
 
 [node name="FadeTransition" parent="Transition/SceneTransition" instance=ExtResource("4_tfdtn")]

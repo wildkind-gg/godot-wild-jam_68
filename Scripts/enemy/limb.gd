@@ -3,7 +3,7 @@ extends Node2D
 
 ### Signals ###
 signal on_destroy
-signal on_hit(hit_message : String)
+signal on_hit(hit_message : String, damage_done : float)
 
 ### Exports ###
 @export var has_debugs : bool
@@ -11,9 +11,10 @@ signal on_hit(hit_message : String)
 ### Private Variables ###
 var _max_health : float
 var _current_health : float
+var _is_weak : bool
 var _display_name : String
-var _hit_display_message : String
 var _input_button : MouseButton
+
 
 ### Private Methods ###
 func _initialize(new_limb_data : LimbData, shape : CollisionPolygon2D) -> void:
@@ -23,10 +24,10 @@ func _initialize(new_limb_data : LimbData, shape : CollisionPolygon2D) -> void:
 	# Setup health
 	_max_health = new_limb_data.max_health
 	_current_health = _max_health
-	
+	_is_weak = new_limb_data.is_weak
+
 	# Setup message to send when hit
 	_display_name = new_limb_data.display_name
-	_hit_display_message = _display_name + ": " + new_limb_data.hit_description
 
 	# Setup input
 	_input_button = new_limb_data.click_type
@@ -35,6 +36,11 @@ func _initialize(new_limb_data : LimbData, shape : CollisionPolygon2D) -> void:
 	var click_poly = click_area.get_node("Shape")
 	click_poly.polygon = shape.polygon
 	click_area.input_event.connect(_on_clickable_area_input_event)
+
+
+func _get_hit_message(damage : float) -> String:
+	var hit_message = "You hit %s for %d damage" %[_display_name, damage]
+	return hit_message
 
 
 func _is_alive() -> bool:
@@ -57,20 +63,33 @@ func destroy() -> void:
 
 
 func take_damage(amount : float) -> void:
-	# Reduce health
-	_current_health -= amount
+	# Don't take more damage if we are dead
+	if not _is_alive():
+		return
 
+	# Reduce health
+	var damage = amount
+
+	# TODO: May want to change the extra amount
+	# taken dynamically somewhere
+	# Take double damage if weak
+	if _is_weak:
+		damage *= 2
+
+	_current_health -= damage
+
+	# DEBUG
+	if has_debugs:
+		print("[take_damage] %s took %f damage" %[_display_name, damage])
+
+	# Emit that we were hit
+	var	hit_display_message = _get_hit_message(damage)
+	on_hit.emit(hit_display_message, damage)
+	
 	# Check if the limb has died
 	if not _is_alive():
 		destroy()
-		return
 	
-	# DEBUG
-	if has_debugs:
-		print("[take_damage] %s took %f damage" %[_display_name, amount])
-
-	# Emit that we were hit
-	on_hit.emit(_hit_display_message)
 
 
 func heal_damage(amount : float) -> void:
@@ -92,10 +111,18 @@ func get_max_health() -> float:
 
 ### Connected Signals ###
 func _on_limb_clicked() -> void:
+	# No click on dead
+	if not _is_alive():
+		return
+
 	Global.current_player.take_attack_action(self)
 
 
 func _on_limb_entered() -> void:
+	# No hover on dead
+	if not _is_alive():
+		return
+	
 	# TODO: Need to figure out a better highlight
 	# maybe a shader?
 	$Hover.visible = true

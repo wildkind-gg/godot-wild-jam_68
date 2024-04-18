@@ -10,13 +10,11 @@ enum LimbType {
 	RIGHT_LEG,
 }
 
-
-var playerHead:float = 100.0
-var playerLarm:float = 100.0
-var playerRarm:float = 100.0
-var playerLleg:float = 100.0
-var playerRleg:float = 100.0
-var playerTorso:float = 100.0
+enum StatType {
+	ATTACK,
+	DEFENSE,
+	SPEED,
+}
 
 var setScore = 0
 var turnCounter = 0

@@ -7,10 +7,10 @@ extends Resource
 
 # Display Values
 @export var display_name : String
-@export_multiline var hit_description : String = "was hit" ## Used for action message
 
 # Stats
 @export var max_health : float
+@export var is_weak : bool
 
 # Interation
 @export var click_type : MouseButton = MOUSE_BUTTON_LEFT

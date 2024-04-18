@@ -61,6 +61,7 @@ max_speed = 20.0
 total_heals = 10.0
 heal_amount = 50.0
 attack_damage = 100.0
+max_health_percent = 80.0
 display_name = "Stronger Enemy"
 description = "This is a stronger enemy, all limb health is 175 and some other value increases"
 ui_texture = ExtResource("3_2phcl")

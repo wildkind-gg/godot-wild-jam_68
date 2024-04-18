@@ -4,9 +4,21 @@ extends Node2D
 ### On Ready Varaibles ###
 @onready var player = $Player
 @onready var enemy = $Enemy
-@onready var UI = $UI/Battle_UI
-@onready var scene_transition = $Transition/SceneTranstion
+
+# Scene Transition
+@onready var scene_transition = $Transition/SceneTransition
 @onready var fade_transition = $Transition/SceneTransition/FadeTransition
+
+# UI
+@onready var UI = $UI/Battle_UI
+@onready var rewards_popup = $UI/Rewards
+@onready var rewards_container = $UI/Rewards/MarginContainer/RewardsContainer
+@onready var reward_item = preload("res://Scenes/components/reward_button.tscn")
+
+# Enemy UI Info
+@onready var enemy_health_bar = $UI/EnemyInfo/MarginContainer/Stack/Health/EnemyHealth
+@onready var enemy_health_bar_value = $UI/EnemyInfo/MarginContainer/Stack/Health/EnemyHealth/ValueLabel
+@onready var enemy_name = $UI/EnemyInfo/MarginContainer/Stack/NameLabel
 
 
 ### Public Variables ###
@@ -16,17 +28,57 @@ var turn_type = TurnManager.TurnType
 
 
 ### Public Methods ###
-func generate_enemy(new_enemy_data : EnemyData) -> void:
-	enemy.create(new_enemy_data)
-	enemy.on_limb_hit.connect(_on_enemy_limb_hit)
-	enemy.on_action_completed.connect(_broadcast_action)
-
-
-func on_player_win() -> void:
+func move_to_next_scene() -> void:
 	scene_transition.start_transition()
 
 
+func generate_rewards(rewards : Array[RewardData]) -> void:
+	# Show popup
+	rewards_popup.show()
+
+	# Remove any old rewards
+	for child in rewards_container.get_children():
+		if child is Button:
+			child.queue_free()
+
+	# Create rewards
+	for reward in rewards:
+		var new_reward = _generate_reward(reward)
+		new_reward.pressed.connect(move_to_next_scene)
+		rewards_container.add_child(new_reward)
+
+	
+func generate_enemy(new_enemy_data : EnemyData) -> void:
+	# Create the enemy
+	enemy.create(new_enemy_data)
+
+	# Connect enemy signals
+	enemy.on_defeated.connect(on_player_win)
+	enemy.on_action_completed.connect(_broadcast_action)
+	enemy.on_health_changed.connect(_on_enemy_health_update)
+	enemy.on_limb_hit.connect(_on_enemy_limb_hit)
+
+	# Enemy UI Info
+	# Update health bar
+	var health_values = enemy.get_health_values()
+	enemy_health_bar.max_value = health_values.max
+	_on_enemy_health_update(health_values.current)
+
+	# Update name
+	enemy_name.text = new_enemy_data.display_name
+
+
+func on_player_win(rewards) -> void:
+	if rewards.size() > 0:
+		generate_rewards(rewards)
+	else:
+		move_to_next_scene()
+		
+
 func on_scene_loaded() -> void:
+	# Make sure to hide popup
+	rewards_popup.hide()
+
 	# Fade in animation
 	fade_transition.play_fade_in()
 
@@ -51,6 +103,13 @@ func on_scene_loaded() -> void:
 
 
 ### Private Methods ###
+func _generate_reward(reward : RewardData) -> Button:
+	var new_reward = reward_item.instantiate()
+	var reward_text = "Gain %s: +%d %s" %[reward.display_name, reward.increase, reward.display_stat]
+	new_reward.text = reward_text
+	return new_reward
+
+
 func _broadcast_action(action_message : String) -> void:
 	$Label.text = action_message
 
@@ -91,6 +150,11 @@ func _on_run_fail() -> void:
 	# Say we took our action
 	var action_delay = 1
 	_on_player_action(action_delay)
+
+
+func _on_enemy_health_update(current_health : float) -> void:
+	enemy_health_bar.value = current_health
+	enemy_health_bar_value.text = "%d" %current_health
 
 
 ### Built in Methods ###

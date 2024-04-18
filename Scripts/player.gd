@@ -13,16 +13,23 @@ const MIN_HEALTH : float = 0.0
 
 ## Public Variables ###
 var current_turn_manager : TurnManager
-
+var limb_health = {
+	"Head" = 100.0,
+	"Torso" = 100.0,
+	"RightArm" = 100.0,
+	"LeftArm" = 100.0,
+	"RightLeg" = 100.0,
+	"LeftLeg" = 100.0,
+}
 
 ### On Ready ###
 @onready var _limb_gauges = {
-	"playerHead" = $Player_Limbs/Player_Head,
-	"playerTorso" = $Player_Limbs/Player_Torso,
-	"playerRarm" = $Player_Limbs/Player_Rarm,
-	"playerLarm" = $Player_Limbs/Player_Larm,
-	"playerRleg" = $Player_Limbs/Player_Rleg,
-	"playerLleg" = $Player_Limbs/Player_Lleg,
+	"Head" = $Player_Limbs/Player_Head,
+	"Torso" = $Player_Limbs/Player_Torso,
+	"RightArm" = $Player_Limbs/Player_Rarm,
+	"LeftArm" = $Player_Limbs/Player_Larm,
+	"RightLeg" = $Player_Limbs/Player_Rleg,
+	"LeftLeg" = $Player_Limbs/Player_Lleg,
 }
 
 
@@ -34,14 +41,14 @@ var current_turn_manager : TurnManager
 # Debug
 func _debug_log_all_health() -> void:
 	print("[Player] Limb Health:")
-	for key in _limb_gauges:
-		var limb_health = Global[key]
-		print("- %s: %d" %[key, limb_health])
+	for key in limb_health:
+		var health = limb_health[key]
+		print("- %s: %d" %[key, health])
 
 
 # Gauge helpers
 func _get_clamped_limb_health(limb_name : String) -> float:
-	var value = Global[limb_name]
+	var value = limb_health[limb_name]
 	return clamp(value, 0, MAX_PERCENT)
 
 
@@ -79,16 +86,12 @@ func get_total_limb_health() -> float: ## Returns player's total limb health per
 func get_limb_health_dict() -> Dictionary: # Returns dictionary of player's limb healths
 	# Player limb health dictionary
 	var percentage_factor = 100
-	var player_limb_health = {
-		"playerHead": Global.playerHead / percentage_factor,
-		"playerTorso": Global.playerTorso / percentage_factor,
-		"playerLarm": Global.playerLarm / percentage_factor,
-		"playerRarm": Global.playerRarm / percentage_factor,
-		"playerLleg": Global.playerLleg / percentage_factor, 
-		"playerRleg": Global.playerRleg / percentage_factor, 
-	}
+	var limb_health_percent = {}
+	for key in limb_health:
+		var health = limb_health[key]
+		limb_health_percent[key] = health / percentage_factor
 
-	return player_limb_health
+	return limb_health_percent
 
 
 # actions
@@ -106,20 +109,18 @@ func take_damage(amount : float, limb : String) -> void:
 	_debug_log_all_health()
 
 	# Calculate next value
-	var new_value = Global[limb] - amount
+	var new_value = limb_health[limb] - amount
 
 	# Don't go negative (normally MIN_HEALTH = 0)
 	if new_value >= MIN_HEALTH:
-		Global[limb] = new_value
+		limb_health[limb] = new_value
 	else:
-		Global[limb] = MIN_HEALTH
+		limb_health[limb] = MIN_HEALTH
+
+	# Update UI
+	_process_gauges()
 
 
 func create(turn_manager : TurnManager) -> void:
 	current_turn_manager = turn_manager
-
-
-### Built in Methods ###
-func _process(_delta):
-	# For processing the ui
 	_process_gauges()
