@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dafdr4mgqnqyn"]
+[gd_scene load_steps=14 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="2_nnivy"]
@@ -12,6 +12,39 @@ bg_color = Color(0.443137, 0.65098, 0.6, 0.627451)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig3l7"]
 bg_color = Color(0, 0.67451, 0.270588, 1)
+
+[sub_resource type="Animation" id="Animation_lhc5o"]
+resource_name = "popup"
+length = 0.75
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI/Rewards:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(405, 900), Vector2(405, 143), Vector2(426, 189)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/Rewards:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.2, 1.2), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jt3xn"]
+_data = {
+"popup": SubResource("Animation_lhc5o")
+}
 
 [sub_resource type="Animation" id="Animation_00tku"]
 length = 0.001
@@ -142,14 +175,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -105.0
-offset_top = -57.0
-offset_right = 105.0
-offset_bottom = -13.0
+offset_left = -150.0
+offset_top = -135.0
+offset_right = 136.001
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 0
 mouse_filter = 1
+
+[node name="RewardsAnimator" type="AnimationPlayer" parent="UI/Rewards"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_jt3xn")
+}
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/Rewards"]
 layout_mode = 2
@@ -176,6 +215,7 @@ landing_scene = ExtResource("3_arcld")
 fade_transition = NodePath("FadeTransition")
 
 [node name="FadeTransition" parent="Transition/SceneTransition" instance=ExtResource("4_tfdtn")]
+visible = false
 
 [node name="Player" parent="." instance=ExtResource("2_qdcmu")]
 position = Vector2(15, 0)

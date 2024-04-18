@@ -19,7 +19,7 @@ script = ExtResource("1_ysxdu")
 type = 1
 display_name = "Torso"
 max_health = 75.0
-is_weak = false
+is_weak = true
 click_type = 1
 
 [sub_resource type="Resource" id="Resource_wpktj"]
@@ -27,7 +27,7 @@ script = ExtResource("1_ysxdu")
 type = 2
 display_name = "Left Arm"
 max_health = 75.0
-is_weak = false
+is_weak = true
 click_type = 1
 
 [sub_resource type="Resource" id="Resource_ndxms"]
@@ -35,7 +35,7 @@ script = ExtResource("1_ysxdu")
 type = 3
 display_name = "Right Arm"
 max_health = 75.0
-is_weak = false
+is_weak = true
 click_type = 1
 
 [sub_resource type="Resource" id="Resource_jgvl7"]

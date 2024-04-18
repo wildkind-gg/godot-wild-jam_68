@@ -12,6 +12,7 @@ extends Node2D
 # UI
 @onready var UI = $UI/Battle_UI
 @onready var rewards_popup = $UI/Rewards
+@onready var rewards_popup_animator = $UI/Rewards/RewardsAnimator
 @onready var rewards_container = $UI/Rewards/MarginContainer/RewardsContainer
 @onready var reward_item = preload("res://Scenes/components/reward_button.tscn")
 
@@ -35,6 +36,7 @@ func move_to_next_scene() -> void:
 func generate_rewards(rewards : Array[RewardData]) -> void:
 	# Show popup
 	rewards_popup.show()
+	rewards_popup_animator.play("popup")
 
 	# Remove any old rewards
 	for child in rewards_container.get_children():
