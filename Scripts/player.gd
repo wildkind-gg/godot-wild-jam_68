@@ -15,7 +15,6 @@ signal on_death(death_message : String)
 
 
 ## Public Variables ###
-var current_turn_manager : TurnManager
 var max_limb_health = {
 	"Head" = 60.0,
 	"Torso" = 60.0,
@@ -35,7 +34,7 @@ var current_limb_health : Dictionary
 	"Right Leg" = $Player_Limbs/Player_Rleg,
 	"Left Leg" = $Player_Limbs/Player_Lleg,
 }
-
+@onready var animation_player = $AnimationPlayer
 
 ### Exports ###
 @export var attack_damage : float = 25.0
@@ -114,11 +113,25 @@ func get_limb_health_percent_dict() -> Dictionary: # Returns dictionary of playe
 
 # actions
 func take_attack_action(limb : Limb) -> void:
-	if not current_turn_manager.is_players_turn():
+	if not Global.current_turn_manager.is_players_turn():
 		return
+
+	# Play animation	
+	animation_player.play("tackle")
+
+	# Complete attack action method (need new one with new limb)
+	var _complete_attack_action = func(anim_name):
+		if anim_name == "tackle":
+			var damage = _damage_calculation()
+			limb.take_damage(damage)
 	
-	var damage = _damage_calculation()
-	limb.take_damage(damage)
+	# Disconnect old connected method (as we are connecting a new one)
+	var connections = animation_player.get_signal_connection_list("animation_finished")
+	for con in connections:
+		animation_player.disconnect("animation_finished", con.callable)
+	
+	# Connect new method
+	animation_player.animation_finished.connect(_complete_attack_action)
 
 
 # Limb helpers
@@ -138,15 +151,18 @@ func take_damage(amount : float, limb : String) -> void:
 	# DEBUG
 	# _debug_log_all_health()
 
+
+	# Animate
+	animation_player.play("hit")
+
 	# Check if we are still alive
 	if not _is_alive():
 		destroy()
 
 
-func create(turn_manager : TurnManager) -> void:
+func create() -> void:
 	for key in max_limb_health:
 		var max_health = max_limb_health[key]
 		current_limb_health[key] = max_health
 	
-	current_turn_manager = turn_manager
 	_process_gauges()

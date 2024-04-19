@@ -10,7 +10,7 @@ signal on_defeated(rewards : Array[RewardData])
 
 ### Constants ###
 const MAX_PERCENT : float = 100.0
-const TURN_STEP_DELAY : float = 0.5
+const TURN_STEP_DELAY : float = 0.75
 
 
 ### On Ready ###
@@ -27,6 +27,7 @@ const TURN_STEP_DELAY : float = 0.5
 ### Private Variables ###
 var _current_limbs : Dictionary
 var _current_rewards : Array[RewardData]
+var _animation_player : AnimationPlayer
 
 var _total_heals: float
 var _heal_amount : float
@@ -75,6 +76,9 @@ func _generate_limbs(limb_points : Node2D, limbs : Array[LimbData]) -> void:
 			var parent = limb_points.get_node(parent_name)
 			var new_limb = _create_limb_object(parent, limb_data)
 			new_limb.on_hit.connect(_on_limb_hit)
+			new_limb.on_weak.connect(func(action_message : String):
+				on_action_started.emit(action_message)
+			)
 
 			# Add to a dictionary
 			_current_limbs[parent_name] = new_limb
@@ -88,6 +92,11 @@ func _generate_visuals(visuals_data : PackedScene) -> Node2D:
 
 	# Instantiate new visuals
 	var new_visuals = visuals_data.instantiate()
+	_animation_player = new_visuals.get_node("AnimationPlayer")
+
+	# Add complete attack method to signal
+	_animation_player.animation_finished.connect(_complete_attack_action)
+
 	self.add_child(new_visuals)
 	return new_visuals.get_node("LimbPoints")
 
@@ -214,8 +223,11 @@ func _heal_limb(limb_name : String, amount : float) -> void:
 	_current_limbs[limb_name].heal_damage(amount)
 	_change_health(amount)
 
+	# Update visuals
+	_process_gauges()
+
 	# Broadcast action
-	var heal_message = "Enemy heals its %s!" %limb_name
+	var heal_message = "Enemy heals its %s for %d health!" %[limb_name, amount]
 	on_action_completed.emit(heal_message)
 
 
@@ -239,7 +251,8 @@ func _attack_player_part(part_name : String) -> void:
 
 # Signals
 func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
-	# Play is hit animation
+	# Play hit animation
+	_animation_player.play("hit")
 
 	# Remove health from damage done
 	_change_health(-damage_taken)
@@ -252,10 +265,19 @@ func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 
 
 # Actions
-func _take_attack_action() -> void:
+func _complete_attack_action(anim_name : String) -> void:
 	var limb_weights = Global.current_player.get_limb_health_percent_dict()
 	var best_limb = util.get_largest_dict_value(limb_weights)
-	_attack_player_part(best_limb)
+
+	if anim_name == "tackle":
+		_attack_player_part(best_limb)
+			
+		# end turn	
+		end_enemy_turn()
+
+
+func _take_attack_action() -> void:
+	_animation_player.play("tackle")
 
 
 func _take_heal_action() -> void:
@@ -264,19 +286,33 @@ func _take_heal_action() -> void:
 	var best_limb = util.get_smallest_dict_value(enemy_limb_health)
 	_heal_limb(best_limb, _heal_amount)
 
+	# end turn	
+	end_enemy_turn()
+
 
 func _take_defend_action() -> void:
 	# play an animation
 	# enemy takes reduced or no damage on next turn
 	var action_message = "Enemy defends!"
 	on_action_completed.emit(action_message)
+	
+	# end turn	
+	end_enemy_turn()
 
 
-func _take_run_action() -> bool:
+func _take_run_action() -> void:
 	# play an animation
 	# RNG to determine run chance, can't run if leg broken
 	# if run is best action use RNG to determine if it is successful 
 	# play animation and change scene
+
+	# Run functions a little different since
+	# we want to see attempt message before action is taken
+	var action_message = "Enemy tries to run!"
+	on_action_started.emit(action_message)
+
+	# Wait a bit
+	await get_tree().create_timer(TURN_STEP_DELAY).timeout
 
 	# Get health pecentages
 	var left_leg_health: float = _get_limb_health_percent("LeftLeg")
@@ -294,14 +330,15 @@ func _take_run_action() -> bool:
 	var was_successful = leg_health > chance_to_fail
 
 	if was_successful:
-		var action_message = "Enemy runs away!"
+		action_message = "Enemy runs away!"
 		on_run_away.emit(action_message)
-		return true
+		return
 	else:
-		var action_message = "Enemy fails to run away"
+		action_message = "Enemy fails to run away"
 		on_action_completed.emit(action_message)
 
-	return false
+	# End turn
+	end_enemy_turn()
 
 
 # Action chance calculations
@@ -422,19 +459,19 @@ func destroy() -> void:
 	on_defeated.emit(_current_rewards)
 
 
-func end_enemy_turn(turn_manager : TurnManager) -> void:
+func end_enemy_turn() -> void:
 	# Wait for timer
 	await get_tree().create_timer(TURN_STEP_DELAY).timeout	
 
 	# Start enemy turn
 	var next_turn = TurnManager.TurnType.PLAYER_TURN
-	turn_manager.change_turn(next_turn)
+	Global.current_turn_manager.change_turn(next_turn)
 
 
-func take_enemy_turn(turn_manager : TurnManager):
+func take_enemy_turn() -> void:
 	if not _is_alive():
 		var next_turn = TurnManager.TurnType.NO_TURN
-		turn_manager.change_turn(next_turn)
+		Global.current_turn_manager.change_turn(next_turn)
 		return
 
 	# Wait for timer
@@ -462,25 +499,10 @@ func take_enemy_turn(turn_manager : TurnManager):
 	elif best_action == "defend":
 		_take_defend_action()
 	elif best_action == "run":
-		# Run functions a little different since
-		# we want to see attempt message before action is taken
-		var action_message = "Enemy tries to run!"
-		on_action_started.emit(action_message)
-
-		# Wait a bit
-		await get_tree().create_timer(TURN_STEP_DELAY).timeout
-
-		# If we were successful in running
-		# don't end the turn (for menu transition)
-		var success = _take_run_action()
-		if success:
-			return
+		_take_run_action()
 	
 	# if 2 calcs are equal, randomly choose any of them for easier difficulty
 	# choose attack over defense action for harder difficulty
 	# choose attack over defend and attack lowest health limb for harder difficulty
 	# if debuffs/buffs added, choose buffs for hardest difficulty 
-	
-	# end turn	
-	end_enemy_turn(turn_manager)
 

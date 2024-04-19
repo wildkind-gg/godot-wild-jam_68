@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/enemy/limb_data.gd" id="1_ysxdu"]
 [ext_resource type="Script" path="res://Scripts/enemy/reward_data.gd" id="2_jd6us"]
 [ext_resource type="Texture2D" uid="uid://cf00stc4wcp17" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/full.png" id="3_kj8dv"]
-[ext_resource type="PackedScene" uid="uid://bepew6251e28h" path="res://Scenes/battles_enemies/enemy_visuals/enemy_1_visuals.tscn" id="4_ica2h"]
+[ext_resource type="PackedScene" uid="uid://bcd6s1ss7vdt7" path="res://Scenes/battles_enemies/enemy_visuals/enemy_1_visuals.tscn" id="4_ica2h"]
 
 [sub_resource type="Resource" id="Resource_0uxb1"]
 script = ExtResource("1_ysxdu")

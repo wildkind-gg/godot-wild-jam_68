@@ -3,6 +3,7 @@ extends Node2D
 
 ### Signals ###
 signal on_destroy
+signal on_weak(hit_message : String)
 signal on_hit(hit_message : String, damage_done : float)
 
 ### Exports ###
@@ -55,6 +56,7 @@ func create(new_limb_data : LimbData, shape : CollisionPolygon2D) -> void:
 	if has_debugs:
 		print("[create] Creating new limb : %s" %_display_name)
 
+
 func destroy() -> void:
 	# DEBUG
 	if has_debugs:
@@ -75,6 +77,8 @@ func take_damage(amount : float) -> void:
 	# taken dynamically somewhere
 	# Take double damage if weak
 	if _is_weak:
+		var message = "You hit a weak point!"
+		on_weak.emit(message)
 		damage *= 2
 
 	_current_health -= damage

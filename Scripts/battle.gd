@@ -26,7 +26,6 @@ extends Node2D
 
 ### Public Variables ###
 var rnd = RandomNumberGenerator.new()
-var current_turn_manager : TurnManager
 var turn_type = TurnManager.TurnType
 
 
@@ -66,6 +65,7 @@ func generate_enemy(new_enemy_data : EnemyData) -> void:
 	# Connect enemy signals
 	enemy.on_defeated.connect(on_player_win)
 	enemy.on_action_completed.connect(_broadcast_action)
+	enemy.on_action_started.connect(_broadcast_action)
 	enemy.on_health_changed.connect(_on_enemy_health_update)
 	enemy.on_limb_hit.connect(_on_enemy_limb_hit)
 	enemy.on_run_away.connect(_on_run_success)
@@ -105,14 +105,14 @@ func on_scene_loaded() -> void:
 	fade_transition.play_fade_in()
 
 	# Create turn manager
-	current_turn_manager = TurnManager.new()
+	Global.current_turn_manager = TurnManager.new()
 
 	# Connect to turns
-	current_turn_manager.player_turn_started.connect(self._on_player_turn_started)
-	current_turn_manager.enemy_turn_started.connect(self._on_enemy_turn_started)
+	Global.current_turn_manager.player_turn_started.connect(_on_player_turn_started)
+	Global.current_turn_manager.enemy_turn_started.connect(_on_enemy_turn_started)
 
 	# Setup player
-	player.create(current_turn_manager)
+	player.create()
 	Global.current_player = player
 	player.on_death.connect(on_player_lose)
 
@@ -122,7 +122,7 @@ func on_scene_loaded() -> void:
 
 	# Set as player's turn to start
 	var next_turn = turn_type.PLAYER_TURN
-	current_turn_manager.change_turn(next_turn)
+	Global.current_turn_manager.change_turn(next_turn)
 
 
 ### Private Methods ###
@@ -151,23 +151,19 @@ func _on_player_action(delay : float = 1) -> void:
 
 	# Set turn as inbetween since we want to see player action
 	var next_turn = TurnManager.TurnType.NO_TURN
-	current_turn_manager.change_turn(next_turn)
+	Global.current_turn_manager.change_turn(next_turn)
 	
 	# Wait for a second
 	await get_tree().create_timer(delay).timeout
 
 	# Unlock after delay and move to enemy turn
 	next_turn = TurnManager.TurnType.ENEMY_TURN
-	current_turn_manager.change_turn(next_turn)
+	Global.current_turn_manager.change_turn(next_turn)
 
 
 func _on_enemy_limb_hit(hit_message : String) -> void:
 	_broadcast_action(hit_message)
 	
-	# TODO: This should be called from the player
-	# and the animation should be on player scene
-	$AnimationPlayer.play("tackle")
-
 	# Say we took our action
 	_on_player_action()
 
@@ -220,7 +216,7 @@ func _on_enemy_turn_started():
 	_broadcast_action(turn_start_message)
 	
 	Global.turnCounter += 1
-	enemy.take_enemy_turn(current_turn_manager)
+	enemy.take_enemy_turn()
 
 
 func _on_defend_pressed():
