@@ -209,7 +209,6 @@ layout_mode = 2
 theme_override_constants/separation = 6
 
 [node name="Transition" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="FadeTransition" parent="Transition" instance=ExtResource("4_tfdtn")]
 
