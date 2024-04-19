@@ -1,38 +1,38 @@
-[gd_scene load_steps=6 format=3 uid="uid://b4yfo8lai86mp"]
+[gd_scene load_steps=7 format=3 uid="uid://b4yfo8lai86mp"]
 
 [ext_resource type="Script" path="res://Scripts/Note.gd" id="1_awum4"]
+[ext_resource type="Texture2D" uid="uid://brk2ilhd7uexf" path="res://Misc/Start_left.png" id="2_26hqp"]
+[ext_resource type="Texture2D" uid="uid://xtaafbwa28vb" path="res://Misc/Start_up.png" id="3_vb14v"]
+[ext_resource type="Texture2D" uid="uid://bdc0pyglfup3x" path="res://Misc/Start.png" id="4_t5scl"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8aqkd"]
-bg_color = Color(0, 0.486275, 0, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
+[sub_resource type="SpriteFrames" id="SpriteFrames_ojhr1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_26hqp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vb14v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_t5scl")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_850ju"]
-bg_color = Color(0.784314, 0, 0, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qwvc"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y7vef"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ckree"]
-
-[node name="Note" type="Node2D" groups=["note"]]
+[node name="Note" type="Area2D" groups=["note"]]
 script = ExtResource("1_awum4")
 
-[node name="Button" type="Button" parent="."]
-offset_left = -70.0
-offset_top = -53.0
-offset_right = 70.0
-offset_bottom = 53.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_8aqkd")
-theme_override_styles/hover = SubResource("StyleBoxFlat_850ju")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_y7vef")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ckree")
-action_mode = 0
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(0.892586, 0.0516911, 0, 1)
+sprite_frames = SubResource("SpriteFrames_ojhr1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3qwvc")
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 rotation = -1.5708
@@ -52,7 +52,7 @@ scale_amount_min = 2.0
 scale_amount_max = 4.0
 
 [node name="DestroyTimer" type="Timer" parent="."]
-autostart = true
+wait_time = 0.3
 
 [node name="Node2D" type="Node2D" parent="."]
 position = Vector2(0, -60)
@@ -72,9 +72,4 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 28
 horizontal_alignment = 1
 
-[node name="HitTimer" type="Timer" parent="."]
-wait_time = 0.3
-
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="timeout" from="DestroyTimer" to="." method="_on_destroy_timer_timeout"]
-[connection signal="timeout" from="HitTimer" to="." method="_on_hit_timer_timeout"]

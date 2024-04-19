@@ -1,12 +1,15 @@
 extends Node2D
 
-var score = Global.setScore
+var score = 0
 var combo = 0
 
 var maxCombo = 0
+var great = 0
+var good = 0
+var okay = 0
 var missed = 0
 
-var bpm = 115
+var bpm = 120
 
 var song_position = 0.0
 var song_position_in_beats = 0
@@ -23,15 +26,21 @@ var rand = 0
 var note = load("res://Scenes/rhythm_forge/note.tscn")
 var cursor = load("res://_Art/images.png")
 var default_cursor = load("res://Misc/1-Normal-Select.png")
+var instance
 
 func _ready():
 	randomize()
 	#$Conductor.play_with_beat_offset(8)
-	$Conductor.seek(5) # sets the position from which audio will be played, in seconds
+	$Conductor.seek(0) # sets the position from which audio will be played, in seconds
 	Input.set_custom_mouse_cursor(cursor)
+	$ComboExclamation.text = ""
+	$Rhythm_Button_Right.modulate = Color("e40d00")
+	$Rhythm_Button_Up.modulate = Color("008720")
+	$Rhythm_Button3_Left.modulate = Color("0000fa")
 	
 func _process(_delta):
-	$Score.text = "Score: " + "%s" %Global.setScore
+	print(song_position_in_beats)
+	$Score.text = "Score: " + "%s" %score
 	
 
 func _input(event):
@@ -77,31 +86,31 @@ func _on_conductor_beat(pos):
 		spawn_3_beat = 1
 		spawn_4_beat = 2
 	if song_position_in_beats > 228:
-		spawn_1_beat = 0
-		spawn_2_beat = 2
-		spawn_3_beat = 1
-		spawn_4_beat = 2
-	if song_position_in_beats > 258:
 		spawn_1_beat = 1
 		spawn_2_beat = 2
 		spawn_3_beat = 1
 		spawn_4_beat = 2
+	if song_position_in_beats > 251:
+		spawn_1_beat = 0
+		spawn_2_beat = 0
+		spawn_3_beat = 0
+		spawn_4_beat = 0
 	if song_position_in_beats > 288:
 		spawn_1_beat = 0
 		spawn_2_beat = 2
 		spawn_3_beat = 0
 		spawn_4_beat = 2
-	if song_position_in_beats > 322:
+	if song_position_in_beats > 302:
 		spawn_1_beat = 3
 		spawn_2_beat = 2
 		spawn_3_beat = 2
 		spawn_4_beat = 1
-	if song_position_in_beats > 388:
-		spawn_1_beat = 1
+	if song_position_in_beats > 380:
+		spawn_1_beat = 0
 		spawn_2_beat = 0
 		spawn_3_beat = 0
 		spawn_4_beat = 0
-	if song_position_in_beats > 396:
+	if song_position_in_beats > 384:
 		spawn_1_beat = 0
 		spawn_2_beat = 0
 		spawn_3_beat = 0
@@ -113,29 +122,50 @@ func _on_conductor_beat(pos):
 		
 func _spawn_notes(to_spawn):
 	if to_spawn > 0:
-		lane = randi() % 4
+		lane = randi() % 3
 		randomize()
 		var instance = note.instantiate()
 		instance._initialize(lane)
 		add_child(instance)
 	if to_spawn > 1:
 		while rand == lane:
-			rand = randi() % 4
+			rand = randi() % 3
 			randomize()
 		lane = rand
-		var instance = note.instantiate()
+		instance = note.instantiate()
 		instance._initialize(lane)
 		add_child(instance)
 		
-	#if combo % 10 == 0:
-		#if combo > 0:
-			#$ComboExclamation.text = "WOW! " + str(combo) + " in a row!"
-			#await get_tree().create_timer(2).timeout
-			#$ComboExclamation.text = ""
-#
-#func reset_combo():
-	#combo = 0
-	#$Combo.text = ""
+func _increment_score(by):
+	if by > 0:
+		combo += 1
+	else:
+		combo = 0
+	if by == 3:
+		great += 1
+	elif by == 2:
+		good += 1
+	elif by == 1:
+		okay += 1
+	else:
+		missed += 1
+	
+	score += by * combo
+	$Score.text = str(score)
+	if combo > 0:
+		$Combo.text = str(combo) + " combo!"
+		if combo > maxCombo:
+			maxCombo = combo
+	else:
+		$Combo.text = ""
+	if combo % 10 == 0 and combo > 0:
+		$ComboExclamation.text = str(combo) + " in a row!"
+		await get_tree().create_timer(2).timeout
+		$ComboExclamation.text = ""
+	
+func reset_combo():
+	combo = 0
+	$Combo.text = ""
 
 func _on_conductor_finished():
 	await get_tree().create_timer(5).timeout
