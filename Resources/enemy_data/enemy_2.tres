@@ -9,58 +9,60 @@
 script = ExtResource("1_hjt34")
 type = 0
 display_name = "Head"
-hit_description = "was hit"
 max_health = 175.0
+is_weak = false
 click_type = 1
 
 [sub_resource type="Resource" id="Resource_if4rn"]
 script = ExtResource("1_hjt34")
 type = 1
 display_name = "Torso"
-hit_description = "was hit"
 max_health = 175.0
+is_weak = false
 click_type = 1
 
 [sub_resource type="Resource" id="Resource_okwqi"]
 script = ExtResource("1_hjt34")
 type = 2
 display_name = "Left Arm"
-hit_description = "was hit"
 max_health = 175.0
+is_weak = false
 click_type = 1
 
 [sub_resource type="Resource" id="Resource_fi63f"]
 script = ExtResource("1_hjt34")
 type = 3
 display_name = "Right Arm"
-hit_description = "was hit"
 max_health = 175.0
+is_weak = false
 click_type = 1
 
 [sub_resource type="Resource" id="Resource_yjhv5"]
 script = ExtResource("1_hjt34")
 type = 4
 display_name = "Left Leg"
-hit_description = "was hit"
 max_health = 175.0
+is_weak = false
 click_type = 1
 
 [sub_resource type="Resource" id="Resource_w0ox1"]
 script = ExtResource("1_hjt34")
 type = 5
 display_name = "Right Leg"
-hit_description = "was hit"
 max_health = 175.0
+is_weak = false
 click_type = 1
 
 [resource]
 script = ExtResource("1_qm5g1")
 limbs = Array[ExtResource("1_hjt34")]([SubResource("Resource_tp3hw"), SubResource("Resource_if4rn"), SubResource("Resource_okwqi"), SubResource("Resource_fi63f"), SubResource("Resource_yjhv5"), SubResource("Resource_w0ox1")])
 visuals = ExtResource("4_egbky")
+rewards = Array[Resource("res://Scripts/enemy/reward_data.gd")]([])
 max_speed = 20.0
 total_heals = 10.0
 heal_amount = 50.0
 attack_damage = 100.0
+max_health_percent = 80.0
 display_name = "Stronger Enemy"
 description = "This is a stronger enemy, all limb health is 175 and some other value increases"
 ui_texture = ExtResource("3_2phcl")

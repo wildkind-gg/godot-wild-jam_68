@@ -1,52 +1,129 @@
-[gd_scene load_steps=10 format=3 uid="uid://dafdr4mgqnqyn"]
+[gd_scene load_steps=11 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="2_nnivy"]
 [ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/battles_enemies/player.tscn" id="2_qdcmu"]
+[ext_resource type="PackedScene" uid="uid://dylnjo762rsqo" path="res://Scenes/rhythm_forge/forge.tscn" id="3_arcld"]
 [ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/battles_enemies/enemy.tscn" id="3_ebjh3"]
-[ext_resource type="PackedScene" uid="uid://bih7xps8v4bbc" path="res://Scenes/bounty_board/bounty_board.tscn" id="3_ijttq"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="4_tfdtn"]
 
-[sub_resource type="Animation" id="Animation_00tku"]
-length = 0.001
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ocq2g"]
+bg_color = Color(0.443137, 0.65098, 0.6, 0.627451)
 
-[sub_resource type="Animation" id="Animation_6vtxd"]
-resource_name = "tackle"
-length = 0.3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig3l7"]
+bg_color = Color(0, 0.67451, 0.270588, 1)
+
+[sub_resource type="Animation" id="Animation_lhc5o"]
+resource_name = "popup"
+length = 0.75
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Player:position")
+tracks/0/path = NodePath("UI/Rewards:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(-5, 0), Vector2(15, 0), Vector2(0, 0)]
+"values": [Vector2(405, 900), Vector2(405, 143), Vector2(426, 189)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("UI/Rewards:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.2, 1.2), Vector2(1, 1)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_jwsv8"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jt3xn"]
 _data = {
-"RESET": SubResource("Animation_00tku"),
-"tackle": SubResource("Animation_6vtxd")
+"popup": SubResource("Animation_lhc5o")
 }
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_wb0f5")
 
-[node name="Label" type="Label" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="UI"]
 offset_left = 307.0
 offset_top = 459.0
 offset_right = 666.0
 offset_bottom = 542.0
 theme_override_font_sizes/font_size = 42
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="EnemyInfo" type="PanelContainer" parent="UI"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -273.0
+offset_top = -51.0
+offset_right = -8.0
+offset_bottom = 29.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ocq2g")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/EnemyInfo"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Stack" type="VBoxContainer" parent="UI/EnemyInfo/MarginContainer"]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Gordnor"
+horizontal_alignment = 1
+
+[node name="Health" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="HealthLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
+layout_mode = 2
+text = "HP"
+
+[node name="EnemyHealth" type="ProgressBar" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_ig3l7")
+value = 20.0
+show_percentage = false
+
+[node name="ValueLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/Health/EnemyHealth"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "100"
+horizontal_alignment = 1
 
 [node name="Battle_UI" type="Control" parent="UI"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
 
 [node name="Defend" type="Button" parent="UI/Battle_UI"]
 custom_minimum_size = Vector2(110, 0)
@@ -66,27 +143,88 @@ offset_right = 1137.0
 offset_bottom = 642.0
 text = "Run"
 
+[node name="Rewards" type="PanelContainer" parent="UI"]
+custom_minimum_size = Vector2(0, 41)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -135.0
+offset_right = 136.001
+offset_bottom = -91.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 0
+mouse_filter = 1
+
+[node name="RewardsAnimator" type="AnimationPlayer" parent="UI/Rewards"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_jt3xn")
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Rewards"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="RewardsContainer" type="VBoxContainer" parent="UI/Rewards/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="TitleLabel" type="Label" parent="UI/Rewards/MarginContainer/RewardsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Choose a Reward"
+horizontal_alignment = 1
+
+[node name="BattleMessages" type="PanelContainer" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_top = -28.0
+offset_right = 230.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/BattleMessages"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="MessageContainer" type="VBoxContainer" parent="UI/BattleMessages/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
 [node name="Transition" type="CanvasLayer" parent="."]
+visible = false
 
-[node name="SceneTransition" parent="Transition" node_paths=PackedStringArray("fade_transition") instance=ExtResource("2_nnivy")]
-landing_scene = ExtResource("3_ijttq")
-fade_transition = NodePath("FadeTransition")
+[node name="FadeTransition" parent="Transition" instance=ExtResource("4_tfdtn")]
 
-[node name="FadeTransition" parent="Transition/SceneTransition" instance=ExtResource("4_tfdtn")]
+[node name="ForgeSceneTransition" parent="Transition" node_paths=PackedStringArray("fade_transition") instance=ExtResource("2_nnivy")]
+landing_scene = ExtResource("3_arcld")
+fade_transition = NodePath("../FadeTransition")
 
 [node name="Player" parent="." instance=ExtResource("2_qdcmu")]
-position = Vector2(15, 0)
+position = Vector2(115, 407)
 
 [node name="Enemy" parent="." instance=ExtResource("3_ebjh3")]
 position = Vector2(1018, 145)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_jwsv8")
-}
 
 [connection signal="pressed" from="UI/Battle_UI/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="UI/Battle_UI/Run" to="." method="_on_run_pressed"]

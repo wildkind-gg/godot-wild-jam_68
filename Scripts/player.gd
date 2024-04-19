@@ -10,46 +10,56 @@ var util : Util = Util.new()
 const MAX_PERCENT : float = 100.0
 const MIN_HEALTH : float = 0.0
 
+### Signals ###
+signal on_death(death_message : String)
+
 
 ## Public Variables ###
-var current_turn_manager : TurnManager
-
+var max_limb_health = {
+	"Head" = 60.0,
+	"Torso" = 60.0,
+	"Right Arm" = 60.0,
+	"Left Arm" = 60.0,
+	"Right Leg" = 60.0,
+	"Left Leg" = 60.0,
+}
+var current_limb_health : Dictionary
 
 ### On Ready ###
 @onready var _limb_gauges = {
-	"playerHead" = $Player_Limbs/Player_Head,
-	"playerTorso" = $Player_Limbs/Player_Torso,
-	"playerRarm" = $Player_Limbs/Player_Rarm,
-	"playerLarm" = $Player_Limbs/Player_Larm,
-	"playerRleg" = $Player_Limbs/Player_Rleg,
-	"playerLleg" = $Player_Limbs/Player_Lleg,
+	"Head" = $Player_Limbs/Player_Head,
+	"Torso" = $Player_Limbs/Player_Torso,
+	"Right Arm" = $Player_Limbs/Player_Rarm,
+	"Left Arm" = $Player_Limbs/Player_Larm,
+	"Right Leg" = $Player_Limbs/Player_Rleg,
+	"Left Leg" = $Player_Limbs/Player_Lleg,
 }
-
+@onready var animation_player = $AnimationPlayer
 
 ### Exports ###
-@export var attack_damage : float = 25
+@export var attack_damage : float = 25.0
 
 
 ### Private Methods ###
 # Debug
 func _debug_log_all_health() -> void:
 	print("[Player] Limb Health:")
-	for key in _limb_gauges:
-		var limb_health = Global[key]
-		print("- %s: %d" %[key, limb_health])
+	for key in current_limb_health:
+		var health = current_limb_health[key]
+		print("- %s: %f" %[key, health])
+
+
+# Getters
+func _is_alive() -> bool:
+	return get_total_limb_health_percent() > 0
 
 
 # Gauge helpers
-func _get_clamped_limb_health(limb_name : String) -> float:
-	var value = Global[limb_name]
-	return clamp(value, 0, MAX_PERCENT)
-
-
 func _process_gauges() -> void:
 	for key in _limb_gauges:
 		# Get data
 		var ui_element = _limb_gauges[key]
-		var value = _get_clamped_limb_health(key)
+		var value = get_limb_health_percent(key) * 100
 		
 		# Set ui value
 		ui_element.value = value
@@ -69,57 +79,90 @@ func _damage_calculation() -> float:
 
 
 ### Public Methods ###
+func destroy() -> void:
+	# Play death animation
+
+	# Tell batlle that player died
+	var death_message = "You have been defeated"
+	on_death.emit(death_message)
+
+
 # Getters
-func get_total_limb_health() -> float: ## Returns player's total limb health percentage
-	var player_limb_health = get_limb_health_dict()
-	var total_health = util.add_dictionary_values(player_limb_health)
-	return total_health
+func get_total_limb_health_percent() -> float: ## Returns player's total limb health percentage
+	var total_health = util.add_dictionary_values(current_limb_health)
+	var max_total_health = util.add_dictionary_values(max_limb_health)
+	return total_health / max_total_health
 
 
-func get_limb_health_dict() -> Dictionary: # Returns dictionary of player's limb healths
+func get_limb_health_percent(limb : String) -> float:
+	var current_health = current_limb_health[limb]
+	var max_health = max_limb_health[limb]
+	return current_health / max_health
+
+
+func get_limb_health_percent_dict() -> Dictionary: # Returns dictionary of player's limb healths
 	# Player limb health dictionary
-	var percentage_factor = 100
-	var player_limb_health = {
-		"playerHead": Global.playerHead / percentage_factor,
-		"playerTorso": Global.playerTorso / percentage_factor,
-		"playerLarm": Global.playerLarm / percentage_factor,
-		"playerRarm": Global.playerRarm / percentage_factor,
-		"playerLleg": Global.playerLleg / percentage_factor, 
-		"playerRleg": Global.playerRleg / percentage_factor, 
-	}
+	var current_limb_health_percent = {}
+	for key in current_limb_health:
+		var max_healh = max_limb_health[key]
+		var current_health = current_limb_health[key]
+		current_limb_health_percent[key] = current_health / max_healh
 
-	return player_limb_health
+	return current_limb_health_percent
 
 
 # actions
 func take_attack_action(limb : Limb) -> void:
-	if not current_turn_manager.is_players_turn():
+	if not Global.current_turn_manager.is_players_turn():
 		return
+
+	# Play animation	
+	animation_player.play("tackle")
+
+	# Complete attack action method (need new one with new limb)
+	var _complete_attack_action = func(anim_name):
+		if anim_name == "tackle":
+			var damage = _damage_calculation()
+			limb.take_damage(damage)
 	
-	var damage = _damage_calculation()
-	limb.take_damage(damage)
+	# Disconnect old connected method (as we are connecting a new one)
+	var connections = animation_player.get_signal_connection_list("animation_finished")
+	for con in connections:
+		animation_player.disconnect("animation_finished", con.callable)
+	
+	# Connect new method
+	animation_player.animation_finished.connect(_complete_attack_action)
 
 
 # Limb helpers
 func take_damage(amount : float, limb : String) -> void:
-	# DEBUG
-	_debug_log_all_health()
-
 	# Calculate next value
-	var new_value = Global[limb] - amount
+	var new_value = current_limb_health[limb] - amount
 
 	# Don't go negative (normally MIN_HEALTH = 0)
 	if new_value >= MIN_HEALTH:
-		Global[limb] = new_value
+		current_limb_health[limb] = new_value
 	else:
-		Global[limb] = MIN_HEALTH
+		current_limb_health[limb] = MIN_HEALTH
+
+	# Update UI
+	_process_gauges()
+
+	# DEBUG
+	# _debug_log_all_health()
 
 
-func create(turn_manager : TurnManager) -> void:
-	current_turn_manager = turn_manager
+	# Animate
+	animation_player.play("hit")
+
+	# Check if we are still alive
+	if not _is_alive():
+		destroy()
 
 
-### Built in Methods ###
-func _process(_delta):
-	# For processing the ui
+func create() -> void:
+	for key in max_limb_health:
+		var max_health = max_limb_health[key]
+		current_limb_health[key] = max_health
+	
 	_process_gauges()

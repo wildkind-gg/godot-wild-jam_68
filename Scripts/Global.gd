@@ -10,18 +10,32 @@ enum LimbType {
 	RIGHT_LEG,
 }
 
+enum StatType {
+	ATTACK,
+	DEFENSE,
+	SPEED,
+}
 
-var playerHead:float = 100.0
-var playerLarm:float = 100.0
-var playerRarm:float = 100.0
-var playerLleg:float = 100.0
-var playerRleg:float = 100.0
-var playerTorso:float = 100.0
+var stat_display_data = [
+	{
+		display_name = "Attack",
+		abbreviation = "atk",
+	},
+	{
+		display_name = "Defense",
+		abbreviation = "def",
+	},
+	{
+		display_name = "Speed",
+		abbreviation = "spd",
+	},
+]
 
 var setScore = 0
 var turnCounter = 0
 var enemyAction = ""
 var setCombo = 0
 
+var current_turn_manager : TurnManager
 var current_enemy : EnemyData
 var current_player : Player # May want to change from global later

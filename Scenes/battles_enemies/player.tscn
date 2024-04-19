@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ckrm64kavjvpr"]
+[gd_scene load_steps=9 format=3 uid="uid://ckrm64kavjvpr"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_dd3de"]
 [ext_resource type="Texture2D" uid="uid://bhs7acn3nn6k7" path="res://Player_Character/Animations (Static)/right_left_combo.png" id="2_pafka"]
@@ -9,13 +9,79 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6q72n"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
+[sub_resource type="Animation" id="Animation_ky4v2"]
+resource_name = "tackle"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-10, 0), Vector2(15, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7m72r"]
+resource_name = "hit"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(4, 4), Vector2(5, 5), Vector2(4, 4), Vector2(5, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0.929412, 0, 0.117647, 1), Color(1, 1, 1, 1), Color(0.929412, 0, 0.117647, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_veymn"]
+resource_name = "idle"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sm4by"]
+_data = {
+"hit": SubResource("Animation_7m72r"),
+"idle": SubResource("Animation_veymn"),
+"tackle": SubResource("Animation_ky4v2")
+}
+
 [node name="Player" type="Node2D"]
 script = ExtResource("1_dd3de")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(122, 405)
-scale = Vector2(4.92969, 4.92969)
+scale = Vector2(4, 4)
 texture = ExtResource("2_pafka")
 hframes = 6
 
@@ -68,3 +134,9 @@ offset_right = 124.0
 offset_bottom = 433.0
 theme_override_styles/background = SubResource("StyleBoxFlat_11ety")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6q72n")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_sm4by")
+}
+autoplay = "idle"

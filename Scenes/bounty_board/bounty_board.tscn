@@ -3,9 +3,9 @@
 [ext_resource type="Script" path="res://Scripts/bounty_board.gd" id="1_7nv2g"]
 [ext_resource type="Resource" uid="uid://ieqpjmrppfhp" path="res://Resources/enemy_data/enemy_1.tres" id="2_jx4yv"]
 [ext_resource type="Resource" uid="uid://b7c1hg7hv1hpb" path="res://Resources/enemy_data/enemy_2.tres" id="3_em0q4"]
+[ext_resource type="PackedScene" uid="uid://dafdr4mgqnqyn" path="res://Scenes/battles_enemies/battle.tscn" id="5_vgfqc"]
+[ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="6_nhsuu"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="8_uyka7"]
-[ext_resource type="PackedScene" uid="uid://dafdr4mgqnqyn" path="res://Scenes/battles_enemies/battle.tscn" id="9_a8h7v"]
-[ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="10_srq2r"]
 
 [node name="BountyBoard" type="Node2D"]
 script = ExtResource("1_7nv2g")
@@ -34,7 +34,7 @@ columns = 3
 layer = 2
 
 [node name="SceneTransition" parent="Loading" node_paths=PackedStringArray("fade_transition") instance=ExtResource("8_uyka7")]
-landing_scene = ExtResource("9_a8h7v")
+landing_scene = ExtResource("5_vgfqc")
 fade_transition = NodePath("FadeTransition")
 
-[node name="FadeTransition" parent="Loading/SceneTransition" instance=ExtResource("10_srq2r")]
+[node name="FadeTransition" parent="Loading/SceneTransition" instance=ExtResource("6_nhsuu")]
