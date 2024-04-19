@@ -194,6 +194,9 @@ func _on_enemy_health_update(current_health : float) -> void:
 
 ### Built in Methods ###
 func _ready() -> void:
+	MenuMusic.volume_db = -80
+	ForgeMusic.volume_db = -80
+	BattleMusic.volume_db = 0
 	on_scene_loaded()
 
 	
@@ -201,6 +204,8 @@ func _process(_delta):
 	# leave game press esc
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
+	if Input.is_action_just_pressed("menu"):
+		get_tree().change_scene_to_file("res://Scenes/menus/main_menu.tscn")
 
 
 ### Signals Connected ###

@@ -38,3 +38,16 @@ landing_scene = ExtResource("5_vgfqc")
 fade_transition = NodePath("FadeTransition")
 
 [node name="FadeTransition" parent="Loading/SceneTransition" instance=ExtResource("6_nhsuu")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+offset_left = 874.0
+offset_top = 576.0
+offset_right = 1144.0
+offset_bottom = 639.0
+theme_override_font_sizes/font_size = 40
+text = "Back to Menu
+"
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

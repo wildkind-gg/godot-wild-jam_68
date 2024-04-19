@@ -26,9 +26,11 @@ var rand = 0
 var note = load("res://Scenes/rhythm_forge/note.tscn")
 var cursor = load("res://_Art/images.png")
 var default_cursor = load("res://Misc/1-Normal-Select.png")
-var instance
 
 func _ready():
+	ForgeMusic.stop()
+	BattleMusic.stop()
+	MenuMusic.stop()
 	randomize()
 	#$Conductor.play_with_beat_offset(8)
 	$Conductor.seek(0) # sets the position from which audio will be played, in seconds
@@ -132,7 +134,7 @@ func _spawn_notes(to_spawn):
 			rand = randi() % 3
 			randomize()
 		lane = rand
-		instance = note.instantiate()
+		var instance = note.instantiate()
 		instance._initialize(lane)
 		add_child(instance)
 		
@@ -158,7 +160,8 @@ func _increment_score(by):
 			maxCombo = combo
 	else:
 		$Combo.text = ""
-	if combo % 10 == 0 and combo > 0:
+	if combo % 40 == 0 and combo > 0:
+		$AnimationPlayer.play("combo")
 		$ComboExclamation.text = str(combo) + " in a row!"
 		await get_tree().create_timer(2).timeout
 		$ComboExclamation.text = ""
@@ -168,6 +171,8 @@ func reset_combo():
 	$Combo.text = ""
 
 func _on_conductor_finished():
-	await get_tree().create_timer(5).timeout
+	$AnimationPlayer.play("nicework")
+	$Guiding_Lines.hide()
+	await get_tree().create_timer(3).timeout
 	Input.set_custom_mouse_cursor(default_cursor)
 	get_tree().change_scene_to_file("res://Scenes/bounty_board/bounty_board.tscn")

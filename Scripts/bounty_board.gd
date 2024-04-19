@@ -23,6 +23,7 @@ var _is_initialzied : bool = false
 func _on_item_clicked(item_enemy : EnemyData):
 	Global.current_enemy = item_enemy
 	scene_transition.start_transition()
+	SceneChange.play()
 
 
 # Build a bounty item from specific data
@@ -89,4 +90,14 @@ func on_scene_loaded():
 ### Built in Methods ###
 func _ready():
 	on_scene_loaded()
+	MenuMusic.volume_db = 0.0
+	BattleMusic.volume_db = -80
+	
+	if !MenuMusic.playing:
+		MenuMusic.play()
+	if !BattleMusic.playing:
+		BattleMusic.play()
 
+
+func _on_button_pressed():
+	get_tree().change_scene_to_file("res://Scenes/menus/main_menu.tscn")

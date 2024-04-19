@@ -19,6 +19,11 @@ config/icon="res://Misc/icon.svg"
 [autoload]
 
 Global="*res://Scripts/Global.gd"
+BattleMusic="*res://battle_music.tscn"
+ForgeMusic="*res://forge_music.tscn"
+MenuMusic="*res://menu_music.tscn"
+SceneChange="*res://scene_transition.tscn"
+IntroSound="*res://intro_sound.tscn"
 
 [display]
 
@@ -38,6 +43,11 @@ escape={
 hit={
 "deadzone": 0.5,
 "events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(280, 20),"global_position":Vector2(284, 61),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+menu={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194318,"key_label":0,"unicode":0,"echo":false,"script":null)
 ]
 }
 

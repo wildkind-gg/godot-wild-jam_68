@@ -1,8 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bbv7krw1tkkpf"]
+[gd_scene load_steps=10 format=3 uid="uid://bbv7krw1tkkpf"]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_dk1lg"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="2_o6fhd"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="3_wywr5"]
+[ext_resource type="PackedScene" uid="uid://d20auegbqfr6p" path="res://intro_sound.tscn" id="4_xulth"]
+[ext_resource type="PackedScene" uid="uid://cej0cmlk6eqbf" path="res://menu_music.tscn" id="5_668y8"]
+[ext_resource type="PackedScene" uid="uid://bg0ki43nfofkf" path="res://battle_music.tscn" id="6_42ibh"]
+[ext_resource type="PackedScene" uid="uid://dmbi4i8rnkwnn" path="res://forge_music.tscn" id="7_37xrb"]
+[ext_resource type="PackedScene" uid="uid://0nb71yt2n7bv" path="res://scene_transition.tscn" id="8_tnj6u"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdsfi"]
 
@@ -50,12 +55,6 @@ fade_transition = NodePath("FadeTransition")
 
 [node name="FadeTransition" parent="Container/VBoxContainer/Play/SceneTransition" instance=ExtResource("2_o6fhd")]
 
-[node name="Options" type="Button" parent="Container/VBoxContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-text = "Options
-"
-
 [node name="Controls" type="Button" parent="Container/VBoxContainer"]
 layout_mode = 2
 text = "Controls"
@@ -88,10 +87,20 @@ offset_right = 599.0
 offset_bottom = 445.0
 text = "Exit"
 
-[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
+[node name="Sounds" type="Node" parent="."]
+
+[node name="Intro_Sound" parent="Sounds" instance=ExtResource("4_xulth")]
+volume_db = -10.0
+
+[node name="MenuMusic" parent="Sounds" instance=ExtResource("5_668y8")]
+
+[node name="BattleMusic" parent="Sounds" instance=ExtResource("6_42ibh")]
+
+[node name="ForgeMusic" parent="Sounds" instance=ExtResource("7_37xrb")]
+
+[node name="SceneTransition" parent="Sounds" instance=ExtResource("8_tnj6u")]
 
 [connection signal="pressed" from="Container/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Container/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/Controls" to="." method="_on_controls_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Container/ControlsText/Button" to="." method="_on_button_pressed"]

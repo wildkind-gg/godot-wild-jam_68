@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://0nb71yt2n7bv"]
+
+[ext_resource type="AudioStream" uid="uid://byisaei5el8b1" path="res://_Music/M_44_72bpm_BattleStart.wav" id="1_sohpq"]
+
+[node name="SceneTransition" type="AudioStreamPlayer"]
+stream = ExtResource("1_sohpq")

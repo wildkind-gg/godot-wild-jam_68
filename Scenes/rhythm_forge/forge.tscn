@@ -1,10 +1,75 @@
-[gd_scene load_steps=6 format=3 uid="uid://dylnjo762rsqo"]
+[gd_scene load_steps=10 format=3 uid="uid://dylnjo762rsqo"]
 
 [ext_resource type="Script" path="res://Scripts/forge.gd" id="1_8xlhv"]
 [ext_resource type="Texture2D" uid="uid://b1p85yai67mqw" path="res://_Art/Forge/ForgeBG-temp.png" id="2_01e6s"]
 [ext_resource type="PackedScene" uid="uid://dittm8xt3v3dp" path="res://Scenes/rhythm_forge/conductor.tscn" id="2_nd8ja"]
 [ext_resource type="PackedScene" uid="uid://c2qvh0ey1jh6g" path="res://Scenes/rhythm_forge/rhythm_button.tscn" id="4_335gy"]
 [ext_resource type="AudioStream" uid="uid://dmqw72kqwstxf" path="res://_Music/M_44_120bpm_LP_Forge.wav" id="4_iu3lw"]
+
+[sub_resource type="Animation" id="Animation_ebk52"]
+resource_name = "nicework"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_1k651"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ComboExclamation:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5rt2p"]
+resource_name = "combo"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ComboExclamation:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6jnjy"]
+_data = {
+"RESET": SubResource("Animation_1k651"),
+"combo": SubResource("Animation_5rt2p"),
+"nicework": SubResource("Animation_ebk52")
+}
 
 [node name="Forge" type="Node2D"]
 scale = Vector2(0.6, 0.6)
@@ -20,7 +85,25 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_01e6s")
 
-[node name="Guiding_Lines" type="Node" parent="."]
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = 808.333
+offset_top = 193.333
+offset_right = 1392.33
+offset_bottom = 330.333
+theme_override_colors/font_color = Color(0.937255, 0.298039, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 8
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_outline_size = 8
+theme_override_font_sizes/font_size = 100
+text = "NICE WORK!"
+
+[node name="Guiding_Lines" type="Node2D" parent="."]
+position = Vector2(10, -18.3333)
+scale = Vector2(1.65, 1.65)
 
 [node name="Line2D" type="Line2D" parent="Guiding_Lines"]
 position = Vector2(62, -350)
@@ -124,6 +207,11 @@ position = Vector2(900, 1015)
 rotation = 3.14159
 scale = Vector2(1, -1)
 input = "ui_left"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6jnjy")
+}
 
 [connection signal="beat" from="Conductor" to="." method="_on_conductor_beat"]
 [connection signal="finished" from="Conductor" to="." method="_on_conductor_finished"]
