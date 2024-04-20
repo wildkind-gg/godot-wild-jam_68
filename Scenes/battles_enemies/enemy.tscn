@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://casq3nvol6l0c"]
+[gd_scene load_steps=5 format=3 uid="uid://casq3nvol6l0c"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/enemy.gd" id="1_vxg0j"]
-[ext_resource type="PackedScene" uid="uid://bcd6s1ss7vdt7" path="res://Scenes/battles_enemies/enemy_visuals/enemy_1_visuals.tscn" id="3_7u77r"]
+[ext_resource type="PackedScene" uid="uid://coex8nc7ipycw" path="res://Scenes/battles_enemies/enemy_visuals/grognor_visuals.tscn" id="2_ihf2t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7ccm"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -9,78 +9,10 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l4ep0"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="Animation" id="Animation_77oo3"]
-resource_name = "hit"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 0.406126, 1, 1),
-"update": 0,
-"values": [Vector2(3, 3), Vector2(5, 5), Vector2(3, 3), Vector2(5, 5)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Color(0.929412, 0, 0.117647, 1), Color(1, 1, 1, 1), Color(0.929412, 0, 0.117647, 1), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_u6e07"]
-resource_name = "idle"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_cld8r"]
-resource_name = "tackle"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(-10, 0), Vector2(15, 0), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_px4at"]
-_data = {
-"hit": SubResource("Animation_77oo3"),
-"idle": SubResource("Animation_u6e07"),
-"tackle": SubResource("Animation_cld8r")
-}
-
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_vxg0j")
 
-[node name="Visuals" parent="." instance=ExtResource("3_7u77r")]
-scale = Vector2(3, 3)
+[node name="Visuals" parent="." instance=ExtResource("2_ihf2t")]
 
 [node name="Enemy_Limbs" type="Node" parent="."]
 
@@ -143,9 +75,3 @@ offset_bottom = 156.0
 mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_h7ccm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_l4ep0")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_px4at")
-}
-autoplay = "idle"

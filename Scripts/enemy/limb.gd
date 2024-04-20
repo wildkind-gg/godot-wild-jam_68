@@ -35,7 +35,13 @@ func _initialize(new_limb_data : LimbData, shape : CollisionPolygon2D) -> void:
 
 	var click_area = $ClickableArea
 	var click_poly = click_area.get_node("Shape")
+
+	# Match the visuals shape as closely as possible
 	click_poly.polygon = shape.polygon
+	click_poly.position = shape.position
+	click_poly.scale = shape.scale
+	
+	# Set click callbacks
 	click_area.input_event.connect(_on_clickable_area_input_event)
 
 
