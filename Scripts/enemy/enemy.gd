@@ -200,6 +200,10 @@ func _get_best_action(percents : Dictionary) -> String:
 
 func _change_health(increment : float) -> void:
 	_current_health += increment
+	
+	# Don't over heal
+	_current_health = min(_current_health, _max_health)
+
 	on_health_changed.emit(_current_health)
 
 	if _current_health <= 0:
@@ -208,6 +212,7 @@ func _change_health(increment : float) -> void:
 
 func _heal_limb(limb_name : String, amount : float) -> void:
 	# Play an animation
+	_animation_player.play("heal")
 
 	# Heal the limb
 	_current_limbs[limb_name].heal_damage(amount)

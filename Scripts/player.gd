@@ -121,7 +121,8 @@ func get_flipped_limb_health_percent_dict() -> Dictionary: # Returns dictionary 
 		# Only track limbs that are alive
 		if current_health / max_healh > 0:
 			# Track inverted percent to use as probablity table for targeting
-			current_limb_health_percent[key] = 1.0 - (current_health / max_healh)
+			# Start at 1.2 to make limbs at 100% health have 20% chance of being targeted still
+			current_limb_health_percent[key] = 1.2 - (current_health / max_healh)
 			current_limb_health_percent[key] = max(0, current_limb_health_percent[key])
 
 	return current_limb_health_percent

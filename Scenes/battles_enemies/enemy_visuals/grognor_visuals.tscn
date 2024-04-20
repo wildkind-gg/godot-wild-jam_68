@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://coex8nc7ipycw"]
+[gd_scene load_steps=7 format=3 uid="uid://coex8nc7ipycw"]
 
 [ext_resource type="Texture2D" uid="uid://tlfknobnvwki" path="res://_Art/Monsters/Grognor-TheTimekeeper.png" id="1_r403k"]
 
@@ -86,8 +86,25 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(-10, 0), Vector2(15, 0), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_8foyp"]
+resource_name = "heal"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(0, 1, 0, 1), Color(1, 1, 1, 1), Color(0, 1, 0, 1), Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bpt8o"]
 _data = {
+"heal": SubResource("Animation_8foyp"),
 "hit": SubResource("Animation_xe8ou"),
 "idle": SubResource("Animation_jobq7"),
 "tackle": SubResource("Animation_ylhnh")
