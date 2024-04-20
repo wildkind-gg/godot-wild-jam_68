@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=11 format=3 uid="uid://ieqpjmrppfhp"]
+[gd_resource type="Resource" script_class="EnemyData" load_steps=14 format=3 uid="uid://ieqpjmrppfhp"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/enemy_data.gd" id="1_64sat"]
 [ext_resource type="Script" path="res://Scripts/enemy/limb_data.gd" id="1_ysxdu"]
+[ext_resource type="Script" path="res://Scripts/enemy/reward_data.gd" id="2_mklgr"]
 [ext_resource type="Texture2D" uid="uid://cf00stc4wcp17" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/full.png" id="3_kj8dv"]
-[ext_resource type="PackedScene" uid="uid://bepew6251e28h" path="res://Scenes/battles_enemies/enemy_visuals/enemy_1_visuals.tscn" id="4_ica2h"]
+[ext_resource type="PackedScene" uid="uid://bcd6s1ss7vdt7" path="res://Scenes/battles_enemies/enemy_visuals/enemy_1_visuals.tscn" id="4_ica2h"]
 
 [sub_resource type="Resource" id="Resource_0uxb1"]
 script = ExtResource("1_ysxdu")
@@ -53,11 +54,23 @@ max_health = 50.0
 is_weak = false
 click_type = 1
 
+[sub_resource type="Resource" id="Resource_hsfyd"]
+script = ExtResource("2_mklgr")
+display_name = "Hasty Arm"
+stat = 0
+increase = 15.0
+
+[sub_resource type="Resource" id="Resource_elfgg"]
+script = ExtResource("2_mklgr")
+display_name = "Armored Torso"
+stat = 1
+increase = 20.0
+
 [resource]
 script = ExtResource("1_64sat")
 limbs = Array[ExtResource("1_ysxdu")]([SubResource("Resource_0uxb1"), SubResource("Resource_pdlp2"), SubResource("Resource_wpktj"), SubResource("Resource_ndxms"), SubResource("Resource_jgvl7"), SubResource("Resource_tyoop")])
 visuals = ExtResource("4_ica2h")
-rewards = Array[Resource("res://Scripts/enemy/reward_data.gd")]([])
+rewards = Array[ExtResource("2_mklgr")]([SubResource("Resource_hsfyd"), SubResource("Resource_elfgg")])
 max_speed = 10.0
 total_heals = 3.0
 heal_amount = 25.0

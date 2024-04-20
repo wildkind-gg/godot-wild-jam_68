@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bih7xps8v4bbc"]
+[gd_scene load_steps=8 format=3 uid="uid://bih7xps8v4bbc"]
 
 [ext_resource type="Script" path="res://Scripts/bounty_board.gd" id="1_7nv2g"]
 [ext_resource type="Resource" uid="uid://ieqpjmrppfhp" path="res://Resources/enemy_data/enemy_1.tres" id="2_jx4yv"]
+[ext_resource type="Resource" uid="uid://j1pv6jridu2k" path="res://Resources/enemy_data/grognor.tres" id="2_mra7h"]
 [ext_resource type="Resource" uid="uid://b7c1hg7hv1hpb" path="res://Resources/enemy_data/enemy_2.tres" id="3_em0q4"]
 [ext_resource type="PackedScene" uid="uid://dafdr4mgqnqyn" path="res://Scenes/battles_enemies/battle.tscn" id="5_vgfqc"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="6_nhsuu"]
@@ -9,7 +10,7 @@
 
 [node name="BountyBoard" type="Node2D"]
 script = ExtResource("1_7nv2g")
-enemy_data = Array[Resource("res://Scripts/enemy/enemy_data.gd")]([ExtResource("2_jx4yv"), ExtResource("3_em0q4")])
+enemy_data = Array[Resource("res://Scripts/enemy/enemy_data.gd")]([ExtResource("2_mra7h"), ExtResource("2_jx4yv"), ExtResource("3_em0q4")])
 
 [node name="Board" type="CanvasLayer" parent="."]
 

@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="EnemyData" load_steps=11 format=3 uid="uid://b7c1hg7hv1hpb"]
+[gd_resource type="Resource" script_class="EnemyData" load_steps=14 format=3 uid="uid://b7c1hg7hv1hpb"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/limb_data.gd" id="1_hjt34"]
 [ext_resource type="Script" path="res://Scripts/enemy/enemy_data.gd" id="1_qm5g1"]
+[ext_resource type="Script" path="res://Scripts/enemy/reward_data.gd" id="2_17r34"]
 [ext_resource type="Texture2D" uid="uid://b71sag5wuvgfn" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/wall_hit.png" id="3_2phcl"]
 [ext_resource type="PackedScene" uid="uid://dns4d2tryiylb" path="res://Scenes/battles_enemies/enemy_visuals/enemy_2_visuals.tscn" id="4_egbky"]
 
@@ -53,11 +54,23 @@ max_health = 175.0
 is_weak = false
 click_type = 1
 
+[sub_resource type="Resource" id="Resource_86ane"]
+script = ExtResource("2_17r34")
+display_name = "Fast Feet"
+stat = 2
+increase = 15.0
+
+[sub_resource type="Resource" id="Resource_881mi"]
+script = ExtResource("2_17r34")
+display_name = "Head"
+stat = 1
+increase = 25.0
+
 [resource]
 script = ExtResource("1_qm5g1")
 limbs = Array[ExtResource("1_hjt34")]([SubResource("Resource_tp3hw"), SubResource("Resource_if4rn"), SubResource("Resource_okwqi"), SubResource("Resource_fi63f"), SubResource("Resource_yjhv5"), SubResource("Resource_w0ox1")])
 visuals = ExtResource("4_egbky")
-rewards = Array[Resource("res://Scripts/enemy/reward_data.gd")]([])
+rewards = Array[ExtResource("2_17r34")]([SubResource("Resource_86ane"), SubResource("Resource_881mi")])
 max_speed = 20.0
 total_heals = 10.0
 heal_amount = 50.0

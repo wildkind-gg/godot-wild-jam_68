@@ -24,6 +24,10 @@ extends Node2D
 @onready var enemy_name = $UI/EnemyInfo/MarginContainer/Stack/NameLabel
 
 
+### EXPORTS ###
+@export var debug_enemy : EnemyData
+
+
 ### Public Variables ###
 var rnd = RandomNumberGenerator.new()
 var turn_type = TurnManager.TurnType
@@ -59,6 +63,10 @@ func generate_rewards(rewards : Array[RewardData]) -> void:
 
 	
 func generate_enemy(new_enemy_data : EnemyData) -> void:
+	# Use the debug enemy if we didn't recieve an enemy
+	if not new_enemy_data:
+		new_enemy_data = debug_enemy
+	
 	# Create the enemy
 	enemy.create(new_enemy_data)
 
