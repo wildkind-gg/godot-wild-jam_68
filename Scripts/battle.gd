@@ -100,6 +100,10 @@ func on_player_win(rewards) -> void:
 		
 
 func on_player_lose(death_message : String) -> void:
+	# Don't allow player to act
+	var next_turn = turn_type.NO_TURN
+	Global.current_turn_manager.change_turn(next_turn)
+
 	_broadcast_action(death_message)
 	
 	# Wait for death animations

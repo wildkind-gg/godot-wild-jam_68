@@ -194,13 +194,12 @@ func take_damage(amount : float, limb : String) -> void:
 	# DEBUG
 	# _debug_log_all_health()
 
-
-	# Animate
-	animation_player.play("hit")
-
 	# Check if we are still alive
 	if not _is_alive():
 		destroy()
+	
+	# Animate
+	animation_player.play("hit")
 
 
 func create() -> void:
