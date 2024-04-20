@@ -29,9 +29,9 @@ var _current_limbs : Dictionary
 var _current_rewards : Array[RewardData]
 var _animation_player : AnimationPlayer
 
-var _total_heals: float
+var _total_heal_actions: int
+var _current_heal_actions: int
 var _heal_amount : float
-var _current_heals: float
 
 var _max_speed: float
 var _current_speed: float
@@ -286,6 +286,9 @@ func _take_heal_action() -> void:
 	var best_limb = util.get_smallest_dict_value(enemy_limb_health)
 	_heal_limb(best_limb, _heal_amount)
 
+	# Reduce the amount of heal actions we can take
+	_current_heal_actions -= 1
+
 	# end turn	
 	end_enemy_turn()
 
@@ -361,14 +364,20 @@ func _get_aggression_level() -> float:
 	return 1 - _get_threat_level()
 
 
+## How healthy the player is relative to the enemy, higher the stronger the player is
+func _get_player_strength() -> float: 
+	var enemy_health = _get_total_limb_health_percent()
+	var player_health = Global.current_player.get_total_limb_health_percent()
+	var player_strength = player_health / (player_health + enemy_health)
+	return player_strength
+
+
 func _get_attack_chance() -> float:
 	# How aggressive the enemy should be
 	var aggression_level = _get_aggression_level()
 
 	# How healthy the player is relative to the enemy
-	var enemy_health = _get_total_limb_health_percent()
-	var player_health = Global.current_player.get_total_limb_health_percent()
-	var player_strength = player_health / (player_health + enemy_health)
+	var player_strength = _get_player_strength()
 
 	# The more aggressive we are and the weaker
 	# the player is, the more likely we are to attack
@@ -377,15 +386,42 @@ func _get_attack_chance() -> float:
 
 
 func _get_heal_chance() -> float:
-	# TODO: This is a placeholder calculation
-	# Heal note: add 1 if no more heals?
-	return _get_attack_chance()
+	# How aggressive the enemy should be
+	var aggression_level = _get_aggression_level()
+	
+	# How healthy the player is relative to the enemy
+	var player_strength = _get_player_strength()
+
+	# The less aggressive we are and the stronger
+	# the player is, the more likely we are to heal
+	var starting_value = 1.0
+	var heal_chance_percent = min(starting_value, starting_value + player_strength)
+	heal_chance_percent -= aggression_level
+	heal_chance_percent = max(0, heal_chance_percent)
+
+	# Don't heal if we run out of heal actions
+	if _current_heal_actions <= 0.0:
+		heal_chance_percent = 0.0
+	
+	return heal_chance_percent
 
 
 func _get_defend_chance() -> float:
-	# TODO: This is a placeholder calculation
+	# How aggressive the enemy should be
+	var aggression_level = _get_aggression_level()
+	
+	# How healthy the player is relative to the enemy
+	var player_strength = _get_player_strength()
+
+	# The less aggressive we are and the stronger
+	# the player is, the more likely we are to defend
+	var starting_value = 0.6
+	var defend_chance_percent = min(starting_value, starting_value + player_strength)
+	defend_chance_percent -= aggression_level
+	defend_chance_percent = max(0, defend_chance_percent)
+
 	# Defend note: add in 1 if a limb is below 30%?
-	return _get_attack_chance()
+	return defend_chance_percent
 
 
 func _get_run_chance() -> float:
@@ -430,10 +466,13 @@ func get_health_values() -> Dictionary:
 func create(new_enemy_data : EnemyData):
 	# Set enemy stats
 	_max_speed = new_enemy_data.max_speed
-	_total_heals = new_enemy_data.total_heals
-	_heal_amount = new_enemy_data.heal_amount
 	_current_attack_damage = new_enemy_data.attack_damage
 	_current_rewards = new_enemy_data.rewards
+
+	# Heals
+	_total_heal_actions = new_enemy_data.total_heal_actions
+	_current_heal_actions = _total_heal_actions
+	_heal_amount = new_enemy_data.heal_amount
 
 	# Generate visuals and get limb points to add limbs to
 	var limb_points = _generate_visuals(new_enemy_data.visuals)
@@ -486,7 +525,7 @@ func take_enemy_turn() -> void:
 		"attack" : _get_attack_chance(),
 		"heal": _get_heal_chance(),
 		"defend": _get_defend_chance(),
-		"run": _get_run_chance(),
+		# "run": _get_run_chance(),
 	}
 	var best_action = _get_best_action(action_weights)
 	print("Action: %s" %best_action)

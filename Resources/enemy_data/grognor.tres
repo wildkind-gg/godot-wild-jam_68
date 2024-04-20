@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://Scripts/enemy/reward_data.gd" id="2_724n2"]
 [ext_resource type="Script" path="res://Scripts/enemy/enemy_data.gd" id="3_jh8ae"]
 [ext_resource type="Texture2D" uid="uid://tlfknobnvwki" path="res://_Art/Monsters/Grognor-TheTimekeeper.png" id="4_j2bhv"]
-[ext_resource type="PackedScene" path="res://Scenes/battles_enemies/enemy_visuals/grognor_visuals.tscn" id="5_3rohr"]
+[ext_resource type="PackedScene" uid="uid://coex8nc7ipycw" path="res://Scenes/battles_enemies/enemy_visuals/grognor_visuals.tscn" id="5_3rohr"]
 
 [sub_resource type="Resource" id="Resource_tp3hw"]
 script = ExtResource("1_xc6lf")
@@ -72,7 +72,7 @@ limbs = Array[ExtResource("1_xc6lf")]([SubResource("Resource_tp3hw"), SubResourc
 visuals = ExtResource("5_3rohr")
 rewards = Array[ExtResource("2_724n2")]([SubResource("Resource_86ane"), SubResource("Resource_881mi")])
 max_speed = 7.5
-total_heals = 3.0
+total_heal_actions = 3.0
 heal_amount = 20.0
 attack_damage = 35.0
 max_health_percent = 60.0
