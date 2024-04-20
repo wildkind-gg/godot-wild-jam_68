@@ -5,7 +5,8 @@ signal on_action_started(action_message : String)
 signal on_action_completed(action_message : String)
 signal on_limb_hit(action_message : String)
 signal on_run_away(action_message : String)
-signal on_health_changed(current_health : float)
+signal on_health_changed(current_health : float, max_health : float)
+signal on_crit_changed(current_crit : float, amount_needed : float)
 signal on_defeated(rewards : Array[RewardData])
 
 ### Constants ###
@@ -39,6 +40,12 @@ var _current_speed: float
 var _max_health : float
 var _current_health : float
 var _current_attack_damage : float
+
+# Crit
+var _crit_multiplier : float
+var _crit_amount_needed : float ## Amount of damage needed before crit happens
+var _current_crit_amount : float ## Amount of damage done
+var _crit_next_turn : bool ## Flag to say we should crit on the next attack
 
 
 ### References ###
@@ -204,7 +211,7 @@ func _change_health(increment : float) -> void:
 	# Don't over heal
 	_current_health = min(_current_health, _max_health)
 
-	on_health_changed.emit(_current_health)
+	on_health_changed.emit(_current_health, _max_health)
 
 	if _current_health <= 0:
 		destroy()
@@ -227,20 +234,30 @@ func _heal_limb(limb_name : String, amount : float) -> void:
 
 
 func _damage_calculation() -> float:
-	# Add any bonus damage calculations here
 	var base_damage = _current_attack_damage
+	if _crit_next_turn:
+		# Multiply damage
+		base_damage *= _crit_multiplier
+		
+		# Track that we just dealt a crit by resetting flag a tracking
+		_crit_next_turn = false
+		_current_crit_amount = 0
+		on_crit_changed.emit(_current_crit_amount, _crit_amount_needed)
+		
+		# Emit crit message
+		var action_message = "Enraged the enemy deals a critical blow!"
+		on_action_started.emit(action_message)
+
 	return base_damage
 
 
 func _attack_player_part(part_name : String) -> void:
-	# Play an animation
-
 	# Have player take damage
 	var damage = _damage_calculation()
 	Global.current_player.take_damage(damage, part_name)
-	
+
 	# Broadcast action
-	var action_message = "Enemy attacks %s" %part_name
+	var action_message = "Enemy attacks %s for %d damage" %[part_name, damage]
 	on_action_completed.emit(action_message)
 
 
@@ -257,6 +274,12 @@ func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 
 	if _is_alive():
 		on_limb_hit.emit(hit_message)
+		
+		# Track crits
+		_current_crit_amount += damage_taken
+		on_crit_changed.emit(_current_crit_amount, _crit_amount_needed)
+		if _current_crit_amount >= _crit_amount_needed:
+			_crit_next_turn = true
 
 
 # Actions
@@ -356,8 +379,13 @@ func _get_threat_level() -> float:
 ## How aggressive the enemy should be a high value here will encorage the enemy to attack
 func _get_aggression_level() -> float:
 	# Aggression reduces when threat is increased
-	return 1 - _get_threat_level()
-
+	var aggression = 1 - _get_threat_level()
+	
+	# Add a large value to aggression if we should crit next turn
+	if _crit_next_turn:
+		aggression += 1
+	
+	return aggression
 
 ## How healthy the player is relative to the enemy, higher the stronger the player is
 func _get_player_strength() -> float: 
@@ -377,6 +405,11 @@ func _get_attack_chance() -> float:
 	# The more aggressive we are and the weaker
 	# the player is, the more likely we are to attack
 	var attack_chance_percent = max(0, aggression_level * player_strength)
+	
+	# Add a large value to attack chance if we should crit next turn
+	if _crit_next_turn:
+		attack_chance_percent += 1
+	
 	return attack_chance_percent
 
 
@@ -469,6 +502,11 @@ func create(new_enemy_data : EnemyData):
 	_current_heal_actions = _total_heal_actions
 	_heal_amount = new_enemy_data.heal_amount
 
+	# Crit
+	_crit_multiplier = new_enemy_data.crit_damage_multiplier
+	_crit_amount_needed = new_enemy_data.crit_amount
+	_current_crit_amount = 0
+
 	# Generate visuals and get limb points to add limbs to
 	var limb_points = _generate_visuals(new_enemy_data.visuals)
 
@@ -484,10 +522,11 @@ func create(new_enemy_data : EnemyData):
 
 func destroy() -> void:
 	_current_health = 0
-	on_health_changed.emit(_current_health)
+	on_health_changed.emit(_current_health, _max_health)
 
 	# Play death animation
-	print("Enemy was defeated")
+	var message = "Enemy was defeated"
+	on_action_started.emit(message)
 
 	# Signal that we were defeated (after animation if added)
 	on_defeated.emit(_current_rewards)

@@ -12,6 +12,10 @@ extends Resource
 @export var total_heal_actions : int = 5
 @export var heal_amount : float
 @export var attack_damage : float
+## The amount of damage needing to be done for crit to trigger
+@export var crit_amount : float = 100
+## Amount damage is multiplied by when critting
+@export var crit_damage_multiplier : float = 2
 ## The percentage of total limb health the player needs to deal before enemy is defeated
 @export var max_health_percent : float = 60
 

@@ -21,6 +21,8 @@ extends Node2D
 # Enemy UI Info
 @onready var enemy_health_bar = $UI/EnemyInfo/MarginContainer/Stack/Health/EnemyHealth
 @onready var enemy_health_bar_value = $UI/EnemyInfo/MarginContainer/Stack/Health/EnemyHealth/ValueLabel
+@onready var enemy_crit_bar = $UI/EnemyInfo/MarginContainer/Stack/CritBar/EnemyCrit
+@onready var enemy_crit_bar_value = $UI/EnemyInfo/MarginContainer/Stack/CritBar/EnemyCrit/ValueLabel
 @onready var enemy_name = $UI/EnemyInfo/MarginContainer/Stack/NameLabel
 
 
@@ -75,6 +77,7 @@ func generate_enemy(new_enemy_data : EnemyData) -> void:
 	enemy.on_action_completed.connect(_broadcast_action)
 	enemy.on_action_started.connect(_broadcast_action)
 	enemy.on_health_changed.connect(_on_enemy_health_update)
+	enemy.on_crit_changed.connect(_on_enemy_crit_update)
 	enemy.on_limb_hit.connect(_on_enemy_limb_hit)
 	enemy.on_run_away.connect(_on_run_success)
 
@@ -82,7 +85,8 @@ func generate_enemy(new_enemy_data : EnemyData) -> void:
 	# Update health bar
 	var health_values = enemy.get_health_values()
 	enemy_health_bar.max_value = health_values.max
-	_on_enemy_health_update(health_values.current)
+	_on_enemy_health_update(health_values.current, health_values.max)
+	_on_enemy_crit_update(0, new_enemy_data.crit_amount)
 
 	# Update name
 	enemy_name.text = new_enemy_data.display_name
@@ -195,9 +199,19 @@ func _on_run_fail() -> void:
 	_on_player_action(action_delay)
 
 
-func _on_enemy_health_update(current_health : float) -> void:
+func _on_enemy_health_update(current_health : float, max_health : float) -> void:
 	enemy_health_bar.value = current_health
-	enemy_health_bar_value.text = "%d" %current_health
+	enemy_health_bar_value.text = "%d/%d" %[current_health, max_health]
+
+
+func _on_enemy_crit_update(current_crit : float, amount_needed : float) -> void:
+	enemy_crit_bar.value = current_crit
+	enemy_crit_bar_value.text = "%d/%d" %[current_crit, amount_needed]
+
+	if current_crit >= amount_needed:
+		enemy_crit_bar.self_modulate = Color(1, 0, 0)
+	else:
+		enemy_crit_bar.self_modulate = Color(1, 1, 0)
 
 
 ### Built in Methods ###
