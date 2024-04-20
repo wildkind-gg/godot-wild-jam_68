@@ -1,7 +1,7 @@
 extends Node2D
 
 const SPAWN_Y = -10
-const TARGET_Y = 1015
+const TARGET_Y = 970
 const DIST_TO_TARGET = TARGET_Y - SPAWN_Y
 
 
@@ -27,15 +27,12 @@ func _physics_process(delta):
 
 func _initialize(lane):
 	if lane == 0:
-		$AnimatedSprite2D.modulate = Color("0000fa")
 		$AnimatedSprite2D.frame = 0
 		position = LEFT_SPAWN
 	elif lane == 1:
-		$AnimatedSprite2D.modulate = Color("008720")
 		$AnimatedSprite2D.frame = 1
 		position = CENTER_SPAWN
 	elif lane == 2:
-		$AnimatedSprite2D.modulate = Color("e40d00")
 		$AnimatedSprite2D.frame = 2
 		position = RIGHT_SPAWN
 	else: 

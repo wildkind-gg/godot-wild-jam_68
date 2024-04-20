@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d20auegbqfr6p"]
+
+[ext_resource type="AudioStream" uid="uid://d0sjr0ns2xmd0" path="res://_Music/M_44_72bpm_Intro.mp3" id="1_ojdyt"]
+
+[node name="Intro_Sound" type="AudioStreamPlayer"]
+stream = ExtResource("1_ojdyt")
+autoplay = true

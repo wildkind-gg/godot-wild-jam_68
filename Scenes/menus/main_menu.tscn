@@ -1,18 +1,64 @@
-[gd_scene load_steps=10 format=3 uid="uid://bbv7krw1tkkpf"]
+[gd_scene load_steps=15 format=3 uid="uid://bbv7krw1tkkpf"]
 
 [ext_resource type="Script" path="res://Scripts/main_menu.gd" id="1_dk1lg"]
+[ext_resource type="Texture2D" uid="uid://ca3llde5xp80v" path="res://Misc/vecteezy_landscape-scene-silhouette-with-medieval-town_6928660.png" id="2_35tdg"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="2_o6fhd"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="3_wywr5"]
-[ext_resource type="PackedScene" uid="uid://d20auegbqfr6p" path="res://intro_sound.tscn" id="4_xulth"]
-[ext_resource type="PackedScene" uid="uid://cej0cmlk6eqbf" path="res://menu_music.tscn" id="5_668y8"]
-[ext_resource type="PackedScene" uid="uid://bg0ki43nfofkf" path="res://battle_music.tscn" id="6_42ibh"]
-[ext_resource type="PackedScene" uid="uid://dmbi4i8rnkwnn" path="res://forge_music.tscn" id="7_37xrb"]
-[ext_resource type="PackedScene" uid="uid://0nb71yt2n7bv" path="res://scene_transition.tscn" id="8_tnj6u"]
+[ext_resource type="PackedScene" uid="uid://d20auegbqfr6p" path="res://_Music/intro_sound.tscn" id="4_icjc6"]
+[ext_resource type="PackedScene" uid="uid://cej0cmlk6eqbf" path="res://_Music/menu_music.tscn" id="5_mrhpt"]
+[ext_resource type="PackedScene" uid="uid://bg0ki43nfofkf" path="res://_Music/battle_music.tscn" id="6_an7xp"]
+[ext_resource type="PackedScene" uid="uid://dmbi4i8rnkwnn" path="res://_Music/forge_music.tscn" id="7_800jt"]
+[ext_resource type="PackedScene" uid="uid://0nb71yt2n7bv" path="res://_Music/scene_transition.tscn" id="8_ev4kk"]
+
+[sub_resource type="SystemFont" id="SystemFont_mw7iy"]
+font_names = PackedStringArray("Poor Richard")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ypli"]
+bg_color = Color(0.8, 0.509804, 0.223529, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.533333, 0.270588, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="SystemFont" id="SystemFont_we0fe"]
+font_names = PackedStringArray("Poor Richard")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cdsfi"]
+bg_color = Color(0.372549, 0.2, 0.0156863, 0.854902)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.203922, 0.109804, 0.00784314, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ff7in"]
+bg_color = Color(0.8, 0.509804, 0.223529, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.533333, 0.270588, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="MainMenu" type="Node2D"]
 script = ExtResource("1_dk1lg")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("2_35tdg")
 
 [node name="Container" type="Control" parent="."]
 layout_mode = 3
@@ -24,30 +70,43 @@ offset_bottom = 648.0
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 23.0
+offset_top = 70.0
+offset_bottom = 139.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.533333, 0.270588, 0, 0.643137)
+theme_override_colors/font_outline_color = Color(0.533333, 0.270588, 0, 0.643137)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 16
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/font = SubResource("SystemFont_mw7iy")
+theme_override_font_sizes/font_size = 50
 text = "LoFi Beats to Slay Monsters to"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Container"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 7
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -198.0
+offset_right = 50.0
+offset_bottom = -55.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme_override_constants/separation = 25
 
 [node name="Play" type="Button" parent="Container/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_mw7iy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5ypli")
 text = "Play"
 
 [node name="SceneTransition" parent="Container/VBoxContainer/Play" node_paths=PackedStringArray("fade_transition") instance=ExtResource("3_wywr5")]
@@ -57,48 +116,80 @@ fade_transition = NodePath("FadeTransition")
 
 [node name="Controls" type="Button" parent="Container/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_mw7iy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5ypli")
 text = "Controls"
 
 [node name="Exit" type="Button" parent="Container/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_mw7iy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5ypli")
 text = "Exit"
 
 [node name="ControlsText" type="Label" parent="Container"]
 visible = false
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -169.0
+offset_right = 300.0
+offset_bottom = 91.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.8, 0.509804, 0.223529, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("SystemFont_we0fe")
+theme_override_font_sizes/font_size = 23
 theme_override_styles/normal = SubResource("StyleBoxFlat_cdsfi")
-text = "ESC to return to main menu
-Left mouse button to choose action or limb
-Arrow keys to hit notes"
+text = "Arrow keys to hit notes in the forge
+
+ESC to return to main menu at anytime
+
+Left mouse button to choose action or enemy limb
+
+"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Button" type="Button" parent="Container/ControlsText"]
-layout_mode = 0
-offset_left = 562.0
-offset_top = 414.0
-offset_right = 599.0
-offset_bottom = 445.0
-text = "Exit"
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -55.0
+offset_right = 65.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_mw7iy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ff7in")
+text = "Return to Menu"
 
 [node name="Sounds" type="Node" parent="."]
 
-[node name="Intro_Sound" parent="Sounds" instance=ExtResource("4_xulth")]
+[node name="Intro_Sound" parent="Sounds" instance=ExtResource("4_icjc6")]
 volume_db = -10.0
 
-[node name="MenuMusic" parent="Sounds" instance=ExtResource("5_668y8")]
+[node name="MenuMusic" parent="Sounds" instance=ExtResource("5_mrhpt")]
 
-[node name="BattleMusic" parent="Sounds" instance=ExtResource("6_42ibh")]
+[node name="BattleMusic" parent="Sounds" instance=ExtResource("6_an7xp")]
 
-[node name="ForgeMusic" parent="Sounds" instance=ExtResource("7_37xrb")]
+[node name="ForgeMusic" parent="Sounds" instance=ExtResource("7_800jt")]
 
-[node name="SceneTransition" parent="Sounds" instance=ExtResource("8_tnj6u")]
+[node name="SceneTransition" parent="Sounds" instance=ExtResource("8_ev4kk")]
 
 [connection signal="pressed" from="Container/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/Controls" to="." method="_on_controls_pressed"]

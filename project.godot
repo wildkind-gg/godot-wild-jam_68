@@ -16,14 +16,18 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 run/max_fps=60
 config/icon="res://Misc/icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://_Music/default_bus_layout.tres"
+
 [autoload]
 
 Global="*res://Scripts/Global.gd"
-BattleMusic="*res://battle_music.tscn"
-ForgeMusic="*res://forge_music.tscn"
-MenuMusic="*res://menu_music.tscn"
-SceneChange="*res://scene_transition.tscn"
-IntroSound="*res://intro_sound.tscn"
+BattleMusic="*res://_Music/battle_music.tscn"
+ForgeMusic="*res://_Music/forge_music.tscn"
+MenuMusic="*res://_Music/menu_music.tscn"
+SceneChange="*res://_Music/scene_transition.tscn"
+IntroSound="*res://_Music/intro_sound.tscn"
 
 [display]
 

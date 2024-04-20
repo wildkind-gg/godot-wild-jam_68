@@ -202,9 +202,7 @@ func _ready() -> void:
 	
 func _process(_delta):
 	# leave game press esc
-	if Input.is_action_just_pressed("ui_cancel"):
-		get_tree().quit()
-	if Input.is_action_just_pressed("menu"):
+	if Input.is_action_just_pressed("escape"):
 		get_tree().change_scene_to_file("res://Scenes/menus/main_menu.tscn")
 
 

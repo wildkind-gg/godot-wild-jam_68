@@ -1,30 +1,30 @@
 [gd_scene load_steps=8 format=3 uid="uid://c2qvh0ey1jh6g"]
 
-[ext_resource type="Texture2D" uid="uid://bdc0pyglfup3x" path="res://Misc/Start.png" id="1_7vyop"]
-[ext_resource type="Texture2D" uid="uid://5g4tvm3ateuc" path="res://Misc/Start.Pressed.png" id="2_sgl7l"]
+[ext_resource type="Texture2D" uid="uid://b8k3bbfkrq4ji" path="res://_Art/Forge/UntitledHammerCircle.png" id="1_b4g6g"]
+[ext_resource type="Texture2D" uid="uid://mrslu0wq0jn7" path="res://_Art/Forge/UntitledRight.png" id="2_ck57r"]
 [ext_resource type="Script" path="res://Scripts/rhythm_button.gd" id="3_onddu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bg5tq"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_7vyop")
+"texture": ExtResource("1_b4g6g")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_sgl7l")
+"texture": ExtResource("2_ck57r")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0sh0n"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_76i0j"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6tyr"]
-size = Vector2(42, 42)
+[sub_resource type="CircleShape2D" id="CircleShape2D_p45a6"]
+radius = 20.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fers"]
-size = Vector2(70, 70)
+[sub_resource type="CircleShape2D" id="CircleShape2D_8mnso"]
+radius = 45.0
 
 [node name="Rhythm_Button" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_bg5tq")
@@ -34,19 +34,19 @@ script = ExtResource("3_onddu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]
 scale = Vector2(1.2, 1.2)
-shape = SubResource("RectangleShape2D_0sh0n")
+shape = SubResource("CircleShape2D_76i0j")
 
 [node name="GoodArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GoodArea"]
 scale = Vector2(1.2, 1.2)
-shape = SubResource("RectangleShape2D_q6tyr")
+shape = SubResource("CircleShape2D_p45a6")
 
 [node name="OkayArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OkayArea"]
 scale = Vector2(1.2, 1.2)
-shape = SubResource("RectangleShape2D_4fers")
+shape = SubResource("CircleShape2D_8mnso")
 
 [node name="Pushtimer" type="Timer" parent="."]
 wait_time = 0.15

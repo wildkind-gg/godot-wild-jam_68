@@ -1,21 +1,21 @@
 [gd_scene load_steps=7 format=3 uid="uid://b4yfo8lai86mp"]
 
 [ext_resource type="Script" path="res://Scripts/Note.gd" id="1_awum4"]
-[ext_resource type="Texture2D" uid="uid://brk2ilhd7uexf" path="res://Misc/Start_left.png" id="2_26hqp"]
-[ext_resource type="Texture2D" uid="uid://xtaafbwa28vb" path="res://Misc/Start_up.png" id="3_vb14v"]
-[ext_resource type="Texture2D" uid="uid://bdc0pyglfup3x" path="res://Misc/Start.png" id="4_t5scl"]
+[ext_resource type="Texture2D" uid="uid://yq3b2ufj5dlf" path="res://_Art/Forge/UntitledHammerCircleLeft.png" id="2_q6186"]
+[ext_resource type="Texture2D" uid="uid://cjpviicj52g0m" path="res://_Art/Forge/UntitledHammerCircleUp.png" id="3_tpuna"]
+[ext_resource type="Texture2D" uid="uid://b8k3bbfkrq4ji" path="res://_Art/Forge/UntitledHammerCircle.png" id="4_uhbbb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ojhr1"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_26hqp")
+"texture": ExtResource("2_q6186")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_vb14v")
+"texture": ExtResource("3_tpuna")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_t5scl")
+"texture": ExtResource("4_uhbbb")
 }],
 "loop": true,
 "name": &"default",
@@ -25,10 +25,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3qwvc"]
 
 [node name="Note" type="Area2D" groups=["note"]]
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_awum4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(0.892586, 0.0516911, 0, 1)
 sprite_frames = SubResource("SpriteFrames_ojhr1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

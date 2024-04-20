@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dmbi4i8rnkwnn"]
-
-[ext_resource type="AudioStream" uid="uid://dmqw72kqwstxf" path="res://_Music/M_44_120bpm_LP_Forge.wav" id="1_ak5ca"]
-
-[node name="ForgeMusic" type="AudioStreamPlayer"]
-stream = ExtResource("1_ak5ca")
-volume_db = -80.0

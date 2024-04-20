@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://jj83exo8d342"]
+
+[ext_resource type="Texture2D" uid="uid://cjpviicj52g0m" path="res://_Art/Forge/UntitledHammerCircleUp.png" id="1_5or55"]
+[ext_resource type="Texture2D" uid="uid://c31goh6lbb41c" path="res://_Art/Forge/UntitledUp.png" id="2_svmqe"]
+[ext_resource type="Script" path="res://Scripts/rhythm_button.gd" id="3_aoxtc"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bg5tq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5or55")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_svmqe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lartf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eyvsr"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1u4cx"]
+radius = 45.0
+
+[node name="Rhythm_Button_Up" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_bg5tq")
+script = ExtResource("3_aoxtc")
+
+[node name="PerfectArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PerfectArea"]
+scale = Vector2(1.2, 1.2)
+shape = SubResource("CircleShape2D_lartf")
+
+[node name="GoodArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GoodArea"]
+scale = Vector2(1.2, 1.2)
+shape = SubResource("CircleShape2D_eyvsr")
+
+[node name="OkayArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OkayArea"]
+scale = Vector2(1.2, 1.2)
+shape = SubResource("CircleShape2D_1u4cx")
+
+[node name="Pushtimer" type="Timer" parent="."]
+wait_time = 0.15
+
+[connection signal="area_entered" from="PerfectArea" to="." method="_on_perfect_area_area_entered"]
+[connection signal="area_exited" from="PerfectArea" to="." method="_on_perfect_area_area_exited"]
+[connection signal="area_entered" from="GoodArea" to="." method="_on_good_area_area_entered"]
+[connection signal="area_exited" from="GoodArea" to="." method="_on_good_area_area_exited"]
+[connection signal="area_entered" from="OkayArea" to="." method="_on_okay_area_area_entered"]
+[connection signal="area_exited" from="OkayArea" to="." method="_on_okay_area_area_exited"]
+[connection signal="timeout" from="Pushtimer" to="." method="_on_pushtimer_timeout"]

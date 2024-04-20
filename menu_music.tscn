@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://cej0cmlk6eqbf"]
-
-[ext_resource type="AudioStream" uid="uid://o242jfd0ggq6" path="res://_Music/M_44_72bpm_LP_Menu.wav" id="1_xut5e"]
-
-[node name="MenuMusic" type="AudioStreamPlayer"]
-stream = ExtResource("1_xut5e")
-volume_db = -80.0

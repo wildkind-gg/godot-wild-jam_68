@@ -24,8 +24,6 @@ var spawn_4_beat = 0
 var lane = 0
 var rand = 0
 var note = load("res://Scenes/rhythm_forge/note.tscn")
-var cursor = load("res://_Art/images.png")
-var default_cursor = load("res://Misc/1-Normal-Select.png")
 
 func _ready():
 	ForgeMusic.stop()
@@ -34,13 +32,11 @@ func _ready():
 	randomize()
 	#$Conductor.play_with_beat_offset(8)
 	$Conductor.seek(0) # sets the position from which audio will be played, in seconds
-	Input.set_custom_mouse_cursor(cursor)
 	$ComboExclamation.text = ""
-	$Rhythm_Button_Right.modulate = Color("e40d00")
-	$Rhythm_Button_Up.modulate = Color("008720")
-	$Rhythm_Button3_Left.modulate = Color("0000fa")
 	
 func _process(_delta):
+	if Input.is_action_just_pressed("escape"):
+		get_tree().change_scene_to_file("res://Scenes/menus/main_menu.tscn")
 	print(song_position_in_beats)
 	$Score.text = "Score: " + "%s" %score
 	
@@ -62,20 +58,20 @@ func _on_conductor_measure_sig(pos):
 
 func _on_conductor_beat(pos):
 	song_position_in_beats = pos
-	if song_position_in_beats > 36:
+	if song_position_in_beats > 24:
 		spawn_1_beat = 1
 		spawn_2_beat = 1
 		spawn_3_beat = 1
 		spawn_4_beat = 1
-	if song_position_in_beats > 98:
+	if song_position_in_beats > 78:
 		spawn_1_beat = 2
-		spawn_2_beat = 0
+		spawn_2_beat = 1
 		spawn_3_beat = 1
-		spawn_4_beat = 0
+		spawn_4_beat = 2
 	if song_position_in_beats > 132:
-		spawn_1_beat = 0
+		spawn_1_beat = 1
 		spawn_2_beat = 2
-		spawn_3_beat = 0
+		spawn_3_beat = 1
 		spawn_4_beat = 2
 	if song_position_in_beats > 162:
 		spawn_1_beat = 2
@@ -150,6 +146,7 @@ func _increment_score(by):
 	elif by == 1:
 		okay += 1
 	else:
+		$MissedNote.play()
 		missed += 1
 	
 	score += by * combo
@@ -171,8 +168,20 @@ func reset_combo():
 	$Combo.text = ""
 
 func _on_conductor_finished():
-	$AnimationPlayer.play("nicework")
 	$Guiding_Lines.hide()
-	await get_tree().create_timer(3).timeout
-	Input.set_custom_mouse_cursor(default_cursor)
+	if score >= 20000:
+		$AnimationPlayer.play("nicework")
+		$Label.text = "UPGRADE SUCCESSFUL!"
+		$UpgradeSuccessful.play()
+	if score < 20000:
+		$AnimationPlayer.play("nicework")
+		$Label.text = "UPGRADE FAILED!"
+		$UpgradeFailure.play()
+
+
+
+func _on_upgrade_successful_finished():
+	get_tree().change_scene_to_file("res://Scenes/bounty_board/bounty_board.tscn")
+
+func _on_upgrade_failure_finished():
 	get_tree().change_scene_to_file("res://Scenes/bounty_board/bounty_board.tscn")

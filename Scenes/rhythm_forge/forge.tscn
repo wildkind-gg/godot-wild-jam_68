@@ -1,38 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://dylnjo762rsqo"]
+[gd_scene load_steps=17 format=3 uid="uid://dylnjo762rsqo"]
 
 [ext_resource type="Script" path="res://Scripts/forge.gd" id="1_8xlhv"]
 [ext_resource type="Texture2D" uid="uid://b1p85yai67mqw" path="res://_Art/Forge/ForgeBG-temp.png" id="2_01e6s"]
 [ext_resource type="PackedScene" uid="uid://dittm8xt3v3dp" path="res://Scenes/rhythm_forge/conductor.tscn" id="2_nd8ja"]
 [ext_resource type="PackedScene" uid="uid://c2qvh0ey1jh6g" path="res://Scenes/rhythm_forge/rhythm_button.tscn" id="4_335gy"]
 [ext_resource type="AudioStream" uid="uid://dmqw72kqwstxf" path="res://_Music/M_44_120bpm_LP_Forge.wav" id="4_iu3lw"]
+[ext_resource type="AudioStream" uid="uid://m0oj5tp4yjtn" path="res://_Music/medieval-fanfare-6826.mp3" id="6_1uegi"]
+[ext_resource type="PackedScene" uid="uid://jj83exo8d342" path="res://Scenes/rhythm_forge/rhythm_button_up.tscn" id="6_2tkke"]
+[ext_resource type="PackedScene" uid="uid://bns5vu555xq4x" path="res://Scenes/rhythm_forge/rhythm_button_left.tscn" id="7_2kf87"]
+[ext_resource type="AudioStream" uid="uid://di4h3xougwy4x" path="res://_Music/wah-wah-sad-trombone-6347.mp3" id="7_pw2t6"]
+[ext_resource type="AudioStream" uid="uid://dws8x15f5io48" path="res://_Music/erase.wav" id="10_0j12a"]
 
-[sub_resource type="Animation" id="Animation_ebk52"]
-resource_name = "nicework"
-length = 0.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Label:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 0.3, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5), Vector2(1, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Label:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.1),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
+[sub_resource type="SystemFont" id="SystemFont_ur24e"]
+font_names = PackedStringArray("Poor Richard")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ndpma"]
 
 [sub_resource type="Animation" id="Animation_1k651"]
 length = 0.001
@@ -64,6 +46,34 @@ tracks/0/keys = {
 "values": [Vector2(1e-05, 1e-05), Vector2(1, 1), Vector2(0.3, 0.3), Vector2(1, 1)]
 }
 
+[sub_resource type="Animation" id="Animation_ebk52"]
+resource_name = "nicework"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.3, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6jnjy"]
 _data = {
 "RESET": SubResource("Animation_1k651"),
@@ -87,57 +97,65 @@ texture = ExtResource("2_01e6s")
 
 [node name="Label" type="Label" parent="."]
 visible = false
-offset_left = 808.333
-offset_top = 193.333
-offset_right = 1392.33
-offset_bottom = 330.333
+offset_left = 566.667
+offset_top = 171.667
+offset_right = 1662.67
+offset_bottom = 308.667
 theme_override_colors/font_color = Color(0.937255, 0.298039, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 8
-theme_override_constants/shadow_offset_y = 8
-theme_override_constants/outline_size = 16
-theme_override_constants/shadow_outline_size = 8
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("SystemFont_ur24e")
 theme_override_font_sizes/font_size = 100
-text = "NICE WORK!"
+text = "UPGRADE SUCCESSFUL!"
 
 [node name="Guiding_Lines" type="Node2D" parent="."]
 position = Vector2(10, -18.3333)
 scale = Vector2(1.65, 1.65)
+
+[node name="TextureRect" type="TextureRect" parent="Guiding_Lines"]
+modulate = Color(0.0823529, 0.027451, 0.0196078, 0.352941)
+offset_left = 485.859
+offset_top = -100.0
+offset_right = 525.859
+offset_bottom = -60.0
+scale = Vector2(8.75757, 23.3838)
+texture = SubResource("CanvasTexture_ndpma")
 
 [node name="Line2D" type="Line2D" parent="Guiding_Lines"]
 position = Vector2(62, -350)
 scale = Vector2(0.6, 0.6)
 points = PackedVector2Array(1196.67, 508.333, 1196.67, 1708.33, 1196.67, 423.333)
 width = 5.0
-default_color = Color(0.0313726, 0.0313726, 0.0313726, 0.286275)
+default_color = Color(0.0313726, 0.0313726, 0.0313726, 0.392157)
 
 [node name="Line2D2" type="Line2D" parent="Guiding_Lines"]
-position = Vector2(-59, -350)
+position = Vector2(-58, -350)
 scale = Vector2(0.6, 0.6)
 points = PackedVector2Array(1196.67, 508.333, 1196.67, 1708.33, 1196.67, 423.333)
 width = 5.0
-default_color = Color(0.0313726, 0.0313726, 0.0313726, 0.286275)
+default_color = Color(0.0313726, 0.0313726, 0.0313726, 0.392157)
 
 [node name="Line2D3" type="Line2D" parent="Guiding_Lines"]
 position = Vector2(-179, -350)
 scale = Vector2(0.6, 0.6)
 points = PackedVector2Array(1196.67, 508.333, 1196.67, 1708.33, 1196.67, 423.333)
 width = 5.0
-default_color = Color(0.0313726, 0.0313726, 0.0313726, 0.286275)
+default_color = Color(0.0313726, 0.0313726, 0.0313726, 0.392157)
 
 [node name="Line2D4" type="Line2D" parent="Guiding_Lines"]
-position = Vector2(116, -329)
+position = Vector2(121, -329)
 scale = Vector2(0.6, 0.6)
 points = PackedVector2Array(1196.67, 508.333, 1196.67, 1708.33, 1196.67, 423.333)
-width = 5.0
 default_color = Color(0, 0, 0, 1)
 
 [node name="Line2D5" type="Line2D" parent="Guiding_Lines"]
-position = Vector2(-231, -322)
+position = Vector2(-235, -322)
 scale = Vector2(0.6, 0.6)
 points = PackedVector2Array(1196.67, 508.333, 1196.67, 1708.33, 1196.67, 423.333)
-width = 5.0
 default_color = Color(0, 0, 0, 1)
 
 [node name="Conductor" parent="." instance=ExtResource("2_nd8ja")]
@@ -146,9 +164,9 @@ autoplay = true
 bpm = 120
 
 [node name="Combo" type="Label" parent="."]
-offset_left = 550.0
+offset_left = 520.0
 offset_top = 1000.0
-offset_right = 590.0
+offset_right = 560.0
 offset_bottom = 1077.0
 theme_override_colors/font_color = Color(0.894118, 0.843137, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -156,14 +174,15 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 4
 theme_override_constants/outline_size = 8
 theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("SystemFont_ur24e")
 theme_override_font_sizes/font_size = 56
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Score" type="Label" parent="."]
-offset_left = 1400.0
+offset_left = 1425.0
 offset_top = 1000.0
-offset_right = 1503.0
+offset_right = 1555.0
 offset_bottom = 1077.0
 theme_override_colors/font_color = Color(0.933333, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
@@ -171,6 +190,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 4
 theme_override_constants/outline_size = 8
 theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("SystemFont_ur24e")
 theme_override_font_sizes/font_size = 56
 text = "test"
 horizontal_alignment = 1
@@ -185,27 +205,28 @@ rotation = 0.436332
 theme_override_colors/font_color = Color(0, 0.823529, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_offset_y = 8
-theme_override_constants/outline_size = 12
-theme_override_constants/shadow_outline_size = 8
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("SystemFont_ur24e")
 theme_override_font_sizes/font_size = 78
 text = "10 in a row!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Rhythm_Button_Right" parent="." instance=ExtResource("4_335gy")]
-position = Vector2(1300, 1015)
+position = Vector2(1300, 970)
+scale = Vector2(0.8, -0.8)
 input = "ui_right"
 
-[node name="Rhythm_Button_Up" parent="." instance=ExtResource("4_335gy")]
-position = Vector2(1100, 1015)
-rotation = -1.5708
+[node name="Rhythm_Button_Up" parent="." instance=ExtResource("6_2tkke")]
+position = Vector2(1100, 970)
+scale = Vector2(0.8, 0.8)
 input = "ui_up"
 
-[node name="Rhythm_Button3_Left" parent="." instance=ExtResource("4_335gy")]
-position = Vector2(900, 1015)
-rotation = 3.14159
-scale = Vector2(1, -1)
+[node name="Rhythm_Button_Left" parent="." instance=ExtResource("7_2kf87")]
+position = Vector2(900, 970)
+scale = Vector2(0.8, -0.8)
 input = "ui_left"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -213,6 +234,20 @@ libraries = {
 "": SubResource("AnimationLibrary_6jnjy")
 }
 
+[node name="UpgradeSuccessful" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_1uegi")
+volume_db = -10.0
+
+[node name="UpgradeFailure" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_pw2t6")
+volume_db = -10.0
+
+[node name="MissedNote" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_0j12a")
+pitch_scale = 1.2
+
 [connection signal="beat" from="Conductor" to="." method="_on_conductor_beat"]
 [connection signal="finished" from="Conductor" to="." method="_on_conductor_finished"]
 [connection signal="measure_sig" from="Conductor" to="." method="_on_conductor_measure_sig"]
+[connection signal="finished" from="UpgradeSuccessful" to="." method="_on_upgrade_successful_finished"]
+[connection signal="finished" from="UpgradeFailure" to="." method="_on_upgrade_failure_finished"]

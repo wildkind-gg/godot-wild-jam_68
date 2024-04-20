@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bg0ki43nfofkf"]
-
-[ext_resource type="AudioStream" uid="uid://bdp67sh4p4xgr" path="res://_Music/M_44_72bpm_LP_Battle.wav" id="1_svhb2"]
-
-[node name="BattleMusic" type="AudioStreamPlayer"]
-stream = ExtResource("1_svhb2")
-volume_db = -80.0
