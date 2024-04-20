@@ -111,6 +111,22 @@ func get_limb_health_percent_dict() -> Dictionary: # Returns dictionary of playe
 	return current_limb_health_percent
 
 
+func get_flipped_limb_health_percent_dict() -> Dictionary: # Returns dictionary of player's limb healths
+	# Player limb health dictionary
+	var current_limb_health_percent = {}
+	for key in current_limb_health:
+		var max_healh = max_limb_health[key]
+		var current_health = current_limb_health[key]
+		
+		# Only track limbs that are alive
+		if current_health / max_healh > 0:
+			# Track inverted percent to use as probablity table for targeting
+			current_limb_health_percent[key] = 1.0 - (current_health / max_healh)
+			current_limb_health_percent[key] = max(0, current_limb_health_percent[key])
+
+	return current_limb_health_percent
+
+
 # actions
 func take_attack_action(limb : Limb) -> void:
 	if not Global.current_turn_manager.is_players_turn():

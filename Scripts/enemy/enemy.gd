@@ -195,17 +195,7 @@ func _get_enemy_limb_health_percent_dict() -> Dictionary:
 
 
 func _get_best_action(percents : Dictionary) -> String:
-	var total_weights = util.add_dictionary_values(percents)
-
-	var roll = rng.randf_range(0, total_weights)
-	var current_weight = 0
-	for key in percents:
-		current_weight += percents[key]
-		if roll <= current_weight:
-			return key
-
-	# Default to attacking
-	return "attack"
+	return util.get_key_from_wieghted_dict(percents)
 
 
 func _change_health(increment : float) -> void:
@@ -266,8 +256,8 @@ func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 
 # Actions
 func _complete_attack_action(anim_name : String) -> void:
-	var limb_weights = Global.current_player.get_limb_health_percent_dict()
-	var best_limb = util.get_largest_dict_value(limb_weights)
+	var limb_weights = Global.current_player.get_flipped_limb_health_percent_dict()
+	var best_limb = util.get_key_from_wieghted_dict(limb_weights)
 
 	if anim_name == "tackle":
 		_attack_player_part(best_limb)

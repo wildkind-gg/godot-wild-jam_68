@@ -131,18 +131,18 @@ position = Vector2(13.3333, -10.6667)
 build_mode = 1
 polygon = PackedVector2Array(-29, -13.6666, -29, 15.3334, -48, 33.3334, -37, 37.3334, -16, 24.3334, -9, 12.3334, -9, -4.6666, -15, -9.6666)
 
-[node name="LeftLeg" type="Area2D" parent="LimbPoints"]
+[node name="RightLeg" type="Area2D" parent="LimbPoints"]
 position = Vector2(-26.6667, 76)
 
-[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/LeftLeg"]
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/RightLeg"]
 position = Vector2(-2.38419e-07, 1.33333)
 build_mode = 1
 polygon = PackedVector2Array(-9.3333, -18.3333, -8.3333, 7.66667, -5.3333, 12.6667, -28.3333, 40.6667, 23.6667, 44.6667, 4.6667, 7.66667, 26.6667, -12.3333)
 
-[node name="RightLeg" type="Area2D" parent="LimbPoints"]
+[node name="LeftLeg" type="Area2D" parent="LimbPoints"]
 position = Vector2(9.33333, 81.3333)
 
-[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/RightLeg"]
+[node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/LeftLeg"]
 position = Vector2(2.66667, 4)
 build_mode = 1
 polygon = PackedVector2Array(9.63706, -27.249, -8, -20.3333, -17, -8.3333, 10, 22.6667, -3, 27.6667, 16, 30.6667, 52, 31.6667, 4, 3.6667, 20, -24.3333)
