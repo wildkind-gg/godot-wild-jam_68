@@ -1,0 +1,81 @@
+[gd_resource type="Resource" script_class="EnemyData" load_steps=14 format=3 uid="uid://dyi3lsgt854qs"]
+
+[ext_resource type="Script" path="res://Scripts/enemy/limb_data.gd" id="1_xc6lf"]
+[ext_resource type="Script" path="res://Scripts/enemy/reward_data.gd" id="2_724n2"]
+[ext_resource type="Script" path="res://Scripts/enemy/enemy_data.gd" id="3_jh8ae"]
+[ext_resource type="Texture2D" uid="uid://tlfknobnvwki" path="res://_Art/Monsters/Grognor-TheTimekeeper.png" id="4_j2bhv"]
+[ext_resource type="PackedScene" uid="uid://dvgsypd1qjbs2" path="res://Scenes/battles_enemies/enemy_visuals/grognor_visuals.tscn" id="5_3rohr"]
+
+[sub_resource type="Resource" id="Resource_tp3hw"]
+script = ExtResource("1_xc6lf")
+type = 0
+display_name = "Head"
+max_health = 75.0
+is_weak = false
+click_type = 1
+
+[sub_resource type="Resource" id="Resource_if4rn"]
+script = ExtResource("1_xc6lf")
+type = 1
+display_name = "Torso"
+max_health = 75.0
+is_weak = false
+click_type = 1
+
+[sub_resource type="Resource" id="Resource_okwqi"]
+script = ExtResource("1_xc6lf")
+type = 2
+display_name = "Left Arm"
+max_health = 75.0
+is_weak = false
+click_type = 1
+
+[sub_resource type="Resource" id="Resource_fi63f"]
+script = ExtResource("1_xc6lf")
+type = 3
+display_name = "Right Arm"
+max_health = 75.0
+is_weak = false
+click_type = 1
+
+[sub_resource type="Resource" id="Resource_yjhv5"]
+script = ExtResource("1_xc6lf")
+type = 4
+display_name = "Left Leg"
+max_health = 75.0
+is_weak = false
+click_type = 1
+
+[sub_resource type="Resource" id="Resource_w0ox1"]
+script = ExtResource("1_xc6lf")
+type = 5
+display_name = "Right Leg"
+max_health = 75.0
+is_weak = false
+click_type = 1
+
+[sub_resource type="Resource" id="Resource_86ane"]
+script = ExtResource("2_724n2")
+display_name = "Fast Feet"
+stat = 2
+increase = 15.0
+
+[sub_resource type="Resource" id="Resource_881mi"]
+script = ExtResource("2_724n2")
+display_name = "Head"
+stat = 1
+increase = 25.0
+
+[resource]
+script = ExtResource("3_jh8ae")
+limbs = Array[ExtResource("1_xc6lf")]([SubResource("Resource_tp3hw"), SubResource("Resource_if4rn"), SubResource("Resource_okwqi"), SubResource("Resource_fi63f"), SubResource("Resource_yjhv5"), SubResource("Resource_w0ox1")])
+visuals = ExtResource("5_3rohr")
+rewards = Array[ExtResource("2_724n2")]([SubResource("Resource_86ane"), SubResource("Resource_881mi")])
+max_speed = 7.5
+total_heals = 3.0
+heal_amount = 20.0
+attack_damage = 35.0
+max_health_percent = 60.0
+display_name = "Grognor"
+description = "Grognor the Timekeeper. Village denizens have been living under Grognor's oppressive force for millenia. The sun and the moon, all under its control. We must put Grognor's reign to an end."
+ui_texture = ExtResource("4_j2bhv")

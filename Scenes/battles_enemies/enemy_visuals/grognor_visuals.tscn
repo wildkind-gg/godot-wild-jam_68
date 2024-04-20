@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dns4d2tryiylb"]
+[gd_scene load_steps=6 format=3 uid="uid://dvgsypd1qjbs2"]
 
-[ext_resource type="Texture2D" uid="uid://b71sag5wuvgfn" path="res://_Art/Player/DuckyV2/Ducky/Spritesheets/wall_hit.png" id="1_vrvl1"]
+[ext_resource type="Texture2D" uid="uid://tlfknobnvwki" path="res://_Art/Monsters/Grognor-TheTimekeeper.png" id="1_r403k"]
 
 [sub_resource type="Animation" id="Animation_xe8ou"]
 resource_name = "hit"
@@ -15,7 +15,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [Vector2(3, 3), Vector2(5, 5), Vector2(3, 3), Vector2(5, 5)]
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 1)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -55,7 +55,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(6, 6)]
+"values": [Vector2(1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -94,56 +94,66 @@ _data = {
 }
 
 [node name="Visuals" type="Sprite2D"]
-scale = Vector2(6, 6)
-texture = ExtResource("1_vrvl1")
+position = Vector2(0, 3)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_r403k")
 
 [node name="LimbPoints" type="Node2D" parent="."]
-scale = Vector2(0.5, 0.5)
 
 [node name="Head" type="Area2D" parent="LimbPoints"]
-position = Vector2(0, -15)
+position = Vector2(32, -38.6667)
 
 [node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/Head"]
-position = Vector2(0, -3)
+position = Vector2(-4, 2.66667)
+scale = Vector2(0.653602, 0.693471)
 build_mode = 1
-polygon = PackedVector2Array(-8, -9, 8, -9, 10, 12, 0, 15, -12, 12)
+polygon = PackedVector2Array(-28, -16.651, -21.3333, -43.0412, 22.6667, -46.8112, 48, -31.7311, 52, 0.942501, 49.3333, 18.536, 30.6667, 27.3327, 2.66667, 23.5627, -25.3333, 13.5093)
 
 [node name="Torso" type="Area2D" parent="LimbPoints"]
-position = Vector2(-1, 10)
+position = Vector2(9.33333, 21.3333)
 
 [node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/Torso"]
-position = Vector2(-1, -7)
+position = Vector2(1.33333, -2.66667)
+scale = Vector2(0.172507, 0.18303)
 build_mode = 1
-polygon = PackedVector2Array(-10, -4, 12, -4, 12, 19, -10, 19)
+polygon = PackedVector2Array(-41.2513, -70.5259, 16.3086, -56.059, 66.194, -34.3588, 50.8446, 45.2089, 8.63398, 117.543, -110.323, 81.376, -83.462, 23.5086, -60.438, -23.5086)
 
 [node name="LeftArm" type="Area2D" parent="LimbPoints"]
-position = Vector2(-19, 10)
+position = Vector2(-44, 18.6667)
 
 [node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/LeftArm"]
+position = Vector2(-1.33333, -2.66667)
+scale = Vector2(0.155734, 0.165233)
 build_mode = 1
-polygon = PackedVector2Array(6, -4, -5, -4, -4, 5, 6, 4)
+polygon = PackedVector2Array(41.0117, -90.5604, -29.2941, -50.8022, -99.5998, 6.62637, -141.783, 103.813, -33.9811, 112.648, 0, 85.7143, 22.2635, 59.6373, 50.3858, 37.5494, 78.5081, -11.0439, 92.5693, -86.1428)
 
 [node name="RightArm" type="Area2D" parent="LimbPoints"]
-position = Vector2(15, 10)
+position = Vector2(58.6667, 33.3333)
 
 [node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/RightArm"]
-position = Vector2(4, -5)
+position = Vector2(13.3333, -10.6667)
+rotation = -0.461143
+scale = Vector2(0.915123, 0.970945)
 build_mode = 1
-polygon = PackedVector2Array(-8, 2, -8, 8, 0, 9, 0, 2)
+polygon = PackedVector2Array(-11.6247, -18.0568, -28.7216, 2.18943, -43.2695, 13.539, -26.9614, 19.1582, -13.2506, 15.4887, -4.2702, 6.57698, -0.43602, -2.72675, -2.60669, -12.8245)
 
 [node name="LeftLeg" type="Area2D" parent="LimbPoints"]
-position = Vector2(-7, 28)
+position = Vector2(-26.6667, 76)
 
 [node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/LeftLeg"]
+position = Vector2(-2.38419e-07, 1.33333)
+scale = Vector2(0.193608, 0.205418)
 build_mode = 1
-polygon = PackedVector2Array(0, -5, -7, -4, -7, 4, 5, 4, 5, -4)
+polygon = PackedVector2Array(-5.05747, -34.3203, -57.6552, -34.3203, -33.3793, 34.3203, -33.3793, 133.468, 7.08047, 133.468, 19.2184, 53.3871, 39.4483, 22.8802, 43.4943, -22.8802)
 
 [node name="RightLeg" type="Area2D" parent="LimbPoints"]
-position = Vector2(4, 28)
+position = Vector2(9.33333, 81.3333)
 
 [node name="Shape" type="CollisionPolygon2D" parent="LimbPoints/RightLeg"]
+position = Vector2(2.66667, 4)
+scale = Vector2(0.276709, 0.293589)
 build_mode = 1
-polygon = PackedVector2Array(1, -6, -5, -3, -5, 4, 6, 4, 6, -4)
+polygon = PackedVector2Array(9.63706, -27.249, -25.6988, -39.3597, -35.3359, -6.05533, -16.0618, 18.166, -3.21236, 39.3597, 35.3359, 72.664, 61.0347, 72.664, 32.1236, 21.1937, 41.7606, -24.2213)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
