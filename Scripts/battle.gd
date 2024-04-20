@@ -127,6 +127,7 @@ func on_scene_loaded() -> void:
 	player.create()
 	Global.current_player = player
 	player.on_death.connect(on_player_lose)
+	player.broadcast_message.connect(_broadcast_action)
 
 	# Setup enemy
 	var new_enemy_data = Global.current_enemy
@@ -245,8 +246,7 @@ func _on_enemy_turn_started():
 
 
 func _on_defend_pressed():
-	# TODO: Move this to a player script
-	# Replace with function body.
+	Global.current_player.take_defend_action()
 
 	# Say we took our action
 	_on_player_action()

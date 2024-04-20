@@ -278,8 +278,6 @@ func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 		# Track crits
 		_current_crit_amount += damage_taken
 		on_crit_changed.emit(_current_crit_amount, _crit_amount_needed)
-		if _current_crit_amount >= _crit_amount_needed:
-			_crit_next_turn = true
 
 
 # Actions
@@ -535,6 +533,11 @@ func destroy() -> void:
 func end_enemy_turn() -> void:
 	# Wait for timer
 	await get_tree().create_timer(TURN_STEP_DELAY).timeout	
+
+	# We set the crit flag here so that enemy
+	# doesn't take the crit action immediately
+	if _current_crit_amount >= _crit_amount_needed:
+		_crit_next_turn = true
 
 	# Start enemy turn
 	var next_turn = TurnManager.TurnType.PLAYER_TURN
