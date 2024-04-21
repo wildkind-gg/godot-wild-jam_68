@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dafdr4mgqnqyn"]
+[gd_scene load_steps=21 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="Resource" uid="uid://j1pv6jridu2k" path="res://Resources/enemy_data/grognor.tres" id="2_3qgxm"]
@@ -21,6 +21,9 @@ bg_color = Color(0.443137, 0.65098, 0.6, 0.627451)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig3l7"]
 bg_color = Color(0, 0.67451, 0.270588, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3t8tr"]
+bg_color = Color(1, 1, 0, 1)
 
 [sub_resource type="Animation" id="Animation_lhc5o"]
 resource_name = "popup"
@@ -101,6 +104,7 @@ layout_mode = 2
 
 [node name="NameLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 28
 text = "Gordnor"
 horizontal_alignment = 1
@@ -108,10 +112,11 @@ horizontal_alignment = 1
 [node name="Health" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/separation = 10
+theme_override_constants/separation = 26
 
 [node name="HealthLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "HP"
 
 [node name="EnemyHealth" type="ProgressBar" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
@@ -129,6 +134,36 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "100"
+horizontal_alignment = 1
+
+[node name="CritBar" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="CritLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/CritBar"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Rage"
+
+[node name="EnemyCrit" type="ProgressBar" parent="UI/EnemyInfo/MarginContainer/Stack/CritBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_3t8tr")
+value = 20.0
+show_percentage = false
+
+[node name="ValueLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/CritBar/EnemyCrit"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "100"
 horizontal_alignment = 1
 

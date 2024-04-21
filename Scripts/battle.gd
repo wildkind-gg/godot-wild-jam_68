@@ -259,7 +259,9 @@ func _on_defend_pressed():
 func _on_run_pressed():
 	# TODO: Move this to a player script
 	var rng = rnd.randi_range(0,10)
-	if Global.playerLleg <= 0 or Global.playerRleg <= 0:
+	var right_leg = Global.current_player.get_limb_health_percent("Right Leg")
+	var left_leg = Global.current_player.get_limb_health_percent("Left Leg")
+	if left_leg <= 0 or right_leg <= 0:
 		rng = 0
 		
 		var action_text = "Your leg is broken!"
