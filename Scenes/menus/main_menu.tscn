@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://ca3llde5xp80v" path="res://Misc/vecteezy_landscape-scene-silhouette-with-medieval-town_6928660.png" id="2_35tdg"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="2_o6fhd"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="3_wywr5"]
-[ext_resource type="PackedScene" uid="uid://d20auegbqfr6p" path="res://_Music/intro_sound.tscn" id="4_icjc6"]
-[ext_resource type="PackedScene" uid="uid://cej0cmlk6eqbf" path="res://_Music/menu_music.tscn" id="5_mrhpt"]
-[ext_resource type="PackedScene" uid="uid://bg0ki43nfofkf" path="res://_Music/battle_music.tscn" id="6_an7xp"]
-[ext_resource type="PackedScene" uid="uid://dmbi4i8rnkwnn" path="res://_Music/forge_music.tscn" id="7_800jt"]
-[ext_resource type="PackedScene" uid="uid://0nb71yt2n7bv" path="res://_Music/scene_transition.tscn" id="8_ev4kk"]
+[ext_resource type="PackedScene" path="res://_Music/intro_sound.tscn" id="4_icjc6"]
+[ext_resource type="PackedScene" path="res://_Music/menu_music.tscn" id="5_mrhpt"]
+[ext_resource type="PackedScene" path="res://_Music/battle_music.tscn" id="6_an7xp"]
+[ext_resource type="PackedScene" path="res://_Music/forge_music.tscn" id="7_800jt"]
+[ext_resource type="PackedScene" path="res://_Music/scene_transition.tscn" id="8_ev4kk"]
 
 [sub_resource type="SystemFont" id="SystemFont_mw7iy"]
 font_names = PackedStringArray("Poor Richard")

@@ -1,6 +1,10 @@
 class_name Util
 extends Resource
 
+### Refs ###
+var rng = RandomNumberGenerator.new()
+
+
 # Dictionary helpers
 func get_largest_dict_value(dict : Dictionary) -> String:
 	var current_max = -999999
@@ -24,6 +28,20 @@ func get_smallest_dict_value(dict : Dictionary) -> String:
 			smallest_key = key
 
 	return smallest_key
+
+
+## Returns a key from a dictionary of probablities wieghted by those numbers
+func get_key_from_wieghted_dict(dict : Dictionary) -> String:
+	var total_weights = add_dictionary_values(dict)
+
+	var roll = rng.randf_range(0, total_weights)
+	var current_weight = 0
+	for key in dict:
+		current_weight += dict[key]
+		if roll <= current_weight:
+			return key
+
+	return ""
 
 
 func add_dictionary_values(dict : Dictionary) -> float:

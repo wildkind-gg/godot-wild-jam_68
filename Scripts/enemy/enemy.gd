@@ -5,7 +5,8 @@ signal on_action_started(action_message : String)
 signal on_action_completed(action_message : String)
 signal on_limb_hit(action_message : String)
 signal on_run_away(action_message : String)
-signal on_health_changed(current_health : float)
+signal on_health_changed(current_health : float, max_health : float)
+signal on_crit_changed(current_crit : float, amount_needed : float)
 signal on_defeated(rewards : Array[RewardData])
 
 ### Constants ###
@@ -29,9 +30,9 @@ var _current_limbs : Dictionary
 var _current_rewards : Array[RewardData]
 var _animation_player : AnimationPlayer
 
-var _total_heals: float
+var _total_heal_actions: int
+var _current_heal_actions: int
 var _heal_amount : float
-var _current_heals: float
 
 var _max_speed: float
 var _current_speed: float
@@ -39,6 +40,12 @@ var _current_speed: float
 var _max_health : float
 var _current_health : float
 var _current_attack_damage : float
+
+# Crit
+var _crit_multiplier : float
+var _crit_amount_needed : float ## Amount of damage needed before crit happens
+var _current_crit_amount : float ## Amount of damage done
+var _crit_next_turn : bool ## Flag to say we should crit on the next attack
 
 
 ### References ###
@@ -195,22 +202,16 @@ func _get_enemy_limb_health_percent_dict() -> Dictionary:
 
 
 func _get_best_action(percents : Dictionary) -> String:
-	var total_weights = util.add_dictionary_values(percents)
-
-	var roll = rng.randf_range(0, total_weights)
-	var current_weight = 0
-	for key in percents:
-		current_weight += percents[key]
-		if roll <= current_weight:
-			return key
-
-	# Default to attacking
-	return "attack"
+	return util.get_key_from_wieghted_dict(percents)
 
 
 func _change_health(increment : float) -> void:
 	_current_health += increment
-	on_health_changed.emit(_current_health)
+	
+	# Don't over heal
+	_current_health = min(_current_health, _max_health)
+
+	on_health_changed.emit(_current_health, _max_health)
 
 	if _current_health <= 0:
 		destroy()
@@ -218,6 +219,7 @@ func _change_health(increment : float) -> void:
 
 func _heal_limb(limb_name : String, amount : float) -> void:
 	# Play an animation
+	_animation_player.play("heal")
 
 	# Heal the limb
 	_current_limbs[limb_name].heal_damage(amount)
@@ -232,20 +234,30 @@ func _heal_limb(limb_name : String, amount : float) -> void:
 
 
 func _damage_calculation() -> float:
-	# Add any bonus damage calculations here
 	var base_damage = _current_attack_damage
+	if _crit_next_turn:
+		# Multiply damage
+		base_damage *= _crit_multiplier
+		
+		# Track that we just dealt a crit by resetting flag a tracking
+		_crit_next_turn = false
+		_current_crit_amount = 0
+		on_crit_changed.emit(_current_crit_amount, _crit_amount_needed)
+		
+		# Emit crit message
+		var action_message = "Enraged the enemy deals a critical blow!"
+		on_action_started.emit(action_message)
+
 	return base_damage
 
 
 func _attack_player_part(part_name : String) -> void:
-	# Play an animation
-
 	# Have player take damage
 	var damage = _damage_calculation()
 	Global.current_player.take_damage(damage, part_name)
-	
+
 	# Broadcast action
-	var action_message = "Enemy attacks %s" %part_name
+	var action_message = "Enemy attacks %s for %d damage" %[part_name, damage]
 	on_action_completed.emit(action_message)
 
 
@@ -262,12 +274,16 @@ func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 
 	if _is_alive():
 		on_limb_hit.emit(hit_message)
+		
+		# Track crits
+		_current_crit_amount += damage_taken
+		on_crit_changed.emit(_current_crit_amount, _crit_amount_needed)
 
 
 # Actions
 func _complete_attack_action(anim_name : String) -> void:
-	var limb_weights = Global.current_player.get_limb_health_percent_dict()
-	var best_limb = util.get_largest_dict_value(limb_weights)
+	var limb_weights = Global.current_player.get_flipped_limb_health_percent_dict()
+	var best_limb = util.get_key_from_wieghted_dict(limb_weights)
 
 	if anim_name == "tackle":
 		_attack_player_part(best_limb)
@@ -285,6 +301,9 @@ func _take_heal_action() -> void:
 	var enemy_limb_health = _get_enemy_limb_health_percent_dict()
 	var best_limb = util.get_smallest_dict_value(enemy_limb_health)
 	_heal_limb(best_limb, _heal_amount)
+
+	# Reduce the amount of heal actions we can take
+	_current_heal_actions -= 1
 
 	# end turn	
 	end_enemy_turn()
@@ -358,7 +377,20 @@ func _get_threat_level() -> float:
 ## How aggressive the enemy should be a high value here will encorage the enemy to attack
 func _get_aggression_level() -> float:
 	# Aggression reduces when threat is increased
-	return 1 - _get_threat_level()
+	var aggression = 1 - _get_threat_level()
+	
+	# Add a large value to aggression if we should crit next turn
+	if _crit_next_turn:
+		aggression += 1
+	
+	return aggression
+
+## How healthy the player is relative to the enemy, higher the stronger the player is
+func _get_player_strength() -> float: 
+	var enemy_health = _get_total_limb_health_percent()
+	var player_health = Global.current_player.get_total_limb_health_percent()
+	var player_strength = player_health / (player_health + enemy_health)
+	return player_strength
 
 
 func _get_attack_chance() -> float:
@@ -366,26 +398,56 @@ func _get_attack_chance() -> float:
 	var aggression_level = _get_aggression_level()
 
 	# How healthy the player is relative to the enemy
-	var enemy_health = _get_total_limb_health_percent()
-	var player_health = Global.current_player.get_total_limb_health_percent()
-	var player_strength = player_health / (player_health + enemy_health)
+	var player_strength = _get_player_strength()
 
 	# The more aggressive we are and the weaker
 	# the player is, the more likely we are to attack
 	var attack_chance_percent = max(0, aggression_level * player_strength)
+	
+	# Add a large value to attack chance if we should crit next turn
+	if _crit_next_turn:
+		attack_chance_percent += 1
+	
 	return attack_chance_percent
 
 
 func _get_heal_chance() -> float:
-	# TODO: This is a placeholder calculation
-	# Heal note: add 1 if no more heals?
-	return _get_attack_chance()
+	# How aggressive the enemy should be
+	var aggression_level = _get_aggression_level()
+	
+	# How healthy the player is relative to the enemy
+	var player_strength = _get_player_strength()
+
+	# The less aggressive we are and the stronger
+	# the player is, the more likely we are to heal
+	var starting_value = 1.0
+	var heal_chance_percent = min(starting_value, starting_value + player_strength)
+	heal_chance_percent -= aggression_level
+	heal_chance_percent = max(0, heal_chance_percent)
+
+	# Don't heal if we run out of heal actions
+	if _current_heal_actions <= 0.0:
+		heal_chance_percent = 0.0
+	
+	return heal_chance_percent
 
 
 func _get_defend_chance() -> float:
-	# TODO: This is a placeholder calculation
+	# How aggressive the enemy should be
+	var aggression_level = _get_aggression_level()
+	
+	# How healthy the player is relative to the enemy
+	var player_strength = _get_player_strength()
+
+	# The less aggressive we are and the stronger
+	# the player is, the more likely we are to defend
+	var starting_value = 0.6
+	var defend_chance_percent = min(starting_value, starting_value + player_strength)
+	defend_chance_percent -= aggression_level
+	defend_chance_percent = max(0, defend_chance_percent)
+
 	# Defend note: add in 1 if a limb is below 30%?
-	return _get_attack_chance()
+	return defend_chance_percent
 
 
 func _get_run_chance() -> float:
@@ -430,10 +492,18 @@ func get_health_values() -> Dictionary:
 func create(new_enemy_data : EnemyData):
 	# Set enemy stats
 	_max_speed = new_enemy_data.max_speed
-	_total_heals = new_enemy_data.total_heals
-	_heal_amount = new_enemy_data.heal_amount
 	_current_attack_damage = new_enemy_data.attack_damage
 	_current_rewards = new_enemy_data.rewards
+
+	# Heals
+	_total_heal_actions = new_enemy_data.total_heal_actions
+	_current_heal_actions = _total_heal_actions
+	_heal_amount = new_enemy_data.heal_amount
+
+	# Crit
+	_crit_multiplier = new_enemy_data.crit_damage_multiplier
+	_crit_amount_needed = new_enemy_data.crit_amount
+	_current_crit_amount = 0
 
 	# Generate visuals and get limb points to add limbs to
 	var limb_points = _generate_visuals(new_enemy_data.visuals)
@@ -450,10 +520,11 @@ func create(new_enemy_data : EnemyData):
 
 func destroy() -> void:
 	_current_health = 0
-	on_health_changed.emit(_current_health)
+	on_health_changed.emit(_current_health, _max_health)
 
 	# Play death animation
-	print("Enemy was defeated")
+	var message = "Enemy was defeated"
+	on_action_started.emit(message)
 
 	# Signal that we were defeated (after animation if added)
 	on_defeated.emit(_current_rewards)
@@ -462,6 +533,11 @@ func destroy() -> void:
 func end_enemy_turn() -> void:
 	# Wait for timer
 	await get_tree().create_timer(TURN_STEP_DELAY).timeout	
+
+	# We set the crit flag here so that enemy
+	# doesn't take the crit action immediately
+	if _current_crit_amount >= _crit_amount_needed:
+		_crit_next_turn = true
 
 	# Start enemy turn
 	var next_turn = TurnManager.TurnType.PLAYER_TURN
@@ -486,7 +562,7 @@ func take_enemy_turn() -> void:
 		"attack" : _get_attack_chance(),
 		"heal": _get_heal_chance(),
 		"defend": _get_defend_chance(),
-		"run": _get_run_chance(),
+		# "run": _get_run_chance(),
 	}
 	var best_action = _get_best_action(action_weights)
 	print("Action: %s" %best_action)

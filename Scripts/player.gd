@@ -12,6 +12,7 @@ const MIN_HEALTH : float = 0.0
 
 ### Signals ###
 signal on_death(death_message : String)
+signal broadcast_message(message : String)
 
 
 ## Public Variables ###
@@ -38,6 +39,11 @@ var current_limb_health : Dictionary
 
 ### Exports ###
 @export var attack_damage : float = 25.0
+@export var defense_percent : float = 0.75
+
+
+## Private Variables ###
+var _is_defending : bool = false
 
 
 ### Private Methods ###
@@ -111,6 +117,23 @@ func get_limb_health_percent_dict() -> Dictionary: # Returns dictionary of playe
 	return current_limb_health_percent
 
 
+func get_flipped_limb_health_percent_dict() -> Dictionary: # Returns dictionary of player's limb healths
+	# Player limb health dictionary
+	var current_limb_health_percent = {}
+	for key in current_limb_health:
+		var max_healh = max_limb_health[key]
+		var current_health = current_limb_health[key]
+		
+		# Only track limbs that are alive
+		if current_health / max_healh > 0:
+			# Track inverted percent to use as probablity table for targeting
+			# Start at 1.2 to make limbs at 100% health have 20% chance of being targeted still
+			current_limb_health_percent[key] = 1.2 - (current_health / max_healh)
+			current_limb_health_percent[key] = max(0, current_limb_health_percent[key])
+
+	return current_limb_health_percent
+
+
 # actions
 func take_attack_action(limb : Limb) -> void:
 	if not Global.current_turn_manager.is_players_turn():
@@ -134,8 +157,28 @@ func take_attack_action(limb : Limb) -> void:
 	animation_player.animation_finished.connect(_complete_attack_action)
 
 
+func take_defend_action() -> void:
+	_is_defending = true
+
+	var defend_message = "You defend yourself"
+	broadcast_message.emit(defend_message)
+
+
 # Limb helpers
 func take_damage(amount : float, limb : String) -> void:
+	# Reduce incoming damage if defending
+	if _is_defending:
+		# Reduce damage
+		var reduction_amount = amount * defense_percent
+		amount -= reduction_amount
+
+		# Broadcast the reduction
+		var message = "Incoming damage reduced by %d" %reduction_amount
+		broadcast_message.emit(message)
+
+		# No longer defend (since we just defended)
+		_is_defending = false
+	
 	# Calculate next value
 	var new_value = current_limb_health[limb] - amount
 
@@ -151,13 +194,12 @@ func take_damage(amount : float, limb : String) -> void:
 	# DEBUG
 	# _debug_log_all_health()
 
-
-	# Animate
-	animation_player.play("hit")
-
 	# Check if we are still alive
 	if not _is_alive():
 		destroy()
+	
+	# Animate
+	animation_player.play("hit")
 
 
 func create() -> void:

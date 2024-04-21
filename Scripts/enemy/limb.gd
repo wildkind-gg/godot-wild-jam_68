@@ -107,6 +107,9 @@ func heal_damage(amount : float) -> void:
 	# Increase health
 	_current_health += amount
 	
+	# Don't over heal
+	_current_health = min(_current_health, _max_health)
+
 	# DEBUG
 	if has_debugs:
 		print("[heal_damage] %s healed %f damage" %[_display_name, amount])
