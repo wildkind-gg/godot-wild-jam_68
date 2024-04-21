@@ -1,20 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://dafdr4mgqnqyn"]
+[gd_scene load_steps=11 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
-[ext_resource type="Resource" uid="uid://j1pv6jridu2k" path="res://Resources/enemy_data/grognor.tres" id="2_3qgxm"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="2_nnivy"]
 [ext_resource type="PackedScene" uid="uid://ckrm64kavjvpr" path="res://Scenes/battles_enemies/player.tscn" id="2_qdcmu"]
-[ext_resource type="Texture2D" uid="uid://chuyrhwlfsrto" path="res://_Art/Backgrounds/pixelvillage-ase.png" id="3_0orog"]
 [ext_resource type="PackedScene" uid="uid://dylnjo762rsqo" path="res://Scenes/rhythm_forge/forge.tscn" id="3_arcld"]
 [ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/battles_enemies/enemy.tscn" id="3_ebjh3"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="4_tfdtn"]
-[ext_resource type="AudioStream" uid="uid://7yqjmd582oah" path="res://Sounds/Enemy_Attack.wav" id="9_woln4"]
-[ext_resource type="AudioStream" uid="uid://diik1eb16r8is" path="res://Sounds/Enemy_Damage.wav" id="10_hq3mi"]
-[ext_resource type="AudioStream" uid="uid://cuxxsoprabf2w" path="res://Sounds/Enemy_Defend.wav" id="11_jjcfx"]
-[ext_resource type="AudioStream" uid="uid://c02dgkhwhdyk6" path="res://Sounds/Player_Attack.wav" id="12_s4wkt"]
-[ext_resource type="AudioStream" uid="uid://dbogdqfeg6lao" path="res://Sounds/Player_Damage.wav" id="13_8gqe7"]
-[ext_resource type="AudioStream" uid="uid://bwtk7i5fj7yti" path="res://Sounds/Player_Defend.wav" id="14_fw6sk"]
-[ext_resource type="AudioStream" uid="uid://i2sktvxd27g4" path="res://Sounds/Run.wav" id="15_dp4i1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ocq2g"]
 bg_color = Color(0.443137, 0.65098, 0.6, 0.627451)
@@ -57,13 +48,6 @@ _data = {
 
 [node name="Battle" type="Node2D"]
 script = ExtResource("1_wb0f5")
-debug_enemy = ExtResource("2_3qgxm")
-
-[node name="Background" type="TextureRect" parent="."]
-offset_right = 1152.0
-offset_bottom = 649.0
-texture = ExtResource("3_0orog")
-expand_mode = 2
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -102,7 +86,7 @@ layout_mode = 2
 [node name="NameLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
-text = "Gordnor"
+text = "Grognor"
 horizontal_alignment = 1
 
 [node name="Health" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
@@ -225,6 +209,7 @@ layout_mode = 2
 theme_override_constants/separation = 6
 
 [node name="Transition" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="FadeTransition" parent="Transition" instance=ExtResource("4_tfdtn")]
 
@@ -241,27 +226,5 @@ position = Vector2(1018, 145)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
 
-[node name="Enemy_Attack" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_woln4")
-
-[node name="Enemy_Damage" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_hq3mi")
-
-[node name="Enemy_Defend" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("11_jjcfx")
-
-[node name="Player_Attack" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("12_s4wkt")
-
-[node name="Player_Damage" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_8gqe7")
-
-[node name="Player_Defend" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("14_fw6sk")
-
-[node name="Run" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("15_dp4i1")
-
 [connection signal="pressed" from="UI/Battle_UI/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="UI/Battle_UI/Run" to="." method="_on_run_pressed"]
-[connection signal="finished" from="Enemy_Attack" to="." method="_on_enemy_attack_finished"]

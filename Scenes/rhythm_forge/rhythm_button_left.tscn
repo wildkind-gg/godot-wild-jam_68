@@ -21,10 +21,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_cgmp0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1r6b3"]
-radius = 20.0
+radius = 30.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jblr8"]
-radius = 45.0
+radius = 60.0
 
 [node name="Rhythm_Button_Left" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_bg5tq")

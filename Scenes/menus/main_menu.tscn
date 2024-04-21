@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://ca3llde5xp80v" path="res://Misc/vecteezy_landscape-scene-silhouette-with-medieval-town_6928660.png" id="2_35tdg"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="2_o6fhd"]
 [ext_resource type="PackedScene" uid="uid://c3ka3fcxs45ad" path="res://Scenes/components/scene_transition/scene_transition.tscn" id="3_wywr5"]
-[ext_resource type="PackedScene" path="res://_Music/intro_sound.tscn" id="4_icjc6"]
-[ext_resource type="PackedScene" path="res://_Music/menu_music.tscn" id="5_mrhpt"]
-[ext_resource type="PackedScene" path="res://_Music/battle_music.tscn" id="6_an7xp"]
-[ext_resource type="PackedScene" path="res://_Music/forge_music.tscn" id="7_800jt"]
-[ext_resource type="PackedScene" path="res://_Music/scene_transition.tscn" id="8_ev4kk"]
+[ext_resource type="PackedScene" uid="uid://d20auegbqfr6p" path="res://_Music/intro_sound.tscn" id="4_icjc6"]
+[ext_resource type="PackedScene" uid="uid://cej0cmlk6eqbf" path="res://_Music/menu_music.tscn" id="5_mrhpt"]
+[ext_resource type="PackedScene" uid="uid://bg0ki43nfofkf" path="res://_Music/battle_music.tscn" id="6_an7xp"]
+[ext_resource type="PackedScene" uid="uid://dmbi4i8rnkwnn" path="res://_Music/forge_music.tscn" id="7_800jt"]
+[ext_resource type="PackedScene" uid="uid://0nb71yt2n7bv" path="res://_Music/scene_transition.tscn" id="8_ev4kk"]
 
 [sub_resource type="SystemFont" id="SystemFont_mw7iy"]
 font_names = PackedStringArray("Poor Richard")
@@ -121,6 +121,14 @@ theme_override_fonts/font = SubResource("SystemFont_mw7iy")
 theme_override_styles/normal = SubResource("StyleBoxFlat_5ypli")
 text = "Controls"
 
+[node name="Credits" type="Button" parent="Container/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_mw7iy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_5ypli")
+text = "Credits
+"
+
 [node name="Exit" type="Button" parent="Container/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
@@ -138,9 +146,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -300.0
-offset_top = -169.0
+offset_top = -179.0
 offset_right = 300.0
-offset_bottom = 91.0
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -178,6 +186,54 @@ theme_override_fonts/font = SubResource("SystemFont_mw7iy")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ff7in")
 text = "Return to Menu"
 
+[node name="CreditsText" type="Label" parent="Container"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -179.0
+offset_right = 300.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.8, 0.509804, 0.223529, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = SubResource("SystemFont_we0fe")
+theme_override_font_sizes/font_size = 23
+theme_override_styles/normal = SubResource("StyleBoxFlat_cdsfi")
+text = "- these
+-are
+-placeholder 
+-credits 
+
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsButton" type="Button" parent="Container/CreditsText"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -55.0
+offset_right = 65.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = SubResource("SystemFont_mw7iy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ff7in")
+text = "Return to Menu"
+
 [node name="Sounds" type="Node" parent="."]
 
 [node name="Intro_Sound" parent="Sounds" instance=ExtResource("4_icjc6")]
@@ -193,5 +249,7 @@ volume_db = -10.0
 
 [connection signal="pressed" from="Container/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/Controls" to="." method="_on_controls_pressed"]
+[connection signal="pressed" from="Container/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Container/ControlsText/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Container/CreditsText/CreditsButton" to="." method="_on_credits_button_pressed"]

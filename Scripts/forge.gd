@@ -26,12 +26,13 @@ var rand = 0
 var note = load("res://Scenes/rhythm_forge/note.tscn")
 
 func _ready():
+	$Combo.text = "Combo: 0"
 	ForgeMusic.stop()
 	BattleMusic.stop()
 	MenuMusic.stop()
 	randomize()
 	#$Conductor.play_with_beat_offset(8)
-	$Conductor.seek(0) # sets the position from which audio will be played, in seconds
+	$Conductor.seek(96) # sets the position from which audio will be played, in seconds
 	$ComboExclamation.text = ""
 	
 func _process(_delta):
@@ -152,11 +153,11 @@ func _increment_score(by):
 	score += by * combo
 	$Score.text = str(score)
 	if combo > 0:
-		$Combo.text = str(combo) + " combo!"
+		$Combo.text = "Combo: " + str(combo)
 		if combo > maxCombo:
 			maxCombo = combo
 	else:
-		$Combo.text = ""
+		$Combo.text = "Combo: 0"
 	if combo % 40 == 0 and combo > 0:
 		$AnimationPlayer.play("combo")
 		$ComboExclamation.text = str(combo) + " in a row!"
@@ -165,15 +166,15 @@ func _increment_score(by):
 	
 func reset_combo():
 	combo = 0
-	$Combo.text = ""
+	$Combo.text = "Combo: 0"
 
 func _on_conductor_finished():
 	$Guiding_Lines.hide()
-	if score >= 20000:
+	if score >= 4000:
 		$AnimationPlayer.play("nicework")
 		$Label.text = "UPGRADE SUCCESSFUL!"
 		$UpgradeSuccessful.play()
-	if score < 20000:
+	if score < 4000:
 		$AnimationPlayer.play("nicework")
 		$Label.text = "UPGRADE FAILED!"
 		$UpgradeFailure.play()

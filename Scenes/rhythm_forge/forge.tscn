@@ -1,13 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://dylnjo762rsqo"]
+[gd_scene load_steps=19 format=3 uid="uid://dylnjo762rsqo"]
 
 [ext_resource type="Script" path="res://Scripts/forge.gd" id="1_8xlhv"]
 [ext_resource type="Texture2D" uid="uid://b1p85yai67mqw" path="res://_Art/Forge/ForgeBG-temp.png" id="2_01e6s"]
 [ext_resource type="PackedScene" uid="uid://dittm8xt3v3dp" path="res://Scenes/rhythm_forge/conductor.tscn" id="2_nd8ja"]
+[ext_resource type="Texture2D" uid="uid://b08evsnrd117w" path="res://_Art/Forge/Screenshot 2024-04-20 183652.png" id="3_axho3"]
 [ext_resource type="PackedScene" uid="uid://c2qvh0ey1jh6g" path="res://Scenes/rhythm_forge/rhythm_button.tscn" id="4_335gy"]
 [ext_resource type="AudioStream" uid="uid://dmqw72kqwstxf" path="res://_Music/M_44_120bpm_LP_Forge.wav" id="4_iu3lw"]
 [ext_resource type="AudioStream" uid="uid://m0oj5tp4yjtn" path="res://_Music/medieval-fanfare-6826.mp3" id="6_1uegi"]
-[ext_resource type="PackedScene" path="res://Scenes/rhythm_forge/rhythm_button_up.tscn" id="6_2tkke"]
-[ext_resource type="PackedScene" path="res://Scenes/rhythm_forge/rhythm_button_left.tscn" id="7_2kf87"]
+[ext_resource type="PackedScene" uid="uid://jj83exo8d342" path="res://Scenes/rhythm_forge/rhythm_button_up.tscn" id="6_2tkke"]
+[ext_resource type="PackedScene" uid="uid://bns5vu555xq4x" path="res://Scenes/rhythm_forge/rhythm_button_left.tscn" id="7_2kf87"]
 [ext_resource type="AudioStream" uid="uid://di4h3xougwy4x" path="res://_Music/wah-wah-sad-trombone-6347.mp3" id="7_pw2t6"]
 [ext_resource type="AudioStream" uid="uid://dws8x15f5io48" path="res://_Music/erase.wav" id="10_0j12a"]
 
@@ -81,6 +82,9 @@ _data = {
 "nicework": SubResource("Animation_ebk52")
 }
 
+[sub_resource type="SystemFont" id="SystemFont_66q1b"]
+font_names = PackedStringArray("Poor Richard")
+
 [node name="Forge" type="Node2D"]
 scale = Vector2(0.6, 0.6)
 script = ExtResource("1_8xlhv")
@@ -94,6 +98,25 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_01e6s")
+
+[node name="Sword" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.627451)
+offset_left = 830.0
+offset_top = 825.0
+offset_right = 1209.0
+offset_bottom = 1329.0
+rotation = 1.5708
+texture = ExtResource("3_axho3")
+
+[node name="Sword2" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.627451)
+offset_left = 1371.67
+offset_top = 823.333
+offset_right = 1750.67
+offset_bottom = 1327.33
+rotation = 4.71239
+scale = Vector2(-1, 1)
+texture = ExtResource("3_axho3")
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -164,10 +187,10 @@ autoplay = true
 bpm = 120
 
 [node name="Combo" type="Label" parent="."]
-offset_left = 520.0
-offset_top = 1000.0
-offset_right = 560.0
-offset_bottom = 1077.0
+offset_left = 506.667
+offset_top = 975.0
+offset_right = 755.667
+offset_bottom = 1052.0
 theme_override_colors/font_color = Color(0.894118, 0.843137, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -175,15 +198,15 @@ theme_override_constants/shadow_offset_y = 4
 theme_override_constants/outline_size = 8
 theme_override_constants/shadow_outline_size = 4
 theme_override_fonts/font = SubResource("SystemFont_ur24e")
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Score" type="Label" parent="."]
 offset_left = 1425.0
-offset_top = 1000.0
-offset_right = 1555.0
-offset_bottom = 1077.0
+offset_top = 975.0
+offset_right = 1702.0
+offset_bottom = 1052.0
 theme_override_colors/font_color = Color(0.933333, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -191,8 +214,7 @@ theme_override_constants/shadow_offset_y = 4
 theme_override_constants/outline_size = 8
 theme_override_constants/shadow_outline_size = 4
 theme_override_fonts/font = SubResource("SystemFont_ur24e")
-theme_override_font_sizes/font_size = 56
-text = "test"
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -245,6 +267,23 @@ volume_db = -10.0
 [node name="MissedNote" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_0j12a")
 pitch_scale = 1.2
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 1410.0
+offset_top = 8.33333
+offset_right = 2108.0
+offset_bottom = 72.3333
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.917647, 0.686275, 0.45098, 1)
+theme_override_colors/font_outline_color = Color(0.917647, 0.686275, 0.45098, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/font = SubResource("SystemFont_66q1b")
+theme_override_font_sizes/font_size = 64
+text = "Get 5000 to 
+successfully upgrade"
 
 [connection signal="beat" from="Conductor" to="." method="_on_conductor_beat"]
 [connection signal="finished" from="Conductor" to="." method="_on_conductor_finished"]
