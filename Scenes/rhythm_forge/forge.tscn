@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://c2qvh0ey1jh6g" path="res://Scenes/rhythm_forge/rhythm_button.tscn" id="4_335gy"]
 [ext_resource type="AudioStream" uid="uid://dmqw72kqwstxf" path="res://_Music/M_44_120bpm_LP_Forge.wav" id="4_iu3lw"]
 [ext_resource type="AudioStream" uid="uid://m0oj5tp4yjtn" path="res://_Music/medieval-fanfare-6826.mp3" id="6_1uegi"]
-[ext_resource type="PackedScene" uid="uid://jj83exo8d342" path="res://Scenes/rhythm_forge/rhythm_button_up.tscn" id="6_2tkke"]
-[ext_resource type="PackedScene" uid="uid://bns5vu555xq4x" path="res://Scenes/rhythm_forge/rhythm_button_left.tscn" id="7_2kf87"]
+[ext_resource type="PackedScene" path="res://Scenes/rhythm_forge/rhythm_button_up.tscn" id="6_2tkke"]
+[ext_resource type="PackedScene" path="res://Scenes/rhythm_forge/rhythm_button_left.tscn" id="7_2kf87"]
 [ext_resource type="AudioStream" uid="uid://di4h3xougwy4x" path="res://_Music/wah-wah-sad-trombone-6347.mp3" id="7_pw2t6"]
 [ext_resource type="AudioStream" uid="uid://dws8x15f5io48" path="res://_Music/erase.wav" id="10_0j12a"]
 
