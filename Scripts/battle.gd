@@ -270,4 +270,3 @@ func _on_run_pressed():
 			_on_run_success(action_text)
 		if rng < 3:
 			_on_run_fail()
-

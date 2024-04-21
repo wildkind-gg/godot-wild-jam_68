@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dafdr4mgqnqyn"]
+[gd_scene load_steps=20 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="Resource" uid="uid://j1pv6jridu2k" path="res://Resources/enemy_data/grognor.tres" id="2_3qgxm"]
@@ -8,15 +8,19 @@
 [ext_resource type="PackedScene" uid="uid://dylnjo762rsqo" path="res://Scenes/rhythm_forge/forge.tscn" id="3_arcld"]
 [ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/battles_enemies/enemy.tscn" id="3_ebjh3"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="4_tfdtn"]
+[ext_resource type="AudioStream" uid="uid://7yqjmd582oah" path="res://Sounds/Enemy_Attack.wav" id="9_woln4"]
+[ext_resource type="AudioStream" uid="uid://diik1eb16r8is" path="res://Sounds/Enemy_Damage.wav" id="10_hq3mi"]
+[ext_resource type="AudioStream" uid="uid://cuxxsoprabf2w" path="res://Sounds/Enemy_Defend.wav" id="11_jjcfx"]
+[ext_resource type="AudioStream" uid="uid://c02dgkhwhdyk6" path="res://Sounds/Player_Attack.wav" id="12_s4wkt"]
+[ext_resource type="AudioStream" uid="uid://dbogdqfeg6lao" path="res://Sounds/Player_Damage.wav" id="13_8gqe7"]
+[ext_resource type="AudioStream" uid="uid://bwtk7i5fj7yti" path="res://Sounds/Player_Defend.wav" id="14_fw6sk"]
+[ext_resource type="AudioStream" uid="uid://i2sktvxd27g4" path="res://Sounds/Run.wav" id="15_dp4i1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ocq2g"]
 bg_color = Color(0.443137, 0.65098, 0.6, 0.627451)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ig3l7"]
 bg_color = Color(0, 0.67451, 0.270588, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfywm"]
-bg_color = Color(100, 100, 0, 1)
 
 [sub_resource type="Animation" id="Animation_lhc5o"]
 resource_name = "popup"
@@ -97,7 +101,6 @@ layout_mode = 2
 
 [node name="NameLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 28
 text = "Gordnor"
 horizontal_alignment = 1
@@ -105,11 +108,10 @@ horizontal_alignment = 1
 [node name="Health" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/separation = 20
+theme_override_constants/separation = 10
 
 [node name="HealthLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "HP"
 
 [node name="EnemyHealth" type="ProgressBar" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
@@ -127,38 +129,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "100"
-horizontal_alignment = 1
-
-[node name="CritBar" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 4
-
-[node name="CritLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/CritBar"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Rage
-"
-
-[node name="EnemyCrit" type="ProgressBar" parent="UI/EnemyInfo/MarginContainer/Stack/CritBar"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 1
-theme_override_styles/fill = SubResource("StyleBoxFlat_sfywm")
-value = 20.0
-show_percentage = false
-
-[node name="ValueLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/CritBar/EnemyCrit"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "100"
 horizontal_alignment = 1
 
@@ -271,5 +241,27 @@ position = Vector2(1018, 145)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(576, 324)
 
+[node name="Enemy_Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_woln4")
+
+[node name="Enemy_Damage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_hq3mi")
+
+[node name="Enemy_Defend" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_jjcfx")
+
+[node name="Player_Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_s4wkt")
+
+[node name="Player_Damage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_8gqe7")
+
+[node name="Player_Defend" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("14_fw6sk")
+
+[node name="Run" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_dp4i1")
+
 [connection signal="pressed" from="UI/Battle_UI/Defend" to="." method="_on_defend_pressed"]
 [connection signal="pressed" from="UI/Battle_UI/Run" to="." method="_on_run_pressed"]
+[connection signal="finished" from="Enemy_Attack" to="." method="_on_enemy_attack_finished"]
