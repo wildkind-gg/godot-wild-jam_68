@@ -21,7 +21,7 @@ var _is_initialzied : bool = false
 
 ### Private Methods ###
 func _on_item_clicked(item_enemy : EnemyData):
-	Global.current_enemy = item_enemy
+	Global.current_enemy_data = item_enemy
 	scene_transition.start_transition()
 	SceneChange.play()
 

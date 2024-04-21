@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dafdr4mgqnqyn"]
+[gd_scene load_steps=22 format=3 uid="uid://dafdr4mgqnqyn"]
 
 [ext_resource type="Script" path="res://Scripts/battle.gd" id="1_wb0f5"]
 [ext_resource type="Resource" uid="uid://j1pv6jridu2k" path="res://Resources/enemy_data/grognor.tres" id="2_3qgxm"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://chuyrhwlfsrto" path="res://_Art/Backgrounds/pixelvillage-ase.png" id="3_0orog"]
 [ext_resource type="PackedScene" uid="uid://dylnjo762rsqo" path="res://Scenes/rhythm_forge/forge.tscn" id="3_arcld"]
 [ext_resource type="PackedScene" uid="uid://casq3nvol6l0c" path="res://Scenes/battles_enemies/enemy.tscn" id="3_ebjh3"]
+[ext_resource type="Texture2D" uid="uid://b2wrjmfd447ed" path="res://_Art/misc/sheild_icon.png" id="4_3ek1c"]
 [ext_resource type="PackedScene" uid="uid://b60cbamfs1gcy" path="res://Scenes/components/scene_transition/fade_transition.tscn" id="4_tfdtn"]
 [ext_resource type="AudioStream" uid="uid://7yqjmd582oah" path="res://Sounds/Enemy_Attack.wav" id="9_woln4"]
 [ext_resource type="AudioStream" uid="uid://diik1eb16r8is" path="res://Sounds/Enemy_Damage.wav" id="10_hq3mi"]
@@ -112,16 +113,17 @@ horizontal_alignment = 1
 [node name="Health" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/separation = 26
+theme_override_constants/separation = 6
 
 [node name="HealthLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
+custom_minimum_size = Vector2(38, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "HP"
 
 [node name="EnemyHealth" type="ProgressBar" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_ig3l7")
 value = 20.0
@@ -138,10 +140,16 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "100"
 horizontal_alignment = 1
 
+[node name="DefendIcon" type="TextureRect" parent="UI/EnemyInfo/MarginContainer/Stack/Health"]
+custom_minimum_size = Vector2(23, 23)
+layout_mode = 2
+texture = ExtResource("4_3ek1c")
+expand_mode = 2
+
 [node name="CritBar" type="HBoxContainer" parent="UI/EnemyInfo/MarginContainer/Stack"]
 layout_mode = 2
 size_flags_vertical = 4
-theme_override_constants/separation = 10
+theme_override_constants/separation = 6
 
 [node name="CritLabel" type="Label" parent="UI/EnemyInfo/MarginContainer/Stack/CritBar"]
 layout_mode = 2
@@ -149,8 +157,8 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Rage"
 
 [node name="EnemyCrit" type="ProgressBar" parent="UI/EnemyInfo/MarginContainer/Stack/CritBar"]
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 1
 theme_override_styles/fill = SubResource("StyleBoxFlat_3t8tr")
 value = 20.0

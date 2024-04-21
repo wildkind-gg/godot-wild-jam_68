@@ -37,5 +37,6 @@ var enemyAction = ""
 var setCombo = 0
 
 var current_turn_manager : TurnManager
-var current_enemy : EnemyData
+var current_enemy: Enemy
+var current_enemy_data : EnemyData
 var current_player : Player # May want to change from global later

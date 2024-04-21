@@ -74,6 +74,7 @@ rewards = Array[ExtResource("2_17r34")]([SubResource("Resource_86ane"), SubResou
 max_speed = 20.0
 total_heal_actions = 5
 heal_amount = 50.0
+defend_damage_reduction = 0.5
 attack_damage = 100.0
 crit_amount = 100.0
 crit_damage_multiplier = 2.0

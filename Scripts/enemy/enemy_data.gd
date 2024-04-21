@@ -11,6 +11,8 @@ extends Resource
 @export var max_speed : float = 10.0
 @export var total_heal_actions : int = 5
 @export var heal_amount : float
+## Percent of damage reduced when defending
+@export var defend_damage_reduction : float = 0.5 
 @export var attack_damage : float
 ## The amount of damage needing to be done for crit to trigger
 @export var crit_amount : float = 100

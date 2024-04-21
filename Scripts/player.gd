@@ -80,7 +80,9 @@ func _process_gauges() -> void:
 # Action helpers
 func _damage_calculation() -> float:
 	# Add any other damage calculations here
-	var base_damage = attack_damage
+	var enemy_damage_reduction = Global.current_enemy.get_damage_reduction()
+	var amount_blocked = attack_damage * enemy_damage_reduction
+	var base_damage = attack_damage - amount_blocked
 	return base_damage 
 
 

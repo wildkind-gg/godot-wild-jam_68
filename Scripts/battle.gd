@@ -21,6 +21,7 @@ extends Node2D
 # Enemy UI Info
 @onready var enemy_health_bar = $UI/EnemyInfo/MarginContainer/Stack/Health/EnemyHealth
 @onready var enemy_health_bar_value = $UI/EnemyInfo/MarginContainer/Stack/Health/EnemyHealth/ValueLabel
+@onready var enemy_defend_icon = $UI/EnemyInfo/MarginContainer/Stack/Health/DefendIcon
 @onready var enemy_crit_bar = $UI/EnemyInfo/MarginContainer/Stack/CritBar/EnemyCrit
 @onready var enemy_crit_bar_value = $UI/EnemyInfo/MarginContainer/Stack/CritBar/EnemyCrit/ValueLabel
 @onready var enemy_name = $UI/EnemyInfo/MarginContainer/Stack/NameLabel
@@ -77,6 +78,7 @@ func generate_enemy(new_enemy_data : EnemyData) -> void:
 	enemy.on_action_completed.connect(_broadcast_action)
 	enemy.on_action_started.connect(_broadcast_action)
 	enemy.on_health_changed.connect(_on_enemy_health_update)
+	enemy.on_defend.connect(_update_defend_buff)
 	enemy.on_crit_changed.connect(_on_enemy_crit_update)
 	enemy.on_limb_hit.connect(_on_enemy_limb_hit)
 	enemy.on_run_away.connect(_on_run_success)
@@ -86,6 +88,7 @@ func generate_enemy(new_enemy_data : EnemyData) -> void:
 	var health_values = enemy.get_health_values()
 	enemy_health_bar.max_value = health_values.max
 	_on_enemy_health_update(health_values.current, health_values.max)
+	_update_defend_buff(false) # Hide defend at start
 	_on_enemy_crit_update(0, new_enemy_data.crit_amount)
 
 	# Update name
@@ -134,8 +137,9 @@ func on_scene_loaded() -> void:
 	player.broadcast_message.connect(_broadcast_action)
 
 	# Setup enemy
-	var new_enemy_data = Global.current_enemy
+	var new_enemy_data = Global.current_enemy_data
 	generate_enemy(new_enemy_data)
+	Global.current_enemy = enemy
 
 	# Set as player's turn to start
 	var next_turn = turn_type.PLAYER_TURN
@@ -207,6 +211,10 @@ func _on_run_fail() -> void:
 func _on_enemy_health_update(current_health : float, max_health : float) -> void:
 	enemy_health_bar.value = current_health
 	enemy_health_bar_value.text = "%d/%d" %[current_health, max_health]
+
+
+func _update_defend_buff(flag : bool) -> void:
+	enemy_defend_icon.visible = flag
 
 
 func _on_enemy_crit_update(current_crit : float, amount_needed : float) -> void:

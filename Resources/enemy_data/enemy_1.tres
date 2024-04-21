@@ -74,6 +74,7 @@ rewards = Array[ExtResource("2_mklgr")]([SubResource("Resource_hsfyd"), SubResou
 max_speed = 10.0
 total_heal_actions = 5
 heal_amount = 25.0
+defend_damage_reduction = 0.5
 attack_damage = 20.0
 crit_amount = 100.0
 crit_damage_multiplier = 2.0

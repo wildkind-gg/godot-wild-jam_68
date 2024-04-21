@@ -1,3 +1,4 @@
+class_name Enemy
 extends Node2D
 
 ### Signals ###
@@ -6,6 +7,7 @@ signal on_action_completed(action_message : String)
 signal on_limb_hit(action_message : String)
 signal on_run_away(action_message : String)
 signal on_health_changed(current_health : float, max_health : float)
+signal on_defend(flag : bool)
 signal on_crit_changed(current_crit : float, amount_needed : float)
 signal on_defeated(rewards : Array[RewardData])
 
@@ -40,6 +42,9 @@ var _current_speed: float
 var _max_health : float
 var _current_health : float
 var _current_attack_damage : float
+
+var _is_defending : bool
+var _defense_damage_reduction : float
 
 # Crit
 var _crit_multiplier : float
@@ -269,6 +274,9 @@ func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 	# Remove health from damage done
 	_change_health(-damage_taken)
 
+	# Update buff icon
+	on_defend.emit(_is_defending)
+
 	# Update visuals
 	_process_gauges()
 
@@ -311,9 +319,12 @@ func _take_heal_action() -> void:
 
 func _take_defend_action() -> void:
 	# play an animation
+	_is_defending = true
+
 	# enemy takes reduced or no damage on next turn
 	var action_message = "Enemy defends!"
 	on_action_completed.emit(action_message)
+	on_defend.emit(_is_defending)
 	
 	# end turn	
 	end_enemy_turn()
@@ -441,7 +452,7 @@ func _get_defend_chance() -> float:
 
 	# The less aggressive we are and the stronger
 	# the player is, the more likely we are to defend
-	var starting_value = 0.6
+	var starting_value = 0.8
 	var defend_chance_percent = min(starting_value, starting_value + player_strength)
 	defend_chance_percent -= aggression_level
 	defend_chance_percent = max(0, defend_chance_percent)
@@ -481,6 +492,14 @@ func _is_alive() -> bool:
 
 
 ### Public Methods ###
+func get_damage_reduction() -> float:
+	if _is_defending:
+		_is_defending = false
+		return _defense_damage_reduction
+	else:
+		return 0.0
+
+
 func get_health_values() -> Dictionary:
 	var health = {
 		"current" = _current_health,
@@ -504,6 +523,9 @@ func create(new_enemy_data : EnemyData):
 	_crit_multiplier = new_enemy_data.crit_damage_multiplier
 	_crit_amount_needed = new_enemy_data.crit_amount
 	_current_crit_amount = 0
+
+	# Defend
+	_defense_damage_reduction = new_enemy_data.defend_damage_reduction
 
 	# Generate visuals and get limb points to add limbs to
 	var limb_points = _generate_visuals(new_enemy_data.visuals)
