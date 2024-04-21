@@ -31,7 +31,7 @@ func _ready():
 	MenuMusic.stop()
 	randomize()
 	#$Conductor.play_with_beat_offset(8)
-	$Conductor.seek(0) # sets the position from which audio will be played, in seconds
+	$Conductor.seek(96) # sets the position from which audio will be played, in seconds
 	$ComboExclamation.text = ""
 	
 func _process(_delta):
