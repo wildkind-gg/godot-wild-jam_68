@@ -78,7 +78,7 @@ defend_damage_reduction = 0.25
 attack_damage = 25.0
 crit_amount = 85.0
 crit_damage_multiplier = 1.85
-max_health_percent = 1.0
+max_health_percent = 55.0
 display_name = "Huffbuns"
 description = "Huffbuns the Blight. Citizens of the realm are paralyzed by fear when they hear the name. Memories of blood-soaked cries plague the mind at the merest hint of her presence.
 

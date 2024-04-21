@@ -137,8 +137,10 @@ offset_right = 1152.0
 offset_bottom = 648.0
 theme_override_fonts/font = SubResource("SystemFont_e56ef")
 theme_override_font_sizes/font_size = 50
-text = "This is some place holder text so that 
-we can test an end game scene in our game."
+text = "Bard, you are a hero! The people of this village 
+thank you for your valiant efforts.
+
+Enjoy your ale and bed!"
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -548,6 +548,7 @@ func destroy() -> void:
 	on_health_changed.emit(_current_health, _max_health)
 
 	# Play death animation
+	Global.enemy_defeated += 1
 	var message = "Enemy was defeated"
 	on_action_started.emit(message)
 

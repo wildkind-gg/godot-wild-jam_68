@@ -78,7 +78,7 @@ defend_damage_reduction = 0.4
 attack_damage = 22.5
 crit_amount = 75.0
 crit_damage_multiplier = 1.75
-max_health_percent = 1.0
+max_health_percent = 50.0
 display_name = "Chompbuck"
 description = "In other realms, he is known as The Forever Abyss. World Eater. Bringer of Night.
 

@@ -78,7 +78,7 @@ defend_damage_reduction = 0.35
 attack_damage = 20.0
 crit_amount = 50.0
 crit_damage_multiplier = 1.5
-max_health_percent = 1.0
+max_health_percent = 45.0
 display_name = "Grognor"
 description = "Grognor the Timekeeper. Village denizens have been living under Grognor's oppressive force for millenia. The sun and the moon, all under its control.
 

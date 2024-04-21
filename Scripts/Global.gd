@@ -1,5 +1,7 @@
 extends Node
 
+var enemy_defeated = 0
+
 ### Enums ###
 enum LimbType {
 	HEAD,

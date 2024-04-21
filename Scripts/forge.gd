@@ -32,7 +32,7 @@ func _ready():
 	MenuMusic.stop()
 	randomize()
 	#$Conductor.play_with_beat_offset(8)
-	$Conductor.seek(120) # sets the position from which audio will be played, in seconds
+	$Conductor.seek(96) # sets the position from which audio will be played, in seconds
 	$ComboExclamation.text = ""
 	
 func _process(_delta):
@@ -178,6 +178,9 @@ func _on_conductor_finished():
 		$AnimationPlayer.play("nicework")
 		$Label.text = "UPGRADE FAILED!"
 		$UpgradeFailure.play()
+		
+	if Global.enemy_defeated == 3:
+		get_tree().change_scene_to_file("res://Scenes/endgame.tscn")
 
 
 
