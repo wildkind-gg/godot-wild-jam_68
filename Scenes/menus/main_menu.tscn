@@ -82,7 +82,7 @@ theme_override_constants/outline_size = 16
 theme_override_constants/shadow_outline_size = 8
 theme_override_fonts/font = SubResource("SystemFont_mw7iy")
 theme_override_font_sizes/font_size = 50
-text = "LoFi Beats to Slay Monsters to"
+text = "lofi beats to slay monsters to"
 horizontal_alignment = 1
 vertical_alignment = 1
 

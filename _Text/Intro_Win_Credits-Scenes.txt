@@ -1,0 +1,53 @@
+## INTRO ##
+
+From the darkest night to the faintest glint,
+here now the menace has born again,
+taking form from time and space,
+to plunder the village and lay its waste.
+
+For you to earn ale and bed,
+its up to you, Bard, to raise your head,
+look above the fiery land,
+raise your sword, and play your hand!
+
+/////
+
+## WIN ##
+
+Bard, you are a hero! The people of this village thank you for your valiant efforts.
+
+Enjoy your ale and bed!
+
+/////
+
+## CREDITS ##
+
+Design - Christian Haag-Fernandez, @MrRan on Itch.io, Zachary Snader
+Code - Christian Haag-Fernandez, @MrRan on Itch.io
+Art - Zachary Snader
+Writing - Zachary Snader
+Music - Kolya Hein
+SFX - Austin Blackwell
+
+~ Additional Art Sources ~
+
+* Forge background by ChipPlays on reddit: https://www.reddit.com/r/PixelArt/comments/pb5fdz/a_workstation_for_a_game_im_working_on/
+* Ducky by DevHive on Itch.io: https://devhive.itch.io/ducky-old
+* Assorted royalty-free works that we forgot to attribute before bringing them into the project and have since lost the original credits for (sorry / thank you to those creators)
+
+~ Special Thanks ~
+
+* All of our families for putting up with us while we make video games
+* Kati Baker and the rest of the Godot Wild Jam team
+* Matt Wesdock
+* Game Audio Colorado, and a bonus thank you for Sabrina Fedele
+* Colorado Springs Game Developers
+* GameDevDrinkUp Denver
+
+~~~ Florfin, you will never be forgotten ~~~
+
+-------------------------
+
+a WiLDKiND joint © 2024
+
+/////
