@@ -81,7 +81,7 @@ script = ExtResource("1_dd3de")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(4, 4)
+scale = Vector2(5, 5)
 texture = ExtResource("2_pafka")
 hframes = 6
 
@@ -92,8 +92,6 @@ offset_left = 117.0
 offset_top = 359.0
 offset_right = 118.0
 offset_bottom = 386.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_11ety")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6q72n")
 
@@ -102,8 +100,6 @@ offset_left = 189.0
 offset_top = 445.0
 offset_right = 190.0
 offset_bottom = 472.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_11ety")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6q72n")
 
@@ -112,8 +108,6 @@ offset_left = 37.0
 offset_top = 442.0
 offset_right = 38.0
 offset_bottom = 469.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_11ety")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6q72n")
 
@@ -122,8 +116,6 @@ offset_left = 54.0
 offset_top = 485.0
 offset_right = 55.0
 offset_bottom = 512.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_11ety")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6q72n")
 
@@ -132,8 +124,6 @@ offset_left = 165.0
 offset_top = 486.0
 offset_right = 166.0
 offset_bottom = 513.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_11ety")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6q72n")
 
@@ -142,8 +132,6 @@ offset_left = 123.0
 offset_top = 406.0
 offset_right = 124.0
 offset_bottom = 433.0
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 4
 theme_override_styles/background = SubResource("StyleBoxFlat_11ety")
 theme_override_styles/fill = SubResource("StyleBoxFlat_6q72n")
 

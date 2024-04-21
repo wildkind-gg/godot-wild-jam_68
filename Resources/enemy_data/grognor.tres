@@ -79,5 +79,7 @@ crit_amount = 100.0
 crit_damage_multiplier = 2.0
 max_health_percent = 60.0
 display_name = "Grognor"
-description = "Grognor the Timekeeper. Village denizens have been living under Grognor's oppressive force for millenia. The sun and the moon, all under its control. We must put Grognor's reign to an end."
+description = "Grognor the Timekeeper. Village denizens have been living under Grognor's oppressive force for millenia. The sun and the moon, all under its control.
+
+We must bring Grognor's reign to an end."
 ui_texture = ExtResource("4_j2bhv")

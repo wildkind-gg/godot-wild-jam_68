@@ -78,6 +78,8 @@ attack_damage = 20.0
 crit_amount = 100.0
 crit_damage_multiplier = 2.0
 max_health_percent = 60.0
-display_name = "Grognor"
-description = "I am an enemy"
+display_name = "Chompbuck"
+description = "In other realms, he is known as The Forever Abyss. World Eater. Bringer of Night.
+
+Here, villagers know him as.. Chompbuck the Harvester. It is time to return the demon from whence it came."
 ui_texture = ExtResource("3_kj8dv")

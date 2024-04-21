@@ -286,7 +286,8 @@ position = Vector2(1060, 480)
 scale = Vector2(2.42188, 2.42188)
 sprite_frames = SubResource("SpriteFrames_6mhhx")
 animation = &"X-Out"
-frame_progress = 0.0932028
+frame = 27
+frame_progress = 0.983704
 script = SubResource("GDScript_tfbt1")
 
 [connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_button_pressed"]

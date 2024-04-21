@@ -166,12 +166,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -135.0
-offset_right = 136.001
-offset_bottom = -91.0
+offset_left = -171.0
+offset_top = 576.0
+offset_right = 115.001
+offset_bottom = 620.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
 size_flags_vertical = 0
 mouse_filter = 1
 
