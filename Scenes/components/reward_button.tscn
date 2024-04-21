@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://6hg50uwac6vi"]
+[gd_scene format=3 uid="uid://lqg3hf1apch3"]
 
 [node name="RewardButton" type="Button"]
 text = "Gain Leg: Spd + 10"

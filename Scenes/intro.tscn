@@ -133,12 +133,20 @@ libraries = {
 
 [node name="Label" type="Label" parent="."]
 visible = false
+offset_top = -37.0
 offset_right = 1152.0
-offset_bottom = 648.0
+offset_bottom = 611.0
 theme_override_fonts/font = SubResource("SystemFont_e56ef")
 theme_override_font_sizes/font_size = 50
-text = "This is some place holder text so that 
-we can test an intro scene in our game."
+text = "From the darkest night to the faintest glint,
+here now the menace has born again,
+taking form from time and space,
+to plunder the village and lay its waste.
+
+For you to earn ale and bed,
+its up to you, Bard, to raise your head,
+look above the fiery land,
+raise your sword, and play your hand!"
 horizontal_alignment = 1
 vertical_alignment = 1
 

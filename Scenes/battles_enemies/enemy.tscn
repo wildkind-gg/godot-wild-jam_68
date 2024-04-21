@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://casq3nvol6l0c"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/enemy.gd" id="1_vxg0j"]
-[ext_resource type="PackedScene" uid="uid://coex8nc7ipycw" path="res://Scenes/battles_enemies/enemy_visuals/grognor_visuals.tscn" id="2_ihf2t"]
+[ext_resource type="PackedScene" uid="uid://bagp07e5vouq4" path="res://Scenes/battles_enemies/enemy_visuals/grognor_visuals.tscn" id="2_ihf2t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7ccm"]
 bg_color = Color(0.6, 0.6, 0.6, 0)

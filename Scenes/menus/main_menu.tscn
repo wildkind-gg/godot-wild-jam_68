@@ -186,54 +186,6 @@ theme_override_fonts/font = SubResource("SystemFont_mw7iy")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ff7in")
 text = "Return to Menu"
 
-[node name="CreditsText" type="Label" parent="Container"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -300.0
-offset_top = -179.0
-offset_right = 300.0
-offset_bottom = 81.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0.8, 0.509804, 0.223529, 1)
-theme_override_constants/outline_size = 8
-theme_override_fonts/font = SubResource("SystemFont_we0fe")
-theme_override_font_sizes/font_size = 23
-theme_override_styles/normal = SubResource("StyleBoxFlat_cdsfi")
-text = "- these
--are
--placeholder 
--credits 
-
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CreditsButton" type="Button" parent="Container/CreditsText"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -65.0
-offset_top = -55.0
-offset_right = 65.0
-offset_bottom = -24.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = SubResource("SystemFont_mw7iy")
-theme_override_styles/normal = SubResource("StyleBoxFlat_ff7in")
-text = "Return to Menu"
-
 [node name="Sounds" type="Node" parent="."]
 
 [node name="Intro_Sound" parent="Sounds" instance=ExtResource("4_icjc6")]
@@ -252,4 +204,3 @@ volume_db = -10.0
 [connection signal="pressed" from="Container/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="Container/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="pressed" from="Container/ControlsText/Button" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="Container/CreditsText/CreditsButton" to="." method="_on_credits_button_pressed"]
