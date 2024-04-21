@@ -251,13 +251,14 @@ func _on_enemy_turn_started():
 
 func _on_defend_pressed():
 	Global.current_player.take_defend_action()
-
+	$Player_Defend.play()
 	# Say we took our action
 	_on_player_action()
 
 
 func _on_run_pressed():
 	# TODO: Move this to a player script
+	$Run.play()
 	var rng = rnd.randi_range(0,10)
 	if Global.playerLleg <= 0 or Global.playerRleg <= 0:
 		rng = 0
@@ -266,7 +267,9 @@ func _on_run_pressed():
 		_broadcast_action(action_text)
 	else:
 		if rng >= 3:
+			$Run.play()
 			var action_text = "You run away!"
 			_on_run_success(action_text)
 		if rng < 3:
+			$Enemy_Defend.play()
 			_on_run_fail()
