@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://ckrm64kavjvpr"]
+[gd_scene load_steps=11 format=3 uid="uid://ckrm64kavjvpr"]
 
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_dd3de"]
 [ext_resource type="Texture2D" uid="uid://bhs7acn3nn6k7" path="res://Player_Character/Animations (Static)/right_left_combo.png" id="2_pafka"]
+[ext_resource type="AudioStream" uid="uid://c02dgkhwhdyk6" path="res://Sounds/Player_Attack.wav" id="3_vr46i"]
+[ext_resource type="AudioStream" uid="uid://dbogdqfeg6lao" path="res://Sounds/Player_Damage.wav" id="4_nx10c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_11ety"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -152,3 +154,9 @@ libraries = {
 "": SubResource("AnimationLibrary_sm4by")
 }
 autoplay = "idle"
+
+[node name="Player_Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vr46i")
+
+[node name="Player_Damage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_nx10c")

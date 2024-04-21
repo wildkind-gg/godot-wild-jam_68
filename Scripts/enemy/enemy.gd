@@ -257,9 +257,11 @@ func _damage_calculation() -> float:
 
 
 func _attack_player_part(part_name : String) -> void:
+	$Enemy_Attack.play()
 	# Have player take damage
 	var damage = _damage_calculation()
 	Global.current_player.take_damage(damage, part_name)
+	
 
 	# Broadcast action
 	var action_message = "Enemy attacks %s for %d damage" %[part_name, damage]
@@ -270,6 +272,7 @@ func _attack_player_part(part_name : String) -> void:
 func _on_limb_hit(hit_message : String, damage_taken : float) -> void:
 	# Play hit animation
 	_animation_player.play("hit")
+	$Enemy_Damage.play()
 
 	# Remove health from damage done
 	_change_health(-damage_taken)

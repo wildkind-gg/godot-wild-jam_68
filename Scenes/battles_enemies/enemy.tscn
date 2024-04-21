@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://casq3nvol6l0c"]
+[gd_scene load_steps=7 format=3 uid="uid://casq3nvol6l0c"]
 
 [ext_resource type="Script" path="res://Scripts/enemy/enemy.gd" id="1_vxg0j"]
 [ext_resource type="PackedScene" uid="uid://coex8nc7ipycw" path="res://Scenes/battles_enemies/enemy_visuals/grognor_visuals.tscn" id="2_ihf2t"]
+[ext_resource type="AudioStream" uid="uid://7yqjmd582oah" path="res://Sounds/Enemy_Attack.wav" id="3_561q3"]
+[ext_resource type="AudioStream" uid="uid://diik1eb16r8is" path="res://Sounds/Enemy_Damage.wav" id="4_lrgtb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7ccm"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -87,3 +89,9 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
 theme_override_styles/background = SubResource("StyleBoxFlat_h7ccm")
 theme_override_styles/fill = SubResource("StyleBoxFlat_l4ep0")
+
+[node name="Enemy_Attack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_561q3")
+
+[node name="Enemy_Damage" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_lrgtb")

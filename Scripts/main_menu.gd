@@ -1,7 +1,7 @@
 extends Node2D
 
 ### On Ready Varaibles ###
-@onready var landing_scene = preload("res://Scenes/bounty_board/bounty_board.tscn")
+@onready var landing_scene = preload("res://Scenes/intro.tscn")
 @onready var scene_transition := $Container/VBoxContainer/Play/SceneTransition
 
 func _ready():

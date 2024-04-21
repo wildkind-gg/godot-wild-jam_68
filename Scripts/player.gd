@@ -143,6 +143,7 @@ func take_attack_action(limb : Limb) -> void:
 
 	# Play animation	
 	animation_player.play("tackle")
+	$Player_Attack.play()
 
 	# Complete attack action method (need new one with new limb)
 	var _complete_attack_action = func(anim_name):
@@ -168,6 +169,7 @@ func take_defend_action() -> void:
 
 # Limb helpers
 func take_damage(amount : float, limb : String) -> void:
+	$Player_Damage.play()
 	# Reduce incoming damage if defending
 	if _is_defending:
 		# Reduce damage

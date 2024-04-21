@@ -24,7 +24,7 @@ animations = [{
 radius = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8mnso"]
-radius = 45.0
+radius = 65.0
 
 [node name="Rhythm_Button" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_bg5tq")
@@ -49,7 +49,7 @@ scale = Vector2(1.2, 1.2)
 shape = SubResource("CircleShape2D_8mnso")
 
 [node name="Pushtimer" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.25
 
 [connection signal="area_entered" from="PerfectArea" to="." method="_on_perfect_area_area_entered"]
 [connection signal="area_exited" from="PerfectArea" to="." method="_on_perfect_area_area_exited"]

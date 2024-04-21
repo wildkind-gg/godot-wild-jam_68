@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dylnjo762rsqo"]
+[gd_scene load_steps=19 format=3 uid="uid://dylnjo762rsqo"]
 
 [ext_resource type="Script" path="res://Scripts/forge.gd" id="1_8xlhv"]
 [ext_resource type="Texture2D" uid="uid://b1p85yai67mqw" path="res://_Art/Forge/ForgeBG-temp.png" id="2_01e6s"]
@@ -6,10 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://c2qvh0ey1jh6g" path="res://Scenes/rhythm_forge/rhythm_button.tscn" id="4_335gy"]
 [ext_resource type="AudioStream" uid="uid://dmqw72kqwstxf" path="res://_Music/M_44_120bpm_LP_Forge.wav" id="4_iu3lw"]
 [ext_resource type="AudioStream" uid="uid://m0oj5tp4yjtn" path="res://_Music/medieval-fanfare-6826.mp3" id="6_1uegi"]
-[ext_resource type="PackedScene" path="res://Scenes/rhythm_forge/rhythm_button_up.tscn" id="6_2tkke"]
-[ext_resource type="PackedScene" path="res://Scenes/rhythm_forge/rhythm_button_left.tscn" id="7_2kf87"]
+[ext_resource type="PackedScene" uid="uid://jj83exo8d342" path="res://Scenes/rhythm_forge/rhythm_button_up.tscn" id="6_2tkke"]
+[ext_resource type="PackedScene" uid="uid://bns5vu555xq4x" path="res://Scenes/rhythm_forge/rhythm_button_left.tscn" id="7_2kf87"]
 [ext_resource type="AudioStream" uid="uid://di4h3xougwy4x" path="res://_Music/wah-wah-sad-trombone-6347.mp3" id="7_pw2t6"]
 [ext_resource type="AudioStream" uid="uid://dws8x15f5io48" path="res://_Music/erase.wav" id="10_0j12a"]
+[ext_resource type="Texture2D" uid="uid://b08evsnrd117w" path="res://_Art/Forge/Screenshot_2024-04-20_183652.png" id="11_78gxu"]
 
 [sub_resource type="SystemFont" id="SystemFont_ur24e"]
 font_names = PackedStringArray("Poor Richard")
@@ -81,6 +82,8 @@ _data = {
 "nicework": SubResource("Animation_ebk52")
 }
 
+[sub_resource type="SystemFont" id="SystemFont_spkd6"]
+
 [node name="Forge" type="Node2D"]
 scale = Vector2(0.6, 0.6)
 script = ExtResource("1_8xlhv")
@@ -94,6 +97,18 @@ offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_01e6s")
+
+[node name="Screenshot2024-04-20183652" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+position = Vector2(546.666, 997.833)
+rotation = 1.5708
+texture = ExtResource("11_78gxu")
+
+[node name="Screenshot2024-04-20183653" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.588235)
+position = Vector2(1655, 997.833)
+rotation = -1.5708
+texture = ExtResource("11_78gxu")
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -164,10 +179,10 @@ autoplay = true
 bpm = 120
 
 [node name="Combo" type="Label" parent="."]
-offset_left = 520.0
-offset_top = 1000.0
-offset_right = 560.0
-offset_bottom = 1077.0
+offset_left = 488.333
+offset_top = 956.167
+offset_right = 528.333
+offset_bottom = 1033.17
 theme_override_colors/font_color = Color(0.894118, 0.843137, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -175,15 +190,15 @@ theme_override_constants/shadow_offset_y = 4
 theme_override_constants/outline_size = 8
 theme_override_constants/shadow_outline_size = 4
 theme_override_fonts/font = SubResource("SystemFont_ur24e")
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Score" type="Label" parent="."]
-offset_left = 1425.0
-offset_top = 1000.0
-offset_right = 1555.0
-offset_bottom = 1077.0
+offset_left = 1491.67
+offset_top = 956.667
+offset_right = 1621.67
+offset_bottom = 1033.67
 theme_override_colors/font_color = Color(0.933333, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -191,7 +206,7 @@ theme_override_constants/shadow_offset_y = 4
 theme_override_constants/outline_size = 8
 theme_override_constants/shadow_outline_size = 4
 theme_override_fonts/font = SubResource("SystemFont_ur24e")
-theme_override_font_sizes/font_size = 56
+theme_override_font_sizes/font_size = 48
 text = "test"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -245,6 +260,16 @@ volume_db = -10.0
 [node name="MissedNote" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_0j12a")
 pitch_scale = 1.2
+
+[node name="PlayerInstructions" type="Label" parent="."]
+offset_left = 1468.0
+offset_top = 102.0
+offset_right = 1867.0
+offset_bottom = 309.0
+theme_override_fonts/font = SubResource("SystemFont_spkd6")
+theme_override_font_sizes/font_size = 48
+text = "Get 1500 score to successfully upgrade!"
+autowrap_mode = 2
 
 [connection signal="beat" from="Conductor" to="." method="_on_conductor_beat"]
 [connection signal="finished" from="Conductor" to="." method="_on_conductor_finished"]
